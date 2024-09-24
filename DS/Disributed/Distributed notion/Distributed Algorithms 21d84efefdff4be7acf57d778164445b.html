@@ -1,0 +1,754 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Distributed Algorithms</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="21d84efe-fdff-4be7-acf5-7d778164445b" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/webb2.jpg" style="object-position:center 70%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">📶</span></div><h1 class="page-title">Distributed Algorithms</h1><p class="page-description"></p></header><div class="page-body"><figure id="ffff532a-f6dc-81a8-bc7e-db9d3579df1e" class="image"><a href="image.png"><img style="width:687.98828125px" src="image.png"/></a></figure><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Topics</strong></summary><div class="indented"><ol type="1" id="ffff532a-f6dc-81e2-a17d-ed6fdf2a8000" class="numbered-list" start="1"><li>Leader Election Algorithms (motivation, examples for logical ring and tree).</li></ol><ol type="1" id="46a1a7be-8fe8-466c-b18f-fedf2180888a" class="numbered-list" start="2"><li>Time in distributed systems, problem definition (physical vs logical time), Lamport’s clock. Christians and Berkeley algorithm.</li></ol><ol type="1" id="0f69a159-855a-41a0-94f7-cabc748e40a3" class="numbered-list" start="3"><li>Mutual exclusion algorithms, problem definition, Algorithms Lamport, Ricart-Agrawala.</li></ol><ol type="1" id="6850f328-c6d9-40fa-b29a-3f80ed92b2e9" class="numbered-list" start="4"><li>Deadlock detection in distributed systems, problem definition (based on resource allocation graph), Lomet algorithms, and Chandy-Misra-Haas algorithm.</li></ol><ol type="1" id="ffff532a-f6dc-8141-aba5-dfff1f4e2a94" class="numbered-list" start="5"><li>Remote Procedure Calls, motivation, principles. Google RPC, motivation, types of services, message and methods specification base dom Protocol Buffers</li></ol></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Bilal/Payal Notes</strong></summary><div class="indented"><figure id="ffff532a-f6dc-81ee-9377-fa0451a8463c"><div class="source"><a href="Distributed_Algorithms_90cf8a769c464bb785536d612fcbc98f.pdf">Distributed Algorithms 90cf8a769c464bb785536d612fcbc98f.pdf</a></div></figure></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Leader Election Algorithms (motivation, examples for logical ring and tree).</strong></summary><div class="indented"><p id="bd22aea7-133a-4cb7-8364-75a85b0a32d0" class=""><a href="https://www.kdkce.edu.in/pdf/HVG-8IT-DS-Election%20Algorithm.pdf">https://www.kdkce.edu.in/pdf/HVG-8IT-DS-Election Algorithm.pdf</a></p><h3 id="7bac554b-4aa8-4750-b78d-e4906f5e9d5a" class="block-color-teal_background"><strong>Leader Election Introduction</strong></h3><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ffff532a-f6dc-8126-99db-d15da3e6ba76"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="ffff532a-f6dc-8132-b8ad-d8ea54fcfd89" class="">In distributed algorithms, <strong><span style="border-bottom:0.05em solid">a leader election is a process of designating a single process as the organizer, coordinator, initiator or sequence of some task distributed among several computers (nodes).</span></strong></p><p id="dc303602-e1a7-4b99-9b4d-9406bc233007" class=""><mark class="highlight-orange"><strong><span style="border-bottom:0.05em solid">Leader election is a process of determining that a process will be manager of some task distributed among several processes or nodes.</span></strong></mark></p></div></figure><p id="ffff532a-f6dc-819f-bc8a-d0c7b4331520" class=""><strong>Following are the </strong><mark class="highlight-orange"><strong>reason </strong></mark><strong>to elect a leader:</strong></p><ul id="ffff532a-f6dc-817b-b6e4-fa498c561eba" class="bulleted-list"><li style="list-style-type:disc">A centralize control simplifies <mark class="highlight-orange"><strong>process synchronization</strong></mark>, but it is single point failure, and can limit the service.</li></ul><ul id="e794cd87-0ac7-4ad2-a88f-0ad4ab5a5c6c" class="bulleted-list"><li style="list-style-type:disc">To <mark class="highlight-orange">p</mark><mark class="highlight-orange"><strong>rovide solution to choose a new controller (leader) upon failure of existing controller.</strong></mark></li></ul><ul id="ffff532a-f6dc-815c-9767-ec38a0168629" class="bulleted-list"><li style="list-style-type:disc">There are many algorithms for leader election, and one of those can be chosen based on specific requirements</li></ul><p id="ffff532a-f6dc-81fb-910c-de175c590e05" class="">
+</p><p id="ffff532a-f6dc-81e2-873b-d1690c676a0f" class=""><strong>When to elect a leader?</strong></p><ul id="8c252131-6942-4c5d-bc05-de711a8af8bd" class="bulleted-list"><li style="list-style-type:disc">During the <mark class="highlight-orange"><strong>system initiation or when the existing leader fails.</strong></mark></li></ul><ul id="ffff532a-f6dc-8146-bd37-e249914c4a85" class="bulleted-list"><li style="list-style-type:disc">A process that gets <mark class="highlight-orange"><strong>no response</strong></mark> from the current leader for a predetermined time. This time out suspects a leader failure and hence should initiate a leader election.</li></ul><ul id="e99145bb-09da-45ee-8861-af0194cbb215" class="bulleted-list"><li style="list-style-type:disc">When election concludes, a coordinator has been chosen and is known to all processes.</li></ul><p id="b68ee7b0-6b8a-4bea-9256-29a79701902e" class="">
+</p><p id="0a5675b3-6247-4f5f-a56f-b49dcd5e781b" class=""><strong>Assumptions for Leader Elections Algorithm?</strong></p><ul id="ffff532a-f6dc-8199-8439-f249f99da9e0" class="bulleted-list"><li style="list-style-type:disc">Each Processes  have a unique, positive identifier.</li></ul><ul id="ffff532a-f6dc-8135-a3d4-eb74d052bf84" class="bulleted-list"><li style="list-style-type:disc">All processes know all other process identifiers.</li></ul><ul id="5064bab4-d0c1-49dd-b214-65579e0b3464" class="bulleted-list"><li style="list-style-type:disc">The process with the highest valued identifier is duly elected coordinator.</li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Logical Ring Algorithm </strong></summary><div class="indented"><p id="ffff532a-f6dc-81d3-874d-e5613eff30e1" class="">To elect leader among group of interconnected nodes arranged in a ring like structure.</p><ul id="95220d40-4172-4f17-8b6b-fce17dfc283d" class="bulleted-list"><li style="list-style-type:disc"><strong>Scenario</strong>: Consider a distributed system where processes are organized in a logical ring. When a leader election is needed, process A initiates the election by sending a message containing its ID to its neighbor, process B.<p id="2c95ab2d-707e-4794-89e4-7f6e8a5d41a6" class="">Example:</p><ul id="ffff532a-f6dc-817c-99c5-e3c629464def" class="bulleted-list"><li style="list-style-type:circle">There are 5 processes in a distributed system, organized in a logical ring: P1, P2, P3, P4, and P5.</li></ul><ul id="f723d173-1ac1-4c7b-a49d-5126e025f8e2" class="bulleted-list"><li style="list-style-type:circle">Each process has a unique ID.</li></ul><ul id="e4237ccb-6edc-41c0-a0ac-4e1404be39bd" class="bulleted-list"><li style="list-style-type:circle">The goal is to elect the process with the highest ID as the leader.</li></ul></li></ul><ul id="50a7c7ec-0376-46ae-b953-88020bb6ea87" class="bulleted-list"><li style="list-style-type:disc"><strong>Process</strong>: Each process adds its ID to the message and forwards it until the message returns to process A. The process with the highest ID in the message declares itself the leader.<p id="be335ad4-509e-46e0-9b0f-423a56abf90c" class=""><strong>Steps:</strong></p><ul id="52db9e8c-5793-4906-b732-eca37a5a1d47" class="bulleted-list"><li style="list-style-type:circle"><strong>Initiation</strong>: Suppose process P3 detects that the current leader has failed and initiates an election. It sends a message containing its ID (3) to its neighbor, P4.</li></ul><ul id="d974b930-fe3d-4b55-a93e-1fd6af64a0da" class="bulleted-list"><li style="list-style-type:circle"><strong>Message Passing</strong>: Each process adds its ID to the message and passes it to the next process in the ring.</li></ul><ul id="ffff532a-f6dc-81fa-85f5-cc2844f09116" class="bulleted-list"><li style="list-style-type:circle"><strong>Election</strong>: When the message completes the circle and returns to P3, it contains the IDs of all the processes (3, 4, 5, 1, 2).</li></ul><ul id="88eb8a41-2ce8-4a07-88b6-26014e189bca" class="bulleted-list"><li style="list-style-type:circle"><strong>Leader Selection</strong>: P3 sees that P5 has the highest ID, so P5 is declared the leader and leader declared with ID message is passed to the other nodes.</li></ul></li></ul><ul id="ffff532a-f6dc-8195-bb66-e22d3526eb68" class="bulleted-list"><li style="list-style-type:disc"><strong>Outcome</strong>: The election ensures that even if multiple processes start the election simultaneously, they all converge on the same leader.</li></ul><p id="ffae4b58-9c5e-44b3-9f86-371878f10cf9" class=""><strong>Ring Algorithm Advantages and Disadvantages</strong></p><div id="ffff532a-f6dc-81d1-a8c3-eebc0263feb0" class="column-list"><div id="d1789001-d845-42c3-b6a3-b33a30d42c2a" style="width:50%" class="column"><p id="108b6203-6aec-4287-b4f0-efcc1a2ff20c" class=""><strong><span style="border-bottom:0.05em solid">Advantages:</span></strong></p><ul id="c9c92d69-9409-4e7c-b282-56037214e112" class="bulleted-list"><li style="list-style-type:disc"><strong>Simple Implementation</strong>: Easy to set up as each process only communicates with its neighbor.</li></ul><ul id="6a448c0a-b317-4e21-ac04-2dc518598fb5" class="bulleted-list"><li style="list-style-type:disc"><strong>Low Message Overhead</strong>: Requires fewer messages (O(N)), making it efficient in terms of communication.</li></ul><ul id="ffff532a-f6dc-81ab-8897-c14101c47fac" class="bulleted-list"><li style="list-style-type:disc"><strong>Scalable</strong>: Handles large systems well with linear message complexity.</li></ul><p id="eb460da0-3fc3-4de3-bb99-f1b9bd4a72e2" class="">
+</p></div><div id="854a6e74-c883-401d-864d-a1eebaeffdb9" style="width:50%" class="column"><p id="ffff532a-f6dc-81ee-b76f-d7af7d59406b" class=""><strong><span style="border-bottom:0.05em solid">Disadvantages:</span></strong></p><ul id="ffff532a-f6dc-8134-bebb-d192e2b47de5" class="bulleted-list"><li style="list-style-type:disc"><strong>Slow Leader Election</strong>: Can be slow as the token must pass through all nodes.</li></ul><ul id="72888be3-11f5-4160-9ae0-6af9a0f34c71" class="bulleted-list"><li style="list-style-type:disc"><strong>Failure Sensitivity</strong>: A single node failure can disrupt the election.</li></ul><ul id="2784f880-47a9-410b-9311-0b3c49cc332c" class="bulleted-list"><li style="list-style-type:disc"><strong>Higher Latency</strong>: Takes longer to elect a leader, especially in large rings.</li></ul></div></div><figure id="ffff532a-f6dc-81e2-b979-e4ee2b32093a"><div class="source"><a href="https://www.cs.colostate.edu/~cs551/CourseNotes/Synchronization/RingElectExample.html">https://www.cs.colostate.edu/~cs551/CourseNotes/Synchronization/RingElectExample.html</a></div></figure></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Bully Algorithm</strong></summary><div class="indented"><figure id="ffff532a-f6dc-8170-baa1-d28e1540eee8" class="image"><a href="image%201.png"><img style="width:800.9722900390625px" src="image%201.png"/></a></figure><p id="5b491272-8fc1-4bf9-891e-842ffc775850" class=""><strong><a href="https://www.geeksforgeeks.org/bully-algorithm-in-distributed-system/">Bully Algorithm</a></strong> starts its process of selecting of coordinator when a working process notices that the coordinator is not responding to it and then initiates an election. To select  a coordinator the  process who notices sends an <strong>election </strong>message to all the other available processes.</p><ul id="ffff532a-f6dc-81d7-9179-fda11cd29448" class="bulleted-list"><li style="list-style-type:disc">If none of the process responds to its message the process itself wins the election and becomes the coordinator.</li></ul><ul id="ffff532a-f6dc-81e0-b623-c6efead9978a" class="bulleted-list"><li style="list-style-type:disc">Meanwhile, if any process that has a higher ID than the initiating process answers, it takes charge of initiating the process.</li></ul><ul id="ffff532a-f6dc-81d0-be47-cb8c8be3970b" class="bulleted-list"><li style="list-style-type:disc">In this algorithm, the bully guy that is the participating process that has the highest ID becomes the coordinator. This approach is efficient in terms of fault tolerance but complex to implement.</li></ul><figure id="ffff532a-f6dc-81b5-9600-c259c5213637" class="image"><a href="image%202.png"><img style="width:976.99658203125px" src="image%202.png"/></a></figure><h3 id="ffff532a-f6dc-8184-8934-e47d34e16a36" class=""><strong>Steps of the Bully Algorithm</strong></h3><ol type="1" id="4735bb59-fba7-46ee-97c1-95937367c336" class="numbered-list" start="1"><li><strong>Detection of Leader Failure</strong>:<ul id="ffff532a-f6dc-819f-aad9-c1b3dabf1597" class="bulleted-list"><li style="list-style-type:disc">A process (let&#x27;s call it <strong>P</strong>) detects that the current leader has failed (e.g., it stops receiving heartbeat messages or notices no response from the leader).</li></ul></li></ol><ol type="1" id="ffff532a-f6dc-8108-9322-fe011f3c8ba6" class="numbered-list" start="2"><li><strong>Election Initiation</strong>:<ul id="0691bbfc-6ff9-4ce2-9929-871a6b269a65" class="bulleted-list"><li style="list-style-type:disc"><strong>P</strong> starts the election by sending an &quot;Election&quot; message to all processes with higher IDs.</li></ul><ul id="ffff532a-f6dc-81c2-afe3-dc63bd1d20fb" class="bulleted-list"><li style="list-style-type:disc">If <strong>P</strong> doesn’t receive any responses from higher ID processes, it declares itself the leader.</li></ul></li></ol><ol type="1" id="ffff532a-f6dc-8182-aa9f-cba34c6a4f1d" class="numbered-list" start="3"><li><strong>Response from Higher ID Processes</strong>:<ul id="4d1fba43-3be7-426d-815f-b3f1e3dbc329" class="bulleted-list"><li style="list-style-type:disc">If any of the higher ID processes receive the &quot;Election&quot; message from <strong>P</strong>, they respond with an &quot;OK&quot; message to <strong>P</strong>. This means that these higher ID processes are taking over the election process.</li></ul><ul id="ffff532a-f6dc-816e-b1c9-c3c76b3ed432" class="bulleted-list"><li style="list-style-type:disc">Upon receiving the &quot;OK&quot; message, <strong>P</strong> knows it cannot be the leader and stops participating in the election.</li></ul></li></ol><ol type="1" id="ffff532a-f6dc-813e-ba12-cc6409a58978" class="numbered-list" start="4"><li><strong>Higher ID Process Takes Over</strong>:<ul id="2435dd58-c236-4cf5-9816-6291fe94e848" class="bulleted-list"><li style="list-style-type:disc">The higher ID process that sent the &quot;OK&quot; message to <strong>P</strong> now sends an &quot;Election&quot; message to all processes with IDs higher than its own.</li></ul><ul id="9fde112b-e0e5-43cf-9ea4-64a59e00f1b0" class="bulleted-list"><li style="list-style-type:disc">This process continues until no higher ID process responds, meaning the highest ID process in the system will eventually become the leader.</li></ul></li></ol><ol type="1" id="8a7acd20-ca89-4b56-9c65-25128adc424d" class="numbered-list" start="5"><li><strong>Leader Announcement</strong>:<ul id="406f0ada-cd5c-4cf0-bc7b-4a2c0b793f19" class="bulleted-list"><li style="list-style-type:disc">The process that receives no &quot;OK&quot; responses after initiating an election declares itself the leader by sending a &quot;Coordinator&quot; message to all other processes.</li></ul><ul id="ddf92f41-d72f-4074-a682-f37305829e88" class="bulleted-list"><li style="list-style-type:disc">All processes now recognize this process as the new leader.</li></ul></li></ol><ol type="1" id="a6bf781a-8768-4877-92e3-bfa905ee4de3" class="numbered-list" start="6"><li><strong>Handling Concurrent Elections</strong>:<ul id="c315562f-ed32-4299-9a72-4bd20f3827cd" class="bulleted-list"><li style="list-style-type:disc">If multiple processes detect the leader&#x27;s failure simultaneously and start the election process, they will eventually all receive an &quot;OK&quot; message from the process with the highest ID.</li></ul><ul id="ffff532a-f6dc-8149-b286-ce77838da48d" class="bulleted-list"><li style="list-style-type:disc">This ensures that the highest ID process wins and declares itself the leader, while others withdraw from the election.</li></ul></li></ol><p id="ffff532a-f6dc-81c4-a45d-e492e8ba7c5a" class=""><strong>Bully Algorithm Advantages and Disadvantages</strong>:</p><div id="ffe0e9b4-3218-4965-a128-12c9d67bfdd4" class="column-list"><div id="ffff532a-f6dc-81a6-a760-d61be9ec7b85" style="width:50%" class="column"><p id="ffff532a-f6dc-81c7-95e7-f1325ab405b4" class=""><strong><span style="border-bottom:0.05em solid">Advantages:</span></strong><div class="indented"><ul id="bbe59578-7fc9-4ecc-96be-821194d637a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Quick Leader Election</strong>: Fast in smaller systems as it quickly identifies the highest ID process.</li></ul><ul id="ffff532a-f6dc-81d3-85ea-ca4d8ab240d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Fault Resilience</strong>: Handles failures well by quickly promoting the next highest ID process.</li></ul><p id="f0093df4-0875-4b5e-89a7-4f0f5c5a36cc" class="">
+</p></div></p></div><div id="ba02faea-0be0-44ce-a942-9da44923cd65" style="width:50%" class="column"><p id="c1a925f2-4b98-41b7-8330-fcd2bc57973c" class=""><strong><span style="border-bottom:0.05em solid">Disadvantages:</span></strong><div class="indented"><ul id="ffff532a-f6dc-81b5-9d3d-ecad1be5863b" class="bulleted-list"><li style="list-style-type:disc"><strong>High Message Overhead</strong>: Generates a lot of messages (O(N^2)), especially in large systems.</li></ul><ul id="ffff532a-f6dc-81c3-9431-d28ba6ee0465" class="bulleted-list"><li style="list-style-type:disc"><strong>Complex Implementation</strong>: Managing concurrent elections and handling responses adds complexity.</li></ul><ul id="ffff532a-f6dc-8147-b8d7-df9d8caf5462" class="bulleted-list"><li style="list-style-type:disc"><strong>Less Scalable</strong>: Not efficient for large systems due to message overhead.</li></ul></div></p></div></div></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Ring vs Bully Algorithm and Use cases </summary><div class="indented"><p id="45314d78-9f85-42a3-822b-ff99557f6e98" class="">
+</p><p id="b0fbd42b-2c88-42c7-88ea-95a1c71069d4" class=""><strong>Use Cases : </strong></p><p id="ffff532a-f6dc-81ec-8cc7-c2ef1813c8bf" class="">IOT : In IoT networks, leader election can be used to select a master device or gateway that coordinates communication between devices and manages data aggregation.</p><p id="8b0befed-0018-4fc5-9ca2-a8158b00fcfe" class="">Distributed Job scheduling : in systems where jobs or tasks need to be scheduled across multiple nodes, leader election ensures that one node takes responsibility for job distribution and management.</p><p id="ffff532a-f6dc-81ca-a2cb-d76bd8a6ca1b" class="">Networking in Routing protocols : to select a router or switch that will manage the routing table or coordinate communication between different network segments.</p><p id="ffff532a-f6dc-8198-a450-f22cf1e65fe2" class="">Distributed databases ( Cassandra, MongoDB ) : to elect primary master to handle write operations, data replication and manages consistency.</p><p id="039ddcc5-b50d-4bfd-8b44-867a21e386c6" class="">
+</p><p id="4140773a-5499-4b00-8562-1a8e4c07e4c2" class=""><strong>Ring vs Bully </strong></p><table id="ffff532a-f6dc-818e-9452-f63e91ebecfd" class="simple-table"><tbody><tr id="ffff532a-f6dc-8169-9291-cad0f46ecd6c"><td id="]I&gt;T" class=""><strong>Criteria</strong></td><td id="ndg^" class=""><strong>Bully Algorithm</strong></td><td id="u\`S" class=""><strong>Ring Algorithm</strong></td></tr><tr id="5b8123f5-5e37-49a5-a9a8-dc5d4900e319"><td id="]I&gt;T" class=""><strong>Concept</strong></td><td id="ndg^" class="">Highest ID process becomes leader.</td><td id="u\`S" class="">Leader elected by passing token in a ring.</td></tr><tr id="ffff532a-f6dc-816f-8fe2-dd0dbfb58330"><td id="]I&gt;T" class=""><strong>Message Complexity</strong></td><td id="ndg^" class="">O(N^2)</td><td id="u\`S" class="">O(N)</td></tr><tr id="583ae3dc-483e-47fe-a2eb-8d4658b60e43"><td id="]I&gt;T" class=""><strong>Message Overhead</strong></td><td id="ndg^" class="">High</td><td id="u\`S" class="">Low</td></tr><tr id="5077b972-ea03-4fa4-9bf9-7eed1a120574"><td id="]I&gt;T" class=""><strong>Fault Tolerance</strong></td><td id="ndg^" class="">Quick recovery, but high message load.</td><td id="u\`S" class="">Slower recovery, but lower message load.</td></tr><tr id="ffff532a-f6dc-8138-a956-c512dcd8ab2f"><td id="]I&gt;T" class=""><strong>Scalability</strong></td><td id="ndg^" class="">Less scalable in large systems.</td><td id="u\`S" class="">More scalable due to linear complexity.</td></tr><tr id="4ca01de5-93df-4afa-83f0-13cab78f21ab"><td id="]I&gt;T" class=""><strong>Implementation</strong></td><td id="ndg^" class="">More complex due to concurrent elections.</td><td id="u\`S" class="">Simpler, sequential communication.</td></tr><tr id="03e0b7d6-9120-4702-94e6-1e7c2e7083d3"><td id="]I&gt;T" class=""><strong>Best For</strong></td><td id="ndg^" class="">Systems needing quick, priority-based leader election.</td><td id="u\`S" class="">Systems where processes are equal and low overhead is important.</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Tree Algorithm</summary><div class="indented"><p id="ffff532a-f6dc-811c-b584-e0574c91f462" class=""><a href="https://www.ps.uni-saarland.de/~duchier/election-algorithms.html#:~:text=Election%20with%20tree%20algorithm&amp;text=Tree%20Algorithm%3A%20When%20process%20p,s%20it%20has%20been%20elected">https://www.ps.uni-saarland.de/~duchier/election-algorithms.html#:~:text=Election with tree algorithm&amp;text=Tree Algorithm%3A When process p,s it has been elected</a>.</p><p id="ccbf0d19-bf77-4d73-a3e5-d7f7f26ef851" class="">The Tree Leader Election Algorithm is used to elect a leader in a distributed system where processes are arranged in a tree structure. It is assumed that Each node (process) knows its parent and children.</p><p id="62695b6d-7636-48c6-9130-d260f37c03e5" class="">The Election with the Tree algorithm is a distributed algorithm used to elect a leader or coordinator in a network of processes organized as a tree. The goal of the election is to select a unique process as the leader that can perform some central tasks for the network.</p><p id="ffff532a-f6dc-8193-bf92-eb3eb5926355" class="">In a distributed system, an election process can be initiated by processes sending a &quot;wakeup&quot; message to all other processes in the network. This message acts as a signal for all processes to start participating in the election process.</p><p id="ffff532a-f6dc-81ac-8843-c644f998dd7e" class="">The election algorithm works as follows:</p><ol type="1" id="bdd430b4-2ab6-4d69-8d83-0b5ca0f19016" class="numbered-list" start="1"><li>Each process in the tree sends an election message to its parent process.</li></ol><ol type="1" id="ffff532a-f6dc-8186-b486-dc1a3b8da095" class="numbered-list" start="2"><li>The parent process selects the process with the highest identifier as the winner and sends a message to the winner to announce its election.</li></ol><ol type="1" id="0c727b4b-4519-4161-bd89-145794092ee7" class="numbered-list" start="3"><li>The winner process then sends an election message to its children processes to start a new round of election.</li></ol><ol type="1" id="ffff532a-f6dc-8117-bdcf-e315427d189f" class="numbered-list" start="4"><li>The process with the highest identifier among its children is selected as the winner and the process repeats the process of sending an election message to its children.</li></ol><ol type="1" id="ffff532a-f6dc-8101-884e-c1d31496574d" class="numbered-list" start="5"><li>This process continues until all the processes in the tree have been visited and the process with the highest identifier has been elected as the leader.</li></ol><p id="770a49fa-5e06-4e96-a8fb-3387e6df136c" class="">The election algorithm ensures that the process with the highest identifier is selected as the leader and ensures that the election is performed in a deterministic manner. The algorithm is usually used in situations where a single leader is required to coordinate the activities of the network, such as in fault-tolerant systems.</p><ul id="73079466-2d29-4ac4-9e8c-a06088357656" class="toggle"><li><details open=""><summary>WITH FLOODING CONTEXT - CHATGPT</summary><p id="ff12977a-8c8e-4e0a-9b32-228aa22f5c2c" class="">The Election with Tree Algorithm is a method used in distributed systems to select a leader or coordinator among nodes that are organized in a tree structure. Here’s a detailed explanation of how it works:</p><h3 id="ffff532a-f6dc-819e-9ff0-f1fe1c516e5d" class="">Assumptions</h3><ul id="40bcee7c-5bbf-4e64-b5b1-66d4af2a931c" class="bulleted-list"><li style="list-style-type:disc"><strong>Tree Topology:</strong> The network is structured as a tree, where nodes are arranged hierarchically with a parent-child relationship.</li></ul><ul id="322f364e-a7a5-4a2c-bf7c-203e7456615e" class="bulleted-list"><li style="list-style-type:disc"><strong>Initiators:</strong> All leaf nodes (nodes without children) are considered initiators, capable of starting the election process.</li></ul><ul id="a60c09aa-ed2e-42a2-a1f6-93ec431cb0d8" class="bulleted-list"><li style="list-style-type:disc"><strong>Flooding Phase:</strong> The election process begins with a wake-up phase called &quot;flooding,&quot; where nodes become aware that an election is needed.</li></ul><h3 id="ffff532a-f6dc-81c5-8bf6-c4996aa84a0a" class="">Phases of the Election with Tree Algorithm</h3><h3 id="ffff532a-f6dc-816d-a306-f7ee08fcdcf5" class="">1. <strong>Flooding Phase (Wake-Up Phase)</strong></h3><ul id="d4fd2e70-800b-4a87-950f-f6bf67e144c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Initiators:</strong> Leaf nodes (initiators) start by sending a <code>&lt;wakeup&gt;</code> message to all their neighbors (parent and possibly sibling nodes).</li></ul><ul id="ffff532a-f6dc-81e2-8386-d4b8a4b28393" class="bulleted-list"><li style="list-style-type:disc"><strong>Non-Initiators:</strong> When a non-initiator node (any node that receives <code>&lt;wakeup&gt;</code> but is not a leaf) receives the first <code>&lt;wakeup&gt;</code> message, it forwards the message to all of its neighbors.</li></ul><ul id="ffff532a-f6dc-81d0-972f-c38f1c1f29b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Waiting:</strong> Each node continues to wait until it has received a <code>&lt;wakeup&gt;</code> message from all its neighbors. This ensures that the entire tree is aware that an election needs to take place and that every node is &quot;awake.&quot;</li></ul><h3 id="bc68fb1f-6d0d-4c4b-9e6f-5609bcdb98d3" class="">2. <strong>Tree Algorithm Phase (Leader Election)</strong></h3><ul id="ffff532a-f6dc-816e-9f85-dcb307d29295" class="bulleted-list"><li style="list-style-type:disc">After all nodes have received the <code>&lt;wakeup&gt;</code> messages from their neighbors, they proceed with the tree algorithm phase to elect the leader.<ul id="ffff532a-f6dc-81ca-aae1-c651230786b7" class="bulleted-list"><li style="list-style-type:circle"><strong>Token Exchange:</strong><ul id="ffff532a-f6dc-814b-bff1-c6914425dc63" class="bulleted-list"><li style="list-style-type:square">A node <code>p</code> waits until it has received messages of the form <code>&lt;tok, vi&gt;</code> from all but one of its neighbors.</li></ul><ul id="ffff532a-f6dc-81ee-8bb6-dd519e66c284" class="bulleted-list"><li style="list-style-type:square">It then computes <code>q = min(p, vi)</code> where <code>vi</code> are the values received from its neighbors and <code>p</code> is its own value (usually a unique identifier).</li></ul><ul id="ffff532a-f6dc-8133-af98-f924c7968553" class="bulleted-list"><li style="list-style-type:square">Node <code>p</code> sends <code>&lt;tok, q&gt;</code> to the remaining neighbor (the one from which it has not yet received a token).</li></ul></li></ul><ul id="ffff532a-f6dc-816a-91d9-d0816b0cc802" class="bulleted-list"><li style="list-style-type:circle"><strong>Final Computation:</strong><ul id="ffff532a-f6dc-8143-90e6-e8ff00c3e87d" class="bulleted-list"><li style="list-style-type:square">Node <code>p</code> waits for a response from this last neighbor in the form <code>&lt;tok, r&gt;</code>.</li></ul><ul id="ffff532a-f6dc-81b0-b154-c29e734a5d00" class="bulleted-list"><li style="list-style-type:square">It then computes <code>s = min(q, r)</code> where <code>r</code> is the value received from the last neighbor.</li></ul><ul id="6d5d0efb-422e-44e1-8886-89cf52cfab99" class="bulleted-list"><li style="list-style-type:square">It sends back <code>&lt;tok, s&gt;</code> to the other neighbors to propagate this minimum value throughout the tree.</li></ul></li></ul><ul id="4035abe6-aff6-4f37-bde4-293c1d10bc89" class="bulleted-list"><li style="list-style-type:circle"><strong>Election Check:</strong><ul id="ffff532a-f6dc-81b5-aa9b-e9e1a8eb3629" class="bulleted-list"><li style="list-style-type:square">If a node finds that <code>p = s</code> (i.e., its own value is the minimum value it has computed), it declares itself as the elected leader.</li></ul></li></ul></li></ul><h3 id="36b76830-82f7-4351-affd-a54ca689991f" class="">Example of the Election Process</h3><ul id="ffff532a-f6dc-81f7-9643-f623e438aefb" class="bulleted-list"><li style="list-style-type:disc">Imagine a tree with nodes having unique identifiers. Let’s say the tree has nodes with IDs {1, 2, 3, 4, 5} where 1 is the root, and 2, 3, 4, and 5 are leaf nodes (initiators).</li></ul><ul id="ffff532a-f6dc-816f-b0a3-dbe6c121f832" class="bulleted-list"><li style="list-style-type:disc">The leaf nodes (2, 3, 4, and 5) send <code>&lt;wakeup&gt;</code> messages to the root node (1).</li></ul><ul id="ffff532a-f6dc-8167-a4fb-dafe2d3ef0f2" class="bulleted-list"><li style="list-style-type:disc">Node 1, upon receiving <code>&lt;wakeup&gt;</code> messages from all its children, initiates the token exchange to find the minimum identifier among all nodes.</li></ul><ul id="8967511c-1f71-45ea-be25-43bb30d76101" class="bulleted-list"><li style="list-style-type:disc">If the minimum ID is found to be 2, node 2 is declared the leader.</li></ul><ul id="13ef45d8-a772-4c2e-b3de-140fc86a12c6" class="bulleted-list"><li style="list-style-type:disc">The result is propagated back through the tree so that all nodes know who the leader is.</li></ul><h3 id="7beceecb-6dc5-4510-9f50-ab1cbae3ecd0" class="">Key Points</h3><ul id="ffff532a-f6dc-81b0-8ca7-f07b79b11b38" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficient Election:</strong> The algorithm efficiently finds the leader using the hierarchical tree structure, reducing the number of messages needed compared to a fully connected network.</li></ul><ul id="52bff681-c4f2-4424-bb2a-7590597536d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Fault Tolerance:</strong> If the elected leader fails, the process can be restarted to elect a new leader.</li></ul><ul id="6d764b11-2c61-4fdc-80d2-eb897fcbf1d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Minimization Criterion:</strong> The leader is selected based on a minimization criterion, usually the node with the smallest identifier.</li></ul><h3 id="cedbfd02-c73a-4bce-9a33-9ff4dc72333b" class="">Use Cases</h3><ul id="dfa1e538-b627-42e5-b314-114b5968c821" class="bulleted-list"><li style="list-style-type:disc"><strong>Distributed Systems:</strong> Useful in distributed databases, sensor networks, and any system where a hierarchical structure naturally exists.</li></ul><ul id="ffff532a-f6dc-8164-991d-d4e5d915354b" class="bulleted-list"><li style="list-style-type:disc"><strong>Network Protocols:</strong> Suitable for networks where a tree topology is used, such as multicast routing trees.</li></ul><p id="ffff532a-f6dc-811c-a9aa-c5e7caa07df6" class="">The Election with Tree Algorithm is a systematic and efficient way to elect a leader in distributed systems that follow a tree topology, ensuring coordination and reliability.</p></details></li></ul><p id="ffff532a-f6dc-8120-8c64-e56ba656a925" class="">
+</p></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Time in distributed systems, problem definition (physical vs logical time), Lamport’s clock. Christians and Berkeley algorithm.</strong></summary><div class="indented"><ul id="ce31c7e7-e0af-45b2-b8d4-940ffa859e33" class="toggle"><li><details open=""><summary>Time in DS and Problem Definition </summary><p id="ffff532a-f6dc-8123-8f69-c8212e1a050d" class="">Problem Definition in Distributed Systems</p><p id="ffff532a-f6dc-81c4-944c-e0e9ddca7e2a" class="">When dealing with time in distributed systems, several problems arise, mainly due to the lack of a global clock and the distributed nature of the environment:</p><ol type="1" id="ffff532a-f6dc-81c2-8c55-e214b4822c95" class="numbered-list" start="1"><li>Clock Synchronization Problem:<br/>How can we ensure that all nodes in a distributed system have the same time? This is challenging due to network delays, varying clock speeds, and the lack of a central authority.<br/></li></ol><ol type="1" id="5547984b-e2a3-4c8a-8144-f3811c60d93c" class="numbered-list" start="2"><li>Event Ordering Problem:<br/>How can we determine the order of events in a distributed system? Since there is no global clock, the system needs to determine the causal relationships between events to order them correctly.<br/></li></ol><ol type="1" id="ffff532a-f6dc-8119-b968-ddc1d683c5b0" class="numbered-list" start="3"><li>Consistency Problem:<br/>How can we maintain consistency in a distributed system, especially in the presence of clock drift and network partitioning? Different consistency models, like eventual consistency or strong consistency, handle this issue in various ways.<br/></li></ol><ol type="1" id="ffff532a-f6dc-81b4-a711-c34ccceabe28" class="numbered-list" start="4"><li>Fault Tolerance Problem:<br/>How can a distributed system continue to function correctly in the presence of faults, such as clock failures or network partitions, that affect the perception of time?<br/></li></ol><ol type="1" id="a7680003-0d93-4264-a91f-259fe5952ea0" class="numbered-list" start="5"><li>Time-based Coordination and Synchronisation :<br/>In distributed algorithms like leader election, mutual exclusion, or consensus, time often plays a critical role. The system must coordinate actions based on timing information, which is challenging without synchronized clocks.<br/><br/></li></ol></details></li></ul><ul id="95d6c348-4c1b-498e-92b0-a83211ffad1d" class="toggle"><li><details open=""><summary>Lamport clock </summary><p id="9415f0ec-1177-48b8-b635-2da5108d5945" class=""><strong>Lamport clocks</strong> represent time logically in a distributed system. They are also known as logical clocks. The idea behind Lamport clocks is to disregard physical time and capture just a “happens-before” relationship between a pair of events.</p><p id="01b94513-a8a4-4662-ad58-cbed7524c43e" class="">
+</p><p id="ffff532a-f6dc-817e-8122-d6f2862d9577" class=""><strong><span style="border-bottom:0.05em solid">Key Concepts:</span></strong></p><p id="ffff532a-f6dc-8196-97c3-d41629d259de" class=""><strong>Event Ordering</strong>:<br/>In a distributed system, each process performs its operations and communicates with other processes. A Lamport clock provides a way to assign a “timestamp” to each event such that the order of events can be determined across the entire system.<br/><br/><strong>Logical Clock:</strong><br/>Each process in the system maintains a local counter, which is the Lamport clock. The clock is initialized to 0 at the start.<br/><br/><strong>Clock Update Rules:</strong><br/>Internal Events: When a process executes an internal event (an event that only affects the local state and not any other process), it increments its local Lamport clock by 1.<br/></p><p id="399288e4-e43b-414b-b979-fc1fd352c5f8" class=""><br/>Sending a Message: When a process sends a message, it increments its Lamport clock by 1 and attaches this timestamp to the message.<br/></p><p id="2e8bf838-7aee-419d-9f95-bd4aa179915e" class=""><br/>Receiving a Message: When a process receives a message, it compares its local clock with the timestamp of the received message. The process then updates its clock to be the maximum of its current clock value and the received timestamp, and then increments it by Example:<br/></p><figure id="647e5163-16f2-4856-a3b7-d18dc09cd096" class="image"><a href="image%203.png"><img style="width:437px" src="image%203.png"/></a></figure><p id="ffff532a-f6dc-8115-b966-d2b09e4d6040" class="">Suppose we have two processes, P1 and P2:</p><p id="ffff532a-f6dc-8111-acd1-dc70fe90ee03" class="">1.	P1 performs an internal event, so it increments its clock: P1_clock = 1.<br/>2.	P1 sends a message to P2. Before sending, P1 increments its clock:P1_clock= 2 The message carries this timestamp.<br/>3.	P2 receives the message. Suppose P2’s current clock is P2_clock = 1. Upon receiving the message with timestamp 2, P2 updates its clock to max(P2_clock, received_timestamp) + 1, which is max(1, 2) + 1 = 3.<br/><br/></p><p id="ffff532a-f6dc-814a-aa5c-c6058d2364e6" class="">Now, even though P1 and P2 may not have synchronized physical clocks, their logical clocks allow them to agree on the order of events.</p><p id="ffff532a-f6dc-8196-ac4e-dc98b36c252c" class="">
+</p><figure id="ffff532a-f6dc-8197-9691-d2c7830c375f" class="link-to-page"><a href="https://www.notion.so/What-are-Lamport-clocks-ffff532af6dc81979691d2c7830c375f?pvs=21">What are Lamport clocks?</a></figure><p id="667e4ce3-6407-4966-b797-ef2370ff4e38" class="">
+</p><p id="42a78574-840a-448d-abc5-382ab416c85b" class="">Advantages of Lamport Clock:</p><p id="8c727a39-6185-42a0-a0de-df4ed4ee027e" class="">1.	<strong>Simplicity</strong>: Easy to implement with minimal computational overhead.<br/>2.	<br/><strong>Causal Ordering</strong>: Ensures that causally related events are correctly ordered.<br/>3.	<br/><strong>Low Overhead</strong>: Requires only a single integer as a timestamp in messages.<br/><br/></p><p id="ffff532a-f6dc-81b9-94fc-d079a4181d95" class="">Disadvantages of Lamport Clock:</p><p id="eaff70c4-2b16-4eca-8489-f51609b0912f" class="">1.	<strong>Partial Ordering</strong>: Cannot distinguish between concurrent events.<br/>2.	<br/><strong>No Total Order:</strong> Additional mechanisms are needed for a total order of events.<br/>3.	<br/><strong>Ambiguity</strong>: Concurrent events may end up with the same timestamp, causing confusion.<br/>4.	<br/><strong>No Real-Time Representation</strong>: Does not reflect actual physical time.</p></details></li></ul><ul id="ffff532a-f6dc-81a8-a83e-e9b2cee961e0" class="toggle"><li><details open=""><summary>Physical vs Logical clock</summary><p id="4772bea9-4d97-4018-b7bc-71a6aa2b15c6" class=""><strong>Physical Clock:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8138-820e-e704f061155b" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">•	Definition: A clock that measures actual time, typically synchronized with a universal time standard like UTC.
+•	Purpose: Used to maintain real-world time across systems.
+•	Synchronization: Requires periodic synchronization with a time server or GPS to ensure accuracy across distributed systems.
+•	Usage: Essential for applications requiring real-time processing or coordination, like timestamps in databases, logging, or scheduling tasks.
+</code></pre><p id="0bdfad11-93bd-434e-affc-9b6ad0c1fa8f" class=""><strong>Logical Clock:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b1fe8831-ad9f-4dd7-b212-4d9bc665f850" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">•	Definition: A clock that provides a sequence of events in a system, without necessarily correlating to real-world time.
+•	Purpose: Used to establish the order of events in distributed systems, ensuring consistency without relying on physical time.
+•	Synchronization: Achieved through specific rules, like incrementing counters (Lamport clocks) or vector clocks, which don’t require real-time synchronization.
+•	Usage: Ideal for distributed systems where event order matters more than actual time, such as in message passing, consistency models, and concurrency control.
+</code></pre></details></li></ul><ul id="ffff532a-f6dc-8136-9502-c044a2e44343" class="toggle"><li><details open=""><summary>Cristian algorithm</summary><p id="ffff532a-f6dc-81b6-8f6e-e872c7620d1a" class="">The Cristian algorithm is a method <em><strong><span style="border-bottom:0.05em solid">used to synchronise clocks in a distributed system, particularly when a client wants to synchronise its clock with a time server.</span></strong></em></p><p id="ffff532a-f6dc-81fa-a83a-f2aa12e30c01" class="">Key Concepts:</p><ol type="1" id="ffff532a-f6dc-81ea-b54d-c3c1e6550d16" class="numbered-list" start="1"><li><strong>Time Server:</strong><br/>There is a centralized time server in the network that maintains an accurate time, typically synchronized with an external time source (e.g., GPS or atomic clock).<br/></li></ol><ol type="1" id="ffff532a-f6dc-8108-a32d-d39e67391a65" class="numbered-list" start="2"><li><strong>Client Request:</strong><br/>The client sends a request to the time server asking for the current time.<br/></li></ol><ol type="1" id="300d59fa-aef9-4df3-8179-528eae7765b9" class="numbered-list" start="3"><li><strong>Server Response:</strong><br/>The server responds with its current time, T_server, as soon as it receives the request.<br/></li></ol><ol type="1" id="ffff532a-f6dc-81c6-94ea-f6e5e118e0af" class="numbered-list" start="4"><li><strong>Round-Trip Delay</strong>:<br/>Since the time taken for the request and response to travel over the network is non-zero, the client must estimate the round-trip delay. The client notes the time, T_request, when the request was sent, and T_response, when the server’s reply is received.<br/></li></ol><ol type="1" id="ffff532a-f6dc-81e4-a895-f2f9f07555ee" class="numbered-list" start="5"><li><strong>Clock Adjustment:</strong></li></ol><ul id="ffff532a-f6dc-8120-a4ec-f28215ae509e" class="bulleted-list"><li style="list-style-type:disc">The client assumes that the network delay is symmetric (i.e., the time taken to send the request is approximately equal to the time taken to receive the response). Thus,it estimates the oneway delay as (T_response - T_request) / 2.</li></ul><ul id="ffff532a-f6dc-812f-8bdb-d00a390d138b" class="bulleted-list"><li style="list-style-type:disc">The client then sets its clock to T_server + (T_response - T_request) / 2.<br/><br/></li></ul><p id="ffff532a-f6dc-81d3-bcc8-e0f5aa6310b6" class="">Example:</p><p id="dcfef0f4-b73e-44cf-a83f-84666dc0546c" class="">1.	Request Sent:</p><p id="ffff532a-f6dc-8130-8941-d591bd7082a1" class=""> The client sends a request at T_request = 10:00:00.<br/>2.	Server Receives Request:<br/></p><p id="ffff532a-f6dc-81ab-9b39-f728c74a3e91" class=""> The server receives the request and immediately responds with T_server = 10:00:05.<br/>3.	Response Received: <br/></p><p id="ffff532a-f6dc-817e-b2e2-f7782d62d9de" class="">The client receives the response at T_response = 10:00:10.<br/>4.	One-Way Delay: <br/></p><p id="ffff532a-f6dc-8152-a8a0-c5fd02c26017" class="">Estimated as (10:00:10 - 10:00:00) / 2 = 5 seconds.<br/>5.	Clock Adjustment: <br/></p><p id="68019f64-3fb3-450e-945b-312bf1418d71" class="">The client sets its clock to 10:00:05 + 5 seconds = 10:00:10.<br/><br/></p><p id="ffff532a-f6dc-8148-ac21-ffecf40cb519" class="">Advantages:</p><p id="ffff532a-f6dc-81bd-8064-f6a51e6d35d2" class=""><strong>Simplicity</strong>: The Cristian algorithm is straightforward to implement.<br/><br/><strong>Accuracy</strong>: It can achieve high accuracy if the network delay is symmetric and stable.<br/><br/></p><p id="da14f3a3-9e3e-4ee9-be1c-2e7a5d6eda4c" class="">Disadvantages:</p><p id="f9d1063b-df0b-42b3-8364-e19855d297db" class=""><strong>Assumption of Symmetry</strong>: The accuracy of the algorithm depends on the assumption that network delay is symmetric, which may not always be true, leading to inaccuracies.<br/><br/><strong>Single Point of Failure</strong>: The algorithm relies on a single time server, which can be a bottleneck or a point of failure.<br/><br/></p><p id="ffff532a-f6dc-819a-9abd-ed16f0187d72" class="">Usage:</p><p id="ffff532a-f6dc-81b0-9626-f9f5bd100cd7" class="">The Cristian algorithm is often used in systems where simplicity is preferred and where network delays are relatively consistent. It’s less suitable for environments with highly variable network delays or where high availability is critical.</p></details></li></ul><ul id="ab9730a1-833d-4963-b621-b0da422caaab" class="toggle"><li><details open=""><summary>Berkeley Algorithm   </summary><p id="8f270056-fec9-470f-960f-694a189586b0" class="">The Berkeley algorithm is a <strong>clock synchronisation method used in distributed systems to synchronise the clocks of all the machines in the network, without relying on a central time server</strong>. Instead, it uses a coordinator to achieve consensus on the correct time.</p><p id="ffff532a-f6dc-8171-a66b-d94fb64e9085" class=""><strong>Key Concepts</strong>:</p><p id="648c56fc-10f9-4a00-8c1f-617f5d46ac51" class="">1.	Coordinator:<br/>•	One of the machines in the network acts as the coordinator. This role can be assigned to any machine, and the coordinator’s job is to manage the clock synchronization process.<br/>2.	Polling:<br/>•	The coordinator periodically polls all the other machines in the network, asking for their current clock times.<br/>3.	Time Collection:<br/>•	Each machine responds with its current clock time. The coordinator then collects these times, including its own.<br/>4.	Averaging:<br/>•	The coordinator computes the average of all the collected times. However, instead of a simple average, the algorithm often uses a weighted average to account for network delays or discrepancies.<br/>5.	Time Adjustment:<br/>•	The coordinator calculates the difference between the average time and each machine’s clock time. It then sends these differences (or adjustments) back to each machine.<br/>•	Each machine adjusts its clock by the received difference, either speeding it up or slowing it down to match the average time.<br/><br/></p><p id="ffff532a-f6dc-8110-8ee0-f9b0cc573127" class=""><strong>Example</strong>:</p><p id="a2759d97-a9c5-4a27-8216-ca7326427cec" class="">1.	Coordinator Polls: The coordinator polls four machines, including itself.<br/>2.	Collected Times: The machines report the following times: 10:00:10, 10:00:15, 10:00:20, and 10:00:25.<br/>3.	Calculate Average: The coordinator calculates the average time, which might be, say, 10:00:17.<br/>4.	Send Adjustments: The coordinator tells the first machine to add 7 seconds, the second machine to add 2 seconds, the third machine to subtract 3 seconds, and the fourth machine to subtract 8 seconds.<br/>5.	Adjust Clocks: Each machine adjusts its clock accordingly.<br/><br/></p><p id="ffff532a-f6dc-816d-a84e-c05574b24c41" class=""><strong>Advantages</strong>:</p><p id="13b96744-aa02-4d31-b5c1-3fe7a4cdeaa6" class="">•	Decentralized Control: Unlike the Cristian algorithm, the Berkeley algorithm doesn’t rely on a single, external time source. This makes it more suitable for systems where no central time server is available.<br/>•	Fault Tolerance: If a machine’s clock is drastically different from others (e.g., due to a fault), its time can be excluded from the average calculation, improving robustness.<br/><br/></p><p id="ffff532a-f6dc-818a-96d1-f052361d3824" class=""><strong>Disadvantages</strong>:</p><p id="ffff532a-f6dc-8130-a8d8-ffca18a5bb7a" class="">•	Coordinator Failure: If the coordinator fails, the synchronization process halts until a new coordinator is elected.<br/>•	Complexity: The process is more complex than algorithms that rely on a single time server, and it assumes that the network delays are small and relatively uniform.<br/><br/></p><p id="38f74816-3f1f-46d3-b87f-379310d57456" class=""><strong>Usage</strong>:</p><p id="d09acd32-92b7-4007-ac18-82ae1d5a60b8" class="">The Berkeley algorithm is particularly useful in environments where no single machine has access to an accurate external time source, and where it’s desirable to have a consensus time that all machines agree on. It is commonly used in distributed systems that require synchronized clocks for consistent operations across multiple nodes.</p></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Mutual Exclusion Algorithms , problem definition, Algorithms Lamport, Ricart-Agrawala</strong></summary><div class="indented"><ul id="ffff532a-f6dc-81ad-a8dd-ff3d23f81527" class="toggle"><li><details open=""><summary><strong>Lamport Mutual Exclusion Algorithm</strong></summary><figure id="661162af-93fd-48bb-b079-99292b17d506"><div class="source"><a href="Lamports_Mutual_Exclusion_Algorithm.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/3c86de85-9738-4070-8d67-d79afa0287c3/Lamports_Mutual_Exclusion_Algorithm.pdf</a></div></figure></details></li></ul><ul id="ffff532a-f6dc-8141-8513-dfcde87e6943" class="toggle"><li><details open=""><summary><strong>Ricart Agarwala ME Algorithm</strong></summary><figure id="00dcd9f9-637c-41f6-8a38-afbc35df8ded"><div class="source"><a href="Ricart-Agrawala_Algorithm_in_Mutual_Exclusion_in_Distributed_Systems.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/383e13a8-d705-47b4-bd59-978e07b0947c/Ricart-Agrawala_Algorithm_in_Mutual_Exclusion_in_Distributed_Systems.pdf</a></div></figure></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Deadlock detection in distributed systems, problem definition (based on resource allocation graph), Lomet algorithms, and Chandy-Misra-Haas algorithm</strong></summary><div class="indented"><ul id="ffff532a-f6dc-8107-8df4-c86a916053e9" class="toggle"><li><details open=""><summary>Notes</summary><figure id="b17ab7a6-1383-4e4f-a29b-99355878ca87"><div class="source"><a href="Deadlock.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/f3684727-e713-4fcc-a6a3-dc903c2b8401/Deadlock.pdf</a></div></figure></details></li></ul><ul id="448b0302-6e16-467c-85ca-886214491c4a" class="toggle"><li><details open=""><summary><strong>Deadlock and Handling (4 steps )</strong></summary><figure id="6135906e-e6fc-496f-b670-e7dc1dd120a4"><div class="source"><a href="https://cis.temple.edu/~giorgio/old/cis307f98/readings/deadlock.html">https://cis.temple.edu/~giorgio/old/cis307f98/readings/deadlock.html</a></div></figure><p id="ffff532a-f6dc-8174-b67b-de835897c939" class="">Deadlock handling is a crucial aspect of managing resources in operating systems, especially in distributed systems where multiple processes or threads may compete for shared resources. Handling deadlocks involves ensuring that the system can continue to function even when processes are contending for resources in a way that could lead to a deadlock. </p><p id="ffff532a-f6dc-8156-9828-de037502020a" class="">4 primary stratergies:</p><ul id="3bb0b612-fff4-4689-9c0a-c2c3e9de6412" class="bulleted-list"><li style="list-style-type:disc"><strong>Deadlock Prevention:</strong> Proactively ensures that the system never allows the conditions that lead to deadlock, but it may result in poor resource utilization.<ul id="518b7deb-5829-4ce0-a310-b2bb94d03a23" class="bulleted-list"><li style="list-style-type:circle">Resource Ordering</li></ul><ul id="2e845eaf-296f-4c5e-a7c8-83df51413f42" class="bulleted-list"><li style="list-style-type:circle">One-Resource-At-A-Time</li></ul><ul id="ffff532a-f6dc-8134-a341-db07978ba35a" class="bulleted-list"><li style="list-style-type:circle">Wait-Die Scheme</li></ul><ul id="16d02bb2-86bd-4a64-b914-f474001b23a8" class="bulleted-list"><li style="list-style-type:circle">Wound-Wait Scheme</li></ul></li></ul><ul id="ffff532a-f6dc-8119-a75f-e0910422361b" class="bulleted-list"><li style="list-style-type:disc"><strong>Deadlock Avoidance:</strong> Dynamically ensures the system never enters an unsafe state that could lead to deadlock, requiring advance knowledge of resource needs.<ul id="5f98cdd0-8d83-40e7-a0e4-519a3fb1452e" class="bulleted-list"><li style="list-style-type:circle">Banker’s Algorithm</li></ul><ul id="ffff532a-f6dc-81c0-ad89-f9cdf802ac51" class="bulleted-list"><li style="list-style-type:circle">Safety Algorithm</li></ul></li></ul><ul id="ffff532a-f6dc-81df-ab4e-d7028a4c8396" class="bulleted-list"><li style="list-style-type:disc"><strong>Deadlock Detection and Recovery:</strong> Allows deadlocks to occur but provides mechanisms to detect and resolve them, which is useful in systems where deadlocks are rare.<ul id="ffff532a-f6dc-8167-bf1a-c1177e37b799" class="bulleted-list"><li style="list-style-type:circle">Wait-For Graph (WFG) Algorithm</li></ul><ul id="ffff532a-f6dc-81be-9a9b-f7c631d254ff" class="bulleted-list"><li style="list-style-type:circle">Path-Pushing Algorithm</li></ul><ul id="ffff532a-f6dc-8177-bc8c-f9c5e2130670" class="bulleted-list"><li style="list-style-type:circle">Chandy-Misra-Haas Algorithm</li></ul><ul id="69285961-ec26-4a8d-8864-4b07292c8237" class="bulleted-list"><li style="list-style-type:circle">Resource Allocation Graph with Cycle Detection</li></ul></li></ul><ul id="be3cd8f3-5495-4d0c-95b0-9c1c52bf80bb" class="bulleted-list"><li style="list-style-type:disc"><strong>Ignoring Deadlocks:</strong> Accepts the risk of deadlocks in environments where they are infrequent, with the understanding that the system may occasionally require manual intervention.<ul id="76a87813-3827-46f1-91fb-01e491240a07" class="bulleted-list"><li style="list-style-type:circle">Ostrich Algorithm (a policy rather than an algorithm)</li></ul></li></ul></details></li></ul><ul id="59d2d59c-a5cb-4d1f-a8df-11c54a51deb4" class="toggle"><li><details open=""><summary><strong>Deadlock Detection </strong></summary><ul id="ffff532a-f6dc-8142-929c-df4592f87f61" class="bulleted-list"><li style="list-style-type:disc">Involves identifying and resolving situations where multiple processes or nodes are waiting indefinitely for resources held by each other resulting in deadlock state .</li></ul><ul id="1408b8a5-52ed-4a2f-9696-23566b4e2341" class="bulleted-list"><li style="list-style-type:disc">When a deadlock is detected, the system can initiate recovery procedures to break the deadlock and restore the system to a functional state. It is essential to monitor and detect deadlocks as early as possible to prevent any negative impact on the system&#x27;s performance and stability.</li></ul><ul id="ffff532a-f6dc-815c-80c8-f30124de1293" class="bulleted-list"><li style="list-style-type:disc">There are two primary methods for detecting deadlocks: <ul id="14db97b8-d2bb-43fe-88f8-f189eeab39db" class="bulleted-list"><li style="list-style-type:circle">Resource allocation graph (RAG) </li></ul><ul id="ffff532a-f6dc-81cc-8141-eb04a721e007" class="bulleted-list"><li style="list-style-type:circle">Wait-for graph (WFG)</li></ul></li></ul><ul id="ffff532a-f6dc-8166-ab39-f82479fbb0ee" class="toggle"><li><details open=""><summary><strong>RAG (Resource allocation graph) - Predicts</strong></summary><ul id="7450dcb8-e42c-4f9e-b4fe-db2649638426" class="bulleted-list"><li style="list-style-type:disc"><strong>RAG Definition</strong>: A graphical tool used to represent the allocation state of resources to processes in a system.</li></ul><ul id="bec92ea2-6b95-4b24-9210-e90700053294" class="bulleted-list"><li style="list-style-type:disc"><strong>Nodes</strong>:<ul id="ffff532a-f6dc-8198-92ac-e196a3d698c0" class="bulleted-list"><li style="list-style-type:circle"><strong>Processes</strong>: Represented as circles.</li></ul><ul id="ffff532a-f6dc-8146-a4d8-eec6d99b04d1" class="bulleted-list"><li style="list-style-type:circle"><strong>Resources</strong>: Represented as rectangles.</li></ul></li></ul><ul id="3a3297b7-7d18-4209-843d-d3adb19b3c77" class="bulleted-list"><li style="list-style-type:disc"><strong>Edges</strong>:<ul id="ffff532a-f6dc-8128-9b53-c25d3d03afdd" class="bulleted-list"><li style="list-style-type:circle"><strong>Allocation Edge (R → P)</strong>: indicates process holds the resource).</li></ul><ul id="ffff532a-f6dc-81ab-ae10-cd389706023d" class="bulleted-list"><li style="list-style-type:circle"><strong>Request Edge (P → R)</strong>:indicates process is waiting for the resource .</li></ul></li></ul><ul id="27190082-9c68-4545-b291-7d8083cfc578" class="bulleted-list"><li style="list-style-type:disc"><strong>Deadlock Detection</strong>:<ul id="e6887898-441a-4115-83a2-84dce4f80dc7" class="bulleted-list"><li style="list-style-type:circle"><strong>Cycle Detection</strong>: A cycle in the RAG indicates a deadlock.</li></ul><ul id="ffff532a-f6dc-81f6-88c6-c0861c14442c" class="bulleted-list"><li style="list-style-type:circle"><strong>Interpretation</strong>: Each process in the cycle is holding a resource that another process in the cycle requires.</li></ul></li></ul><ul id="a88a9260-d8ae-4f2f-916a-d56f28c0452d" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficiency</strong>: RAG is a quick and effective method for deadlock detection in modern operating systems.<figure id="969227d8-8575-412b-afa3-57cd9ada5b37" class="image"><a href="8c7ded0b-a0c7-44f8-a727-f10b8edce34d.png"><img style="width:480.53511705685617px" src="8c7ded0b-a0c7-44f8-a727-f10b8edce34d.png"/></a></figure></li></ul></details></li></ul><ul id="01d678b3-603a-4f36-abf6-fc20cb7c545b" class="toggle"><li><details open=""><summary><strong>Wait for Graph (WFG) - ensures</strong></summary><ul id="ffff532a-f6dc-8169-bfae-da8c9d69c7a7" class="bulleted-list"><li style="list-style-type:disc"><strong>WFG Definition</strong>: A graphical tool used to represent dependencies between processes and the resources they are waiting for.</li></ul><ul id="50331c64-ab54-44aa-a170-9f8f1f56b032" class="bulleted-list"><li style="list-style-type:disc"><strong>Nodes</strong>: Represent processes in the system.</li></ul><ul id="4764efa6-68b3-426a-b7b8-8e2e1e16ba66" class="bulleted-list"><li style="list-style-type:disc"><strong>Edges</strong>:<ul id="ffff532a-f6dc-810e-ba2c-fbe7e90f69f9" class="bulleted-list"><li style="list-style-type:circle"><strong>Directed Edge (P1 → P2)</strong>: Indicates that Process P1 is waiting for a resource currently held by Process P2.</li></ul></li></ul><ul id="ffff532a-f6dc-8157-bf9c-c488ac417a63" class="bulleted-list"><li style="list-style-type:disc"><strong>Deadlock Detection</strong>:<ul id="14cd72dc-da04-426d-a363-1f8b50997666" class="bulleted-list"><li style="list-style-type:circle"><strong>Cycle Detection</strong>: A cycle in the WFG indicates a deadlock.</li></ul><ul id="bcc2d10b-db27-40f7-b47b-d18456d82c24" class="bulleted-list"><li style="list-style-type:circle"><strong>Interpretation</strong>: Processes in the cycle are mutually waiting for resources held by each other, causing a deadlock.</li></ul></li></ul><ul id="ffff532a-f6dc-81a8-83c0-e9dcd78744d6" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficiency</strong>: WFG is an effective method for deadlock detection, allowing the system to identify and resolve deadlocks by actions like rolling back or aborting processes.<figure id="ffff532a-f6dc-81db-9201-d7c6fda0b823" class="image"><a href="93d12761-ded7-497e-ad4b-12bcdce6b842.png"><img style="width:462.1656050955414px" src="93d12761-ded7-497e-ad4b-12bcdce6b842.png"/></a></figure></li></ul></details></li></ul></details></li></ul><ul id="ffff532a-f6dc-816f-9fe2-ea345d45c2a5" class="toggle"><li><details open=""><summary><mark class="highlight-yellow"><strong>Lomet Algorithm ( Pessimistic or Priori) - Preemptive </strong></mark></summary><p id="79a50fa9-f344-4fd3-8414-b9325be0de22" class="">For deadlock prevention</p><p id="c9ab658f-ce42-4dc0-83f3-6f3a3a705af3" class="">University Presentation :  <a href="https://elearning.jcu.cz/pluginfile.php/610071/course/section/179168/MIE-DSV_06.pdf">https://elearning.jcu.cz/pluginfile.php/610071/course/section/179168/MIE-DSV_06.pdf</a></p><p id="849f208d-fb59-4035-a015-f1f8e0eb3922" class="">It aims to prevent deadlocks from occurring in the first place, rather than detecting and resolving them after they happen. ( don’t allow the transactions to wait) </p><p id="52ebc76e-065d-44fb-aac3-08b913ee7427" class=""><strong>Key components of the Lomet algorithm:</strong></p><ol type="1" id="11335b0f-02d5-4477-b5d9-5a6cf81c8f16" class="numbered-list" start="1"><li><strong>Timestamping:</strong> Each transaction is assigned a unique timestamp when it starts.</li></ol><ol type="1" id="3c13cb8d-5196-4e0f-913d-6fe11169fb1c" class="numbered-list" start="2"><li><strong>Wait-Die:</strong> When a transaction wants to acquire a resource that is held by another transaction with a lower timestamp, it must wait. If the resource is held by a transaction with a higher timestamp, it must die (abort). (non preemptive) - <strong>I&#x27;m young: wait, I&#x27;m old: die.</strong></li></ol><ol type="1" id="73d70dfe-7749-4aa0-b05d-887a9088af7c" class="numbered-list" start="3"><li><strong>Wound-Wait:</strong> When a transaction wants to acquire a resource that is held by another transaction with a lower timestamp, it can wound the lower-timestamp transaction, forcing it to abort. The higher-timestamp transaction can then acquire the resource. (preemptive) - <strong>I&#x27;m young: wound, I&#x27;m out: wait; </strong><table id="f04ba2f9-a6c5-4a36-ba21-59a99ceb9d2e" class="simple-table"><tbody><tr id="f0c035cf-21d4-4dc3-a06c-cb830fa169bf"><td id="?Y^z" class=""><strong>Wait – Die</strong></td><td id="e:Ec" class=""><strong>Wound -Wait</strong></td></tr><tr id="920d612c-0bc2-4100-a11c-9ccd4ec56234"><td id="?Y^z" class="">It is based on a non-preemptive technique.</td><td id="e:Ec" class="">It is based on a preemptive technique.</td></tr><tr id="11483d93-c630-4542-aa84-09f5e940d010"><td id="?Y^z" class="">In this, older transactions must wait for the younger one to release its data items.</td><td id="e:Ec" class="">In this, older transactions never wait for younger transactions.</td></tr><tr id="ffff532a-f6dc-812b-bd1d-e1869ec80b94"><td id="?Y^z" class="">The number of aborts and rollbacks is higher in these techniques.</td><td id="e:Ec" class="">In this, the number of aborts and rollback is lesser.</td></tr></tbody></table><p id="ffff532a-f6dc-814d-9a34-fc5e400449da" class=""><strong>How the algorithm works:</strong></p><ul id="234b77ab-4f21-4b4b-bd00-e8a5e8ee05df" class="bulleted-list"><li style="list-style-type:disc">When a transaction wants to acquire a resource, it checks the timestamp of the transaction holding the resource.</li></ul><ul id="ffff532a-f6dc-817f-a058-c35f3c39be5e" class="bulleted-list"><li style="list-style-type:disc">If the holding transaction has a lower timestamp, the requesting transaction follows the Wait-Die or Wound-Wait rule.</li></ul><ul id="58effa84-938f-487b-af55-2cfd83e64ed1" class="bulleted-list"><li style="list-style-type:disc">If the holding transaction has a higher timestamp, the requesting transaction must wait until the resource is released.</li></ul></li></ol></details></li></ul><ul id="7d739b23-a48b-4e03-93d5-e6f4c07cb614" class="toggle"><li><details open=""><summary><strong>Chandy Misra Hass Deadlock Detection Algorithm </strong></summary><ul id="4af08421-03bb-4b93-99a0-372977b4499a" class="bulleted-list"><li style="list-style-type:disc">This is considered an <em>edge-chasing</em>, <em>probe-based</em> algorithm.</li></ul><ul id="ffff532a-f6dc-8143-8200-efa528491578" class="bulleted-list"><li style="list-style-type:disc">If a process makes a request for a resource which fails or times out, the process generates a <em>probe message</em> and sends it to each of the processes holding one or more of its requested resources.</li></ul><ul id="ffff532a-f6dc-816b-b084-d1d55bb07657" class="bulleted-list"><li style="list-style-type:disc"><strong>Probe (i, j, k)</strong> consists of:<ul id="cac6a2a3-1178-4d76-892b-002b89206529" class="bulleted-list"><li style="list-style-type:circle"><strong>i</strong>: Initiator process (the one that starts the probe).</li></ul><ul id="3fd4aea4-f067-4e6a-9f9e-da7c480194f9" class="bulleted-list"><li style="list-style-type:circle"><strong>j</strong>: Current process (the one holding the resource and forwarding the probe).</li></ul><ul id="fe7c5812-b4c5-450f-b931-7ea7e5d004a7" class="bulleted-list"><li style="list-style-type:circle"><strong>k</strong>: Process holding the resource needed by <code>j</code>.</li></ul></li></ul><ul id="84705e68-3078-4b0c-973f-9f93c88d7efd" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Detect deadlocks in distributed systems where processes are spread across different nodes and may hold and request resources from other processes.</li></ul><h3 id="ffff532a-f6dc-81e1-b1e7-cf77710775e6" class=""><strong>Operation</strong>:</h3><ol type="1" id="40bda72b-300f-4e59-8487-83e92a358056" class="numbered-list" start="1"><li><strong>Initiating Probe</strong>:<ul id="ffff532a-f6dc-8170-996c-d52d5daa0309" class="bulleted-list"><li style="list-style-type:disc">A process that is waiting for a resource starts a probe to detect potential deadlock.</li></ul><ul id="ffff532a-f6dc-818c-8923-f5e0c38cdb4d" class="bulleted-list"><li style="list-style-type:disc">The probe is sent to the process holding the required resource.</li></ul></li></ol><ol type="1" id="15708454-aa6d-416c-ab67-0cba7734cd10" class="numbered-list" start="2"><li><strong>Probe Propagation</strong>:<ul id="ffff532a-f6dc-818c-a8b0-c60697bd39cb" class="bulleted-list"><li style="list-style-type:disc">If the receiving process is also waiting for a resource, it forwards the probe to the process holding the resource it needs.</li></ul><ul id="ffff532a-f6dc-8185-bfaf-c08e252c230b" class="bulleted-list"><li style="list-style-type:disc">This continues until the probe either returns to the initiator or the chain is broken.</li></ul></li></ol><ol type="1" id="9c7edd34-46e3-42dc-9f11-87b34cbff05b" class="numbered-list" start="3"><li><strong>Cycle Detection</strong>:<ul id="b79c7901-94e8-4f02-b00d-46dbcd35b55e" class="bulleted-list"><li style="list-style-type:disc">If the probe returns to the initiator (i.e., the initiator process receives its own probe), a cycle is detected, indicating a deadlock.</li></ul></li></ol><ol type="1" id="21075464-23d1-4130-868c-f5dcc5cf0c84" class="numbered-list" start="4"><li><strong>Deadlock Resolution</strong>:<ul id="ffff532a-f6dc-813d-903c-ce2ad50acbd7" class="bulleted-list"><li style="list-style-type:disc">Once a deadlock is confirmed, corrective actions such as aborting one or more processes involved in the cycle are taken to break the deadlock.</li></ul></li></ol><h3 id="da2b0c85-1c84-4c2e-8ccd-b8ecb8066647" class=""><strong>Advantages</strong>:</h3><ul id="ffff532a-f6dc-81f3-91ba-c935f013b3c7" class="bulleted-list"><li style="list-style-type:disc"><strong>Distributed Nature</strong>: Suited for systems without a central authority.</li></ul><ul id="462251c2-9d0f-415e-80ab-21849c20c975" class="bulleted-list"><li style="list-style-type:disc"><strong>Efficiency</strong>: Probes are only initiated when a process is blocked, reducing unnecessary communication.</li></ul><h3 id="2126e301-c1ab-4443-be85-74f454d2d8ce" class=""><strong>Limitations</strong>:</h3><ul id="ffff532a-f6dc-81e7-ba1d-c541198d97e7" class="bulleted-list"><li style="list-style-type:disc"><strong>Message Overhead</strong>: High in large systems due to multiple probe messages.</li></ul><ul id="ffff532a-f6dc-817b-b39c-cbcb465553ea" class="bulleted-list"><li style="list-style-type:disc"><strong>Complexity</strong>: Managing probes and ensuring correct detection in a large, dynamic environment can be challenging.<figure id="7696a68a-fe11-4eae-a506-fdceb2a89b3f"><div class="source"><a href="Note_1._Sep_2024.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/35411b84-df30-431d-b364-bae0edd9413d/Note_1._Sep_2024.pdf</a></div></figure></li></ul></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Remote Procedure Calls, motivation, principles. Google RPC, motivation, types of services, message and methods specification based on Protocol Buffers</strong></summary><div class="indented"><ul id="ffff532a-f6dc-81af-aa69-e5c64d2c9551" class="toggle"><li><details open=""><summary><strong>RPC ( Remote Procedure Calls)</strong></summary><p id="ffff532a-f6dc-81cd-8da0-fe05ac40b467" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a84f5aaf-d457-434a-b011-fa2986d73613"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="ffff532a-f6dc-819c-96c1-dc543d9981de" class=""><strong><span style="border-bottom:0.05em solid">Motivation of RPC:</span></strong></p><p id="ffff532a-f6dc-8160-938c-d6f552c3cec4" class=""><strong>Simplifying Distributed Computing:</strong></p><p id="75a8e559-bedb-41d3-b17c-2deddc2f7bb1" class="">In distributed systems, different components or services often run on separate machines and need to communicate with each other. RPCs provide a way for these components to communicate as if they were invoking local procedures or methods, abstracting away the complexities of the underlying network communication</p></div></figure><p id="fe8e52f7-2ae6-443f-8d58-efbc0cebe8a4" class=""><strong>Remote Procedure Call (RPC)</strong> is a powerful technique for constructing <strong>distributed, client-server based applications</strong>. </p><p id="f8456309-9881-401b-993d-db28bcf8ac23" class="">It is based on extending the conventional local procedure calling so that the <strong>called procedure need not exist in the same address space as the calling procedure</strong>. </p><p id="ffff532a-f6dc-812d-840e-e00e1258bb2e" class="">The two processes may be on the same system, or they may be on different systems with a network connecting them. <br/><br/><em><strong><span style="border-bottom:0.05em solid">RPC simplifies distributed computing by making remote method invocations as transparent as local calls, promoting modularity, reusability, and efficiency.</span></strong></em><br/><br/></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="56e5722c-dcc7-4aeb-b532-39126dca548d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="74895d64-6c75-43bc-84f6-9a5b6868d8f0" class="">Principles of RPC</p><ul id="22a3899b-1114-45cd-af2a-63a6111bb771" class="bulleted-list"><li style="list-style-type:disc"><strong>Client-Server Model:</strong> RPC involves a client and a server. The client initiates the call, and the server executes the procedure and returns the result.</li></ul><ul id="ffff532a-f6dc-81c5-b689-dd1dd80a66fa" class="bulleted-list"><li style="list-style-type:disc"><strong>Stub Generation:</strong> A stub is a piece of code that acts as a proxy for the remote procedure. It handles the communication between the client and server, including marshalling (converting data into a format suitable for transmission) and unmarshalling (converting data back into its original format).</li></ul><ul id="db3c2775-2b2c-4057-9493-fdd67339ab47" class="bulleted-list"><li style="list-style-type:disc"><strong>Binding:</strong> The client needs to know the network address of the server to establish a connection. This process is called binding.</li></ul><ul id="ffff532a-f6dc-81f3-b8cb-f1f794def5f2" class="bulleted-list"><li style="list-style-type:disc"><strong>Protocol:</strong> RPC systems use a network protocol (e.g., TCP, UDP) to exchange messages between the client and server.</li></ul><ul id="18b4cb43-0049-47c3-9ba0-04c92a4da29f" class="bulleted-list"><li style="list-style-type:disc"><strong>Error Handling:</strong> RPC systems must handle errors that may occur during communication or procedure execution.</li></ul></div></figure><figure id="1111846e-d5b5-4030-b60a-074d4e873608" class="image"><a href="image%204.png"><img style="width:682.9861450195312px" src="image%204.png"/></a></figure><p id="6fb45367-5bc9-44d3-8345-d8c6eb2ef69b" class=""><strong>Step 1) </strong>The client, the client stub, and one instance of RPC run time execute on the client machine.</p><p id="831c5424-a33f-43c2-9d00-20d00c74aca6" class=""><strong>Step 2) </strong>A client starts a client stub process by passing parameters in the usual way. The client stub stores within the client’s own address space. It also asks the local RPC Runtime to send back to the server stub.</p><p id="ffff532a-f6dc-819d-bef8-c4d81e0d214f" class=""><strong>Step 3) </strong>In this stage, RPC accessed by the user by making regular Local Procedural Cal. RPC Runtime manages the transmission of messages between the network across client and server. It also performs the job of retransmission, acknowledgment, routing, and encryption.</p><p id="ffff532a-f6dc-812c-bc1c-ea25c58cfafb" class=""><strong>Step 4)</strong> After completing the server procedure, it returns to the server stub, which packs (marshalls) the return values into a message. The server stub then sends a message back to the transport layer.</p><p id="802828e2-5aab-4c0b-a30e-d89425b31022" class=""><strong>Step 5) </strong>In this step, the transport layer sends back the result message to the client transport layer, which returns back a message to the client stub.</p><p id="aa86b7ce-52d5-4401-aabf-6f88bcd39f39" class=""><strong>Step 6) </strong>In this stage, the client stub demarshalls (unpack) the return parameters, in the resulting packet, and the execution process returns to the caller.</p><p id="85524ab5-0bd9-4c9f-a691-c687955c4cd3" class="">ADVANTAGES</p><ol type="1" id="6cff065d-34a2-4f21-98db-041e45f384e7" class="numbered-list" start="1"><li><code>Support process oriented and thread oriented models.</code></li></ol><ol type="1" id="ffff532a-f6dc-8165-88a0-f0379b7f9620" class="numbered-list" start="2"><li><code>Internal message passing is hidden from the user.</code></li></ol><ol type="1" id="b2aa3b11-e425-4181-bb7f-6aa44cc600d1" class="numbered-list" start="3"><li><code>Effort to re-write and re-develop code is min.</code></li></ol><ol type="1" id="ffff532a-f6dc-8131-94c9-da2fb2a97b13" class="numbered-list" start="4"><li><code>Used in distributes and local env.</code></li></ol><ol type="1" id="b8713bea-e812-4157-b1f4-b3c5a41fd17f" class="numbered-list" start="5"><li><code>Protocol layers are omitted by RPC to improve performance.</code></li></ol><p id="ffff532a-f6dc-8132-929d-c9ac30cf8104" class="">DISADVANTAGES</p><ol type="1" id="b5ebd254-9a0f-4453-8e1f-f8b7893cf719" class="numbered-list" start="1"><li><code>No standard implementation format.</code></li></ol><ol type="1" id="a2a0667a-f533-40ce-b2cf-c4ceabcc2723" class="numbered-list" start="2"><li><code>No flexibility for hardware architecture. Interaction based.</code></li></ol><ol type="1" id="ce814371-1380-492f-b197-419e3bac4985" class="numbered-list" start="3"><li><code>Increase in cost</code></li></ol><figure id="6759894e-3a1c-4f35-b031-368b18160b09"><div class="source"><a href="Note_1._Sep_2024%201.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/a4d62758-64ea-4210-bd32-f6f8995632ed/Note_1._Sep_2024.pdf</a></div></figure></details></li></ul><ul id="683d7a14-f010-4155-98a0-8b6e7d6f4065" class="toggle"><li><details open=""><summary><strong>REST vs RPC</strong></summary><h3 id="ffff532a-f6dc-81bb-bb37-cc616e6b10f0" class="">REST</h3><p id="58983693-e470-44f2-abc0-de5d25f7ed6c" class="">REST is well-suited for building web APIs, as it leverages HTTP principles and is stateless. It&#x27;s ideal for applications that need to be scalable, flexible, and easy to understand.</p><ul id="ffff532a-f6dc-81f4-b2b6-de30a622582d" class="bulleted-list"><li style="list-style-type:disc"><strong>Architectural style:</strong> REST is an architectural style based on HTTP principles.</li></ul><ul id="b5d25cb3-7200-4c44-abff-bedeb30e0567" class="bulleted-list"><li style="list-style-type:disc"><strong>Stateless:</strong> Each request is treated independently, without relying on previous requests.</li></ul><ul id="ffff532a-f6dc-81fa-a31f-ef8d5f1da328" class="bulleted-list"><li style="list-style-type:disc"><strong>Resource-oriented:</strong> REST focuses on interacting with resources (e.g., data, services) using HTTP methods (GET, POST, PUT, DELETE).</li></ul><ul id="ffff532a-f6dc-81a3-9cb5-cf6e8cb936b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Uniform interface:</strong> REST uses a standard interface for interacting with resources, making it more flexible and scalable.</li></ul><h3 id="01ae63de-8261-4b23-8081-3d0be8cf238b" class="">RPC</h3><p id="ffff532a-f6dc-81f7-91d6-d738663b6281" class="">RPC is suitable for applications that require tight coupling between the client and server, or when stateful communication is necessary. It&#x27;s often used for building distributed systems with complex interactions.</p><ul id="880207ea-433d-4066-8d5a-d0579e40ed6a" class="bulleted-list"><li style="list-style-type:disc"><strong>Protocol:</strong> RPC is a protocol-based approach that involves calling remote procedures.</li></ul><ul id="b00d3bb4-a71d-460f-aa61-ae4b350c434f" class="bulleted-list"><li style="list-style-type:disc"><strong>Stateful:</strong> RPC can maintain state between calls, making it suitable for long-lived connections.</li></ul><ul id="c09a7376-c4a1-4ce7-bc2d-97aa1988985f" class="bulleted-list"><li style="list-style-type:disc"><strong>Procedure-oriented:</strong> RPC focuses on calling remote procedures, rather than interacting with resources.</li></ul><ul id="ffff532a-f6dc-81f5-a1c8-d9ca040a0f98" class="bulleted-list"><li style="list-style-type:disc"><strong>Custom interface:</strong> RPC interfaces are often custom-defined, which can make them less flexible.</li></ul><table id="605e98fb-7f27-414d-aa1f-67da8c805b8d" class="simple-table"><thead class="simple-table-header"><tr id="ffff532a-f6dc-81e9-8686-da6090ca0796"><th id="ueCz" class="simple-table-header-color simple-table-header">Feature</th><th id="ZLS^" class="simple-table-header-color simple-table-header" style="width:178.11111450195312px">REST</th><th id="MGgw" class="simple-table-header-color simple-table-header">RPC</th></tr></thead><tbody><tr id="ffff532a-f6dc-81eb-b5dc-fdb3c3a6906b"><th id="ueCz" class="simple-table-header-color simple-table-header"><strong>Architecture</strong></th><td id="ZLS^" class="" style="width:178.11111450195312px">Architectural style</td><td id="MGgw" class="">Protocol-based</td></tr><tr id="2fd60216-ba0b-445d-9e36-7e9e38a0165e"><th id="ueCz" class="simple-table-header-color simple-table-header"><strong>Statefulness</strong></th><td id="ZLS^" class="" style="width:178.11111450195312px">Stateless</td><td id="MGgw" class="">Stateful</td></tr><tr id="ffff532a-f6dc-81a2-9866-df3990bd6412"><th id="ueCz" class="simple-table-header-color simple-table-header"><strong>Focus</strong></th><td id="ZLS^" class="" style="width:178.11111450195312px">Resources</td><td id="MGgw" class="">Procedures</td></tr><tr id="ffff532a-f6dc-8174-82ea-c62dd60e085a"><th id="ueCz" class="simple-table-header-color simple-table-header"><strong>Interface</strong></th><td id="ZLS^" class="" style="width:178.11111450195312px">Uniform interface</td><td id="MGgw" class="">Custom interface</td></tr></tbody></table><h3 id="ffff532a-f6dc-8109-a172-ed69227f136e" class=""></h3></details></li></ul><ul id="8470c310-bc48-401e-8560-3697042363c7" class="toggle"><li><details open=""><summary><strong>gRPC</strong></summary><p id="ffff532a-f6dc-8152-a5cb-cb0886c458b0" class=""><strong>gRPC</strong> is a framework for implementing RPC APIs via HTTP/2</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ffff532a-f6dc-81e3-8f56-e0892967bee9"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="ffff532a-f6dc-81fa-8d76-e6ed157ceaa2" class=""><strong>Motivation:</strong> </p><p id="90d8f5a2-8dc0-4a13-91c3-ee91cc4f8d36" class="">Google RPC, now known as gRPC, was developed by Google to address the challenges of building scalable and efficient distributed systems. Its primary motivations were:</p><ul id="ffff532a-f6dc-81e1-9940-eb20b9745410" class="bulleted-list"><li style="list-style-type:disc"><strong>High Performance:</strong> gRPC aims to provide a highly efficient mechanism for communication between services.</li></ul><ul id="ffff532a-f6dc-817e-bae7-dac7bbc6e0c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Scalability:</strong> It is designed to handle large-scale distributed systems with many services and clients.</li></ul><ul id="4fc39778-18a0-4f37-9f32-c3684255b232" class="bulleted-list"><li style="list-style-type:disc"><strong>Flexibility:</strong> gRPC supports a variety of programming languages and platforms, making it versatile for different use cases.</li></ul><ul id="831c7c6b-a283-49b1-8de1-4732c79a6653" class="bulleted-list"><li style="list-style-type:disc"><strong>Platform Independence:</strong> It allows for seamless communication between services running on different platforms.</li></ul></div></figure><p id="2ab4d3b6-10f3-4ec0-b520-0a7925a5ef83" class="">Traditionally, there have been two distinct ways to build APIs: RPC and REST. Also SOAP and GraphQL.</p><figure id="ffff532a-f6dc-8168-bd84-e1ceb637a676" class="image"><a href="image%205.png"><img style="width:551.99658203125px" src="image%205.png"/></a></figure><p id="ffff532a-f6dc-8182-a1a2-d910aceb2a14" class=""><strong>How it Works:</strong></p><ul id="ffff532a-f6dc-815c-ac8e-df23dbe36b60" class="bulleted-list"><li style="list-style-type:disc"><strong>Client sends a request:</strong> A client (e.g., the Ruby client) sends a request to the gRPC server.</li></ul><ul id="b7067f1e-df23-450e-81a3-d9f5eb61e5dd" class="bulleted-list"><li style="list-style-type:disc"><strong>Stub handles request:</strong> The gRPC stub on the client side serializes the request message using Protocol Buffers and sends it to the gRPC server.</li></ul><ul id="264277fe-8fe2-4a62-8155-3f2a820bcaaa" class="bulleted-list"><li style="list-style-type:disc"><strong>Server receives request:</strong> The gRPC server receives the request and deserializes it.</li></ul><ul id="ffff532a-f6dc-8177-86c9-e962ad970e85" class="bulleted-list"><li style="list-style-type:disc"><strong>Server invokes service:</strong> The server forwards the request to the C++ service for processing.</li></ul><ul id="ffff532a-f6dc-8105-8e65-c4c861c210e3" class="bulleted-list"><li style="list-style-type:disc"><strong>Service processes request:</strong> The C++ service performs the necessary operations and generates a response.</li></ul><ul id="5a840991-8256-4f70-99fc-2e44a341d397" class="bulleted-list"><li style="list-style-type:disc"><strong>Server sends response:</strong> The gRPC server serializes the response and sends it back to the client.</li></ul><ul id="f70ab15e-b090-4796-91bb-e1fd00595db3" class="bulleted-list"><li style="list-style-type:disc"><strong>Client receives response:</strong> The gRPC stub on the client side deserializes the response and returns it to the application.</li></ul><ul id="ffff532a-f6dc-81db-9678-c641eaa23d94" class="toggle"><li><details open=""><summary><strong>gRPC Benefits</strong></summary><p id="8625db28-3662-4afa-8213-5dde7187d9df" class="">gRPC - uses HTTP 2 and Protobuf concepts<div class="indented"><ul id="cbda1e43-0b33-4167-8cf1-88e6c85019c8" class="bulleted-list"><li style="list-style-type:disc"><strong>Lightweight messages. </strong>Depending on the type of call, gRPC-specific messages can be up to 30 percent smaller in size than JSON messages.</li></ul><ul id="ffff532a-f6dc-819f-a769-f6d8cb66ba2b" class="bulleted-list"><li style="list-style-type:disc"><strong>High performance.</strong> By different evaluations, gRPC is 5, 7, and even 8 times faster than REST+JSON communication.</li></ul><ul id="bfa1b271-05e9-4036-b284-f353ab81144d" class="bulleted-list"><li style="list-style-type:disc"><strong>Built-in code generation</strong>. gRPC has automated code generation in different programming languages including Java, C++, Python, Go, Dart, Objective-C, Ruby, and more.</li></ul><ul id="e23a5ffa-1256-4c2c-b17c-852d27205640" class="bulleted-list"><li style="list-style-type:disc"><strong>More connection options.</strong> While REST focuses on request-response architecture, gRPC provides support for data streaming with event-driven architectures: server-side streaming, client-side streaming, and bidirectional streaming.</li></ul><ul id="b4ee0bba-4103-44f0-9a84-7690640fd11c" class="bulleted-list"><li style="list-style-type:disc"><strong>Pluggable Support for Authentication, Load Balancing, and More: </strong>gRPC has built-in support for features like authentication, load balancing, and logging, making it easier to build robust and scalable distributed systems.</li></ul></div></p></details></li></ul><ul id="21d50b62-c7df-4b0c-95d9-aa3a1d76bb9c" class="toggle"><li><details open=""><summary><strong>Main Concepts of gRPC:</strong></summary><ol type="1" id="ffff532a-f6dc-813a-81a9-f36a3453b2c4" class="numbered-list" start="1"><li>Using <em><strong>HTTP/2 instead of HTTP/1.1 </strong></em></li></ol><ol type="1" id="ffff532a-f6dc-8163-a30d-e4d99f690c7b" class="numbered-list" start="2"><li>Using <em><strong>Protocol Buffers instead of XML or JSON</strong></em></li></ol></details></li></ul><ul id="5ebbba6d-8c06-440d-83c3-3f13aa114785" class="toggle"><li><details open=""><summary><strong>Protocol Buffers</strong></summary><p id="188b9a88-ae6b-4ca8-b7ba-8979ea70987d" class=""><strong>Performance</strong>: Protobufs use a binary data representation, enabling data packets to be transported faster than other formats like JSON or XML. This is because binary data is more compact and easier to parse than text-based formats. Protobufs are also more efficient to serialize and deserialize, which can lead to better performance in some cases</p><ul id="2c426e1d-3ca2-4db5-bebe-e64b199481f4" class="bulleted-list"><li style="list-style-type:disc">Language Agnostic Protocol</li></ul><ul id="ffff532a-f6dc-8158-85b5-dfcbe49a224c" class="bulleted-list"><li style="list-style-type:disc">To define the structure of messages that are exchanged between clients and servers.</li></ul><ul id="ffff532a-f6dc-811d-8a07-c9e71349ce0f" class="bulleted-list"><li style="list-style-type:disc">Huge code can be generated in any language from a simple .proto file </li></ul><ul id="1c6670ee-8df6-46f2-bc4b-5f0f816ec107" class="bulleted-list"><li style="list-style-type:disc">Payload is binary, therefore efficient to send or receive on a network and serialize or deserialize on a CPU </li></ul><p id="ffff532a-f6dc-8143-993d-de3b6232e59d" class=""><strong>Key Features of Protocol Buffers:</strong></p><ul id="ffff532a-f6dc-8146-9eb8-efa5e4823d0d" class="bulleted-list"><li style="list-style-type:disc"><strong>Message Definition:</strong> Define data structures using a simple syntax.</li></ul><ul id="ffff532a-f6dc-8176-b4ce-e2d62dc1dc19" class="bulleted-list"><li style="list-style-type:disc"><strong>Serialization:</strong> Convert messages into binary format for efficient transmission.</li></ul><ul id="ffff532a-f6dc-819f-977d-e06f08ac60c4" class="bulleted-list"><li style="list-style-type:disc"><strong>Deserialization:</strong> Reconstruct messages from binary format.</li></ul><ul id="ffff532a-f6dc-8193-9b91-e334ee09d817" class="bulleted-list"><li style="list-style-type:disc"><strong>Code Generation:</strong> Automatically generate code for different programming languages.</li></ul><ul id="745d66c8-bd0e-4692-a67b-7d4c81941bae" class="bulleted-list"><li style="list-style-type:disc">Less CPU intensive and faster exchange of messages </li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="298d9496-2886-4ebc-8ec2-626c79753754" class="code"><code class="language-Go">message Person {
+required string name = 1;
+required int32 id = 2;
+optional string email = 3;
+}
+1,2,3 are unique id for seralisation and deseralisation</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8108-ac8f-d5800a2f8fcd" class="code"><code class="language-Go">service GreetingService {
+rpc SayHello(HelloRequest) returns (HelloReply);
+}</code></pre><figure id="80ebecca-5871-40e5-a2b9-ebf74a075437" class="image"><a href="image%206.png"><img style="width:576px" src="image%206.png"/></a></figure><ol type="1" id="ffff532a-f6dc-8190-92c4-fab2c41ad5bf" class="numbered-list" start="1"><li>In a <em>.proto</em> text file, a programmer defines a schema -- how they want data to be structured. They use numbers, not field names, to save storage. They can also embed documentation in the schema.</li></ol><ol type="1" id="ffff532a-f6dc-81e9-b524-ed8173538bd2" class="numbered-list" start="2"><li>Using a <em>protoc compiler</em>, this file is then automatically compiled into any of the numerous supported languages like Java, C++, Python, Go, Dart, Objective-C, Ruby, and more.</li></ol><ol type="1" id="9d84da24-f95f-4af5-a42c-4b90c679db04" class="numbered-list" start="3"><li>At runtime, messages are compressed and serialized in binary format.</li></ol><p id="e783a673-c479-4091-a6db-76013fc36fdb" class="">
+</p><p id="911d7ffe-19dd-4a06-a21d-ee678d9c8f2e" class="">
+</p></details></li></ul><ul id="645b372b-b9d8-4aa5-bc1f-82c94d0d703d" class="toggle"><li><details open=""><summary><strong>HTTP/2 as Transport Protocol</strong></summary><p id="28d90133-1b33-4292-a5be-5ac7cc14c40b" class=""><strong>HTTP/2 transport protocol</strong>: gRPC runs on <a href="https://datatracker.ietf.org/doc/html/rfc7540">HTTP/2</a>, which offers several advantages over HTTP 1.1, such as <mark class="highlight-orange"><strong>real-time communication and greatly improved network efficienc</strong></mark><strong>y</strong>. HTTP/2 <mark class="highlight-yellow"><strong>supports bi-directional streaming, multiplexing</strong></mark>, and more.</p><ul id="161928bd-c0e9-4d2b-a5cf-70c0c485176c" class="bulleted-list"><li style="list-style-type:disc"><strong>Bi-directional streaming</strong> : &quot;Bi-directional: Two-way, no wait.”<p id="ffff532a-f6dc-812b-8afb-ffeb842ca9ca" class=""><em><span style="border-bottom:0.05em solid">Ideal for real-time applications as it enables clients and servers to send and receive data without waiting for a request or response to be completed before sending the next message</span></em>. This can be vital for <strong><span style="border-bottom:0.05em solid">achieving high performance and low latency</span></strong> in certain use cases.</p></li></ul><ul id="82125203-1aa6-4685-bbd5-4fc7f56acf7b" class="bulleted-list"><li style="list-style-type:disc"><strong>Multiplexing</strong> : Many messages, one connection.<p id="ffff532a-f6dc-8128-90af-fa7a65637576" class=""><em><span style="border-bottom:0.05em solid">Enables multiple requests and responses to be sent concurrently over a single TCP connection</span></em>. Instead of opening a new connection for each request, HTTP/2 can send multiple requests simultaneously over the same connection, and the server can respond to them in any order.<br/><br/></p></li></ul></details></li></ul><ul id="e2d4674d-7364-4e5a-9495-87e82a16a574" class="toggle"><li><details open=""><summary><strong>Types of gRPC Services</strong></summary><p id="e42ebf2e-3818-44cf-8908-657759fa8c82" class="">gRPC supports four types of services that define how communication occurs between clients and servers:</p><ol type="1" id="ce23ac4f-f2d1-40ca-a266-97ad5ecb150b" class="numbered-list" start="1"><li><strong>Unary RPC: [C1, S1]</strong><ul id="c15a2b8f-24b3-4c46-ad99-d700268c4344" class="bulleted-list"><li style="list-style-type:disc"><strong>Description:</strong> The client sends a single request to the server and receives a single response.</li></ul><ul id="ffff532a-f6dc-8146-a824-fa7297e8c95f" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Case:</strong> Ideal for simple, straightforward request-response operations. <p id="ffff532a-f6dc-8158-bed5-d02688465b4b" class="">Example : Authentication and authorization, CRUD Operations, Simple Data Retrieval</p></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4d465b10-9269-4dad-8838-01d3022cda99" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+service MyService {
+    rpc UnaryCall(RequestMessage) returns (ResponseMessage);
+}</code></pre></li></ol><ol type="1" id="ffff532a-f6dc-814f-bc18-cb3d2033d0be" class="numbered-list" start="2"><li><strong>Server Streaming RPC: [C1: Sn]</strong><ul id="58699e0d-acc3-46bb-a4aa-66f2bdfdd923" class="bulleted-list"><li style="list-style-type:disc"><strong>Description:</strong> The client sends a single request to the server, and the server sends back a stream of responses.</li></ul><ul id="ae33f920-d35b-4219-ac34-e246796dbcae" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Case:</strong> Suitable for cases where a large amount of data needs to be sent progressively from the server to the client.<p id="ffff532a-f6dc-812a-a3f6-c1109286f9e7" class="">Example: live video feeds., Notifications</p></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cf19003f-8d4c-4aaf-a409-abc970b1418f" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+service MyService {
+    rpc ServerStreamingCall(RequestMessage) returns (stream ResponseMessage);
+}
+
+</code></pre></li></ol><ol type="1" id="ffff532a-f6dc-8177-aad4-f5b4a5e66a3a" class="numbered-list" start="3"><li><strong>Client Streaming RPC: [Cn : S1]</strong><ul id="fdf8c501-4b1c-4fd9-9241-e1d100d9eee2" class="bulleted-list"><li style="list-style-type:disc"><strong>Description:</strong> The client sends a stream of requests to the server, and the server sends back a single response.</li></ul><ul id="ffff532a-f6dc-8129-9baa-ded7822489a1" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Case:</strong> Useful when the client needs to send multiple pieces of data to the server before receiving a response.<p id="ffff532a-f6dc-81bf-b294-dcbed24aa719" class="">Example: Uploading Videos, Batch Data insertions</p></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="fa24110c-e56b-4ef0-9254-3e5e5d9fa49c" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+service MyService {
+    rpc ClientStreamingCall(stream RequestMessage) returns (ResponseMessage);
+}
+
+</code></pre></li></ol><ol type="1" id="ffff532a-f6dc-810a-9ba8-dee967c5be2f" class="numbered-list" start="4"><li><strong>Bidirectional Streaming RPC:</strong><ul id="e3377f40-a601-482c-922a-a6ed7fa01421" class="bulleted-list"><li style="list-style-type:disc"><strong>Description:</strong> Both the client and server send streams of messages to each other. The two streams operate independently.</li></ul><ul id="ffff532a-f6dc-811a-bc31-f64427f6966f" class="bulleted-list"><li style="list-style-type:disc"><strong>Use Case:</strong> Ideal for real-time applications like chat services, where both sides communicate continuously.<p id="ffff532a-f6dc-8150-8da5-dc72aa4b7b13" class="">Example : Chat Real time, Game Streaming,, Collaborative Editing</p></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8143-99ab-e895f018eb74" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+service MyService {
+    rpc BidiStreamingCall(stream RequestMessage) returns (stream ResponseMessage);
+}
+</code></pre></li></ol></details></li></ul><ul id="ffff532a-f6dc-8110-846a-e9bb675a1ae1" class="toggle"><li><details open=""><summary><strong>Message and Methods Specification Based on Protocol Buffers</strong></summary><p id="ffff532a-f6dc-815d-93e5-da9e16acbda4" class=""><strong>Protocol Buffers (Protobuf)</strong> is a language-agnostic binary serialization format developed by Google. It is used by gRPC to define messages and service methods.</p><h3 id="ffff532a-f6dc-81c7-b0fa-d125b26f842b" class=""><strong>Defining Messages</strong></h3><ul id="974a2e25-a12f-42fb-a558-032e88668503" class="bulleted-list"><li style="list-style-type:disc"><strong>Message Definition:</strong> In Protobuf, a message is a structured data format, similar to a class in object-oriented languages. Each message consists of a series of fields, each with a unique number used for serialization.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8193-82fa-f834607878a0" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+syntax = &quot;proto3&quot;;
+
+message RequestMessage {
+    string name = 1;
+    int32 id = 2;
+}
+
+message ResponseMessage {
+    string greeting = 1;
+}
+
+</code></pre><ul id="ffff532a-f6dc-811e-9b22-d6da9657d673" class="bulleted-list"><li style="list-style-type:circle"><strong>Field Types:</strong> Protobuf supports various scalar types like <code>int32</code>, <code>string</code>, <code>bool</code>, as well as composite types like other messages.</li></ul><ul id="ffff532a-f6dc-8161-b4dd-cb09fa3ff60c" class="bulleted-list"><li style="list-style-type:circle"><strong>Field Numbers:</strong> Field numbers are used to identify fields in the serialized binary format. These numbers must be unique within the message.</li></ul></li></ul><h3 id="ffff532a-f6dc-8184-ad70-c6ddd6794be9" class=""><strong>Defining Service Methods</strong></h3><ul id="ffff532a-f6dc-81cb-82ce-d9fb2c5962f5" class="bulleted-list"><li style="list-style-type:disc"><strong>Service Definition:</strong> In gRPC, a service is defined using the <code>service</code> keyword in a <code>.proto</code> file. Each service consists of one or more RPC methods that specify the request and response message types.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f9c26545-1707-499c-83b8-76568c46afb7" class="code"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">protoCopy code
+service MyService {
+    rpc UnaryCall(RequestMessage) returns (ResponseMessage);
+    rpc ServerStreamingCall(RequestMessage) returns (stream ResponseMessage);
+    rpc ClientStreamingCall(stream RequestMessage) returns (ResponseMessage);
+    rpc BidiStreamingCall(stream RequestMessage) returns (stream ResponseMessage);
+}
+
+</code></pre><ul id="2cb0596a-a1b1-453e-adf4-1f31fd38f0cd" class="bulleted-list"><li style="list-style-type:circle"><strong>Method Signatures:</strong> Each method signature specifies the types of request and response messages. For streaming methods, the keyword <code>stream</code> is used before the message type.</li></ul></li></ul></details></li></ul><p id="ffff532a-f6dc-8151-ae97-eafcbf189dc4" class="">
+</p></details></li></ul><ul id="0e3c7252-3663-4b03-a682-0fb229739487" class="toggle"><li><details open=""><summary><strong>TCP vs UDP</strong></summary><table id="618aa237-a1be-430f-9476-57f19e3c9c15" class="simple-table"><thead class="simple-table-header"><tr id="d7068874-bfa7-4ff7-be48-79a2e423f3ef"><th id="KVA[" class="simple-table-header-color simple-table-header">Feature</th><th id="^Mxh" class="simple-table-header-color simple-table-header">TCP (Transmission Control<br/>  Protocol)<br/></th><th id="u`yD" class="simple-table-header-color simple-table-header">UDP (User Datagram Protocol)</th></tr></thead><tbody><tr id="e78dc9e2-1021-49eb-8f24-355429226239"><th id="KVA[" class="simple-table-header-color simple-table-header">Connection<br/>  Type<br/></th><td id="^Mxh" class="">Connection-oriented</td><td id="u`yD" class="">Connectionless</td></tr><tr id="ffff532a-f6dc-811e-bd11-d54fcaba4a53"><th id="KVA[" class="simple-table-header-color simple-table-header">Reliability</th><td id="^Mxh" class="">Reliable (ensures delivery,<br/>  ordering, and error-checking)<br/></td><td id="u`yD" class="">Unreliable (no guarantee of<br/>  delivery, ordering, or error-checking)<br/></td></tr><tr id="6a344968-d6f6-4019-b731-0cc3f8ab6bdd"><th id="KVA[" class="simple-table-header-color simple-table-header">Error<br/>  Checking<br/></th><td id="^Mxh" class="">Yes (with error correction and<br/>  retransmission)<br/></td><td id="u`yD" class="">Yes (basic error detection, no<br/>  correction)<br/></td></tr><tr id="153186b0-a534-4f96-b787-8475471d862f"><th id="KVA[" class="simple-table-header-color simple-table-header">Flow<br/>  Control<br/></th><td id="^Mxh" class="">Yes (manages data flow to prevent<br/>  congestion)<br/></td><td id="u`yD" class="">No (no flow control, can overwhelm<br/>  receiver)<br/></td></tr><tr id="ffff532a-f6dc-813a-abbb-ccdfdd9d96fe"><th id="KVA[" class="simple-table-header-color simple-table-header">Acknowledgment</th><td id="^Mxh" class="">Yes (data segments are<br/>  acknowledged)<br/></td><td id="u`yD" class="">No (no acknowledgment of received<br/>  data)<br/></td></tr><tr id="ffff532a-f6dc-8178-b5b1-e3f2221d0d71"><th id="KVA[" class="simple-table-header-color simple-table-header">Speed</th><td id="^Mxh" class="">Slower due to overhead</td><td id="u`yD" class="">Faster due to minimal overhead</td></tr><tr id="c978e6ed-959e-46b7-b6d5-1f9aa992fb3a"><th id="KVA[" class="simple-table-header-color simple-table-header">Overhead</th><td id="^Mxh" class="">High (due to features like error<br/>  correction and acknowledgment)<br/></td><td id="u`yD" class="">Low (minimal features, leading to<br/>  lower overhead)<br/></td></tr><tr id="89f72395-570c-455b-8d4d-71787a911c85"><th id="KVA[" class="simple-table-header-color simple-table-header">Use<br/>  Cases<br/></th><td id="^Mxh" class="">Web browsing (HTTP/HTTPS), Email<br/>  (SMTP/IMAP), File transfers (FTP)<br/></td><td id="u`yD" class="">Video streaming, Online gaming,<br/>  Voice over IP (VoIP)<br/></td></tr><tr id="9dddc0b6-0406-4fd0-b925-6b00ba503d6f"><th id="KVA[" class="simple-table-header-color simple-table-header">Packet<br/>  Size<br/></th><td id="^Mxh" class="">Larger headers (20 bytes minimum)</td><td id="u`yD" class="">Smaller headers (8 bytes)</td></tr><tr id="ffff532a-f6dc-81fd-b123-fe05a3c74681"><th id="KVA[" class="simple-table-header-color simple-table-header">Connection<br/>  Setup<br/></th><td id="^Mxh" class="">Requires a handshake (3-way<br/>  handshake)<br/></td><td id="u`yD" class="">No connection setup needed</td></tr><tr id="a4f1a978-53d2-4129-b684-c7704fcd0b8c"><th id="KVA[" class="simple-table-header-color simple-table-header">Data<br/>  Transmission<br/></th><td id="^Mxh" class="">Sequential and reliable</td><td id="u`yD" class="">Independent and potentially<br/>  unordered<br/></td></tr><tr id="b8db90be-5f58-4c72-8c20-5df3a44260a5"><th id="KVA[" class="simple-table-header-color simple-table-header">Congestion<br/>  Control<br/></th><td id="^Mxh" class="">Yes</td><td id="u`yD" class="">No</td></tr></tbody></table></details></li></ul><ul id="d5e430bb-8181-4ae5-b2ce-f59ae5d613e3" class="toggle"><li><details open=""><summary><strong>RPC vs REST vs gRPC </strong></summary><table id="ffff532a-f6dc-81d3-9950-d706adaad965" class="simple-table"><tbody><tr id="3f5b0c39-d641-4a18-85e9-e5a86cf7ee14"><td id="Gupw" class="">Feature</td><td id="|ZlU" class="">RPC</td><td id="aekU" class="">REST</td><td id="FJzN" class="">gRPC</td></tr><tr id="74810e88-3a77-470c-88e8-b9c37f445c05"><td id="Gupw" class="">Communication<br/>  Style<br/></td><td id="|ZlU" class="">Function calls</td><td id="aekU" class="">Stateless HTTP methods (GET, POST,<br/>  etc.)<br/></td><td id="FJzN" class="">Function calls with streaming<br/>  support<br/></td></tr><tr id="4866b06c-6601-4128-923d-e73e548556d9"><td id="Gupw" class="">Data<br/>  Format<br/></td><td id="|ZlU" class="">Binary (or text-based like XML)</td><td id="aekU" class="">JSON, XML</td><td id="FJzN" class="">Protocol Buffers (binary)</td></tr><tr id="6df95b2b-cae2-4b2c-9aa4-5b5d81eefeec"><td id="Gupw" class="">Performance</td><td id="|ZlU" class="">Efficient (varies by<br/>  implementation)<br/></td><td id="aekU" class="">Moderate to slow (due to text<br/>  formats and HTTP overhead)<br/></td><td id="FJzN" class="">Highly efficient (HTTP/2, Protocol<br/>  Buffers)<br/></td></tr><tr id="ffff532a-f6dc-81f7-8722-ef93b2115bca"><td id="Gupw" class="">Statefulness</td><td id="|ZlU" class="">Can be stateful</td><td id="aekU" class="">Stateless</td><td id="FJzN" class="">Typically stateless, but supports<br/>  stateful streams<br/></td></tr><tr id="ffff532a-f6dc-8114-83b7-ccf877f6eb79"><td id="Gupw" class="">Use<br/>  Cases<br/></td><td id="|ZlU" class="">Legacy systems, internal services</td><td id="aekU" class="">Web APIs, microservices, public<br/>  APIs<br/></td><td id="FJzN" class="">High-performance microservices,<br/>  real-time systems<br/></td></tr><tr id="846d5439-f5ec-4f64-9e8d-b8794785aecc"><td id="Gupw" class="">Language<br/>  Support<br/></td><td id="|ZlU" class="">Varies</td><td id="aekU" class="">Universal (HTTP support)</td><td id="FJzN" class="">Wide (supports many languages)</td></tr><tr id="ffff532a-f6dc-8195-8a9b-d0f1ee66d52f"><td id="Gupw" class="">Tooling</td><td id="|ZlU" class="">Implementation-specific tools<br/>  required<br/></td><td id="aekU" class="">Minimal tooling required</td><td id="FJzN" class="">Requires gRPC tooling for code<br/>  generation<br/></td></tr><tr id="ffff532a-f6dc-81f6-8435-ceffc09aafaf"><td id="Gupw" class="">Streaming</td><td id="|ZlU" class="">Typically not supported</td><td id="aekU" class="">Not natively supported</td><td id="FJzN" class="">Supports client, server, and<br/>  bi-directional streaming<br/></td></tr><tr id="0b741f12-9cc5-47d2-a90b-3f852747f795"><td id="Gupw" class="">Example</td><td id="|ZlU" class="">Java RMI, XML-RPC</td><td id="aekU" class="">Twitter API, GitHub API</td><td id="FJzN" class="">Google services, Netflix<br/>  microservices<br/></td></tr></tbody></table></details></li></ul><ul id="dfdaa9b8-042f-4d6d-b4f1-12adfdb353be" class="toggle"><li><details open=""><summary><strong>SOAP Protocol</strong></summary><p id="ffff532a-f6dc-81be-b23d-d60d6a52fb87" class=""><strong>SOAP (Simple Object Access Protocol)</strong> is an XML-based protocol for exchanging structured information over the internet. It defines a standard for message formats and communication between different applications, regardless of their underlying platforms or programming languages.</p><p id="ffff532a-f6dc-818f-8e30-cda9110f4e04" class=""><strong>Key features of SOAP:</strong></p><ul id="ffff532a-f6dc-81d6-a5b1-c97bb8fb6eec" class="bulleted-list"><li style="list-style-type:disc"><strong>XML-based:</strong> SOAP messages are encoded in XML, making them human-readable and easily integrated with other XML-based technologies.</li></ul><ul id="2ff8c25e-d938-4b43-82a2-ce3ec2be3d4b" class="bulleted-list"><li style="list-style-type:disc"><strong>Envelope-based:</strong> SOAP messages are enclosed in an envelope that contains the message header and body.</li></ul><ul id="4e198cd4-7408-49ac-ad27-63257e5b8869" class="bulleted-list"><li style="list-style-type:disc"><strong>RPC-like:</strong> SOAP provides an RPC-like interface, allowing clients to invoke methods on remote servers.</li></ul><ul id="13de6bda-14c4-4e68-a66a-ac971a697249" class="bulleted-list"><li style="list-style-type:disc"><strong>Platform-independent:</strong> SOAP can be used by applications running on different platforms and programming languages.</li></ul><p id="ffff532a-f6dc-8108-b96a-cb27c406ef61" class=""><strong>SOAP is typically used for:</strong></p><ul id="ffff532a-f6dc-81af-8088-d10f7b15aa78" class="bulleted-list"><li style="list-style-type:disc"><strong>Web services:</strong> Exposing business logic as services that can be accessed over the network.</li></ul><ul id="ffff532a-f6dc-8109-a4b1-f080fcf597c3" class="bulleted-list"><li style="list-style-type:disc"><strong>Enterprise application integration:</strong> Integrating different applications within an organization.</li></ul><ul id="47c381b3-97c3-4ba7-9616-81bc2f23bdae" class="bulleted-list"><li style="list-style-type:disc"><strong>Remote procedure calls:</strong> Invoking methods on remote systems.</li></ul></details></li></ul></div></details><p id="f284d1ed-10e5-417b-ae09-52b7b22f2967" class="">
+</p><p id="ffff532a-f6dc-8178-ada5-d54fbfa7e1e3" class="">
+</p><p id="ffff532a-f6dc-8197-b3e3-d612aca9b6a9" class="">
+</p><p id="ffff532a-f6dc-8110-8aeb-dfebab46ecd3" class="">
+</p><figure id="06129239-87ec-4626-9682-f5a6b95733ae"><div class="source"><a href="Distributed.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/2098d49c-09b7-4c08-a840-cd708602b76e/Distributed.pdf</a></div></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,715 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Advanced-Data Storages and Analyses (guarantor Jan Fesl)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a00681f1-6a60-4c94-b1ca-e65683dde4ec" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_eva_during_skylab_3.jpg" style="object-position:center 40%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">💽</span></div><h1 class="page-title"><mark class="highlight-teal_background"><strong>Advanced-Data Storages and Analyses (guarantor Jan Fesl)</strong></mark></h1><p class="page-description"></p></header><div class="page-body"><p id="59f9c573-1287-4b01-9035-47d13a0bbf80" class="">Topics : <div class="indented"><ul id="a1bc3f93-d994-4ae8-9227-5d7ead09c97b" class="bulleted-list"><li style="list-style-type:disc">Indexing and query execution and optimization in relational and no-SQL databases. Explain the differences between index types (B+tree, hash, bitmap, map/reduce) and the process of query optimization.</li></ul><ul id="ffff532a-f6dc-819f-bacd-ce7e25ead1d0" class="bulleted-list"><li style="list-style-type:disc">Database scaling and big data processing. Describe different approaches to database scaling (Vertical and Horizontal scaling, application level, mirroring, partitioning, sharding) and non-database approaches to big data storing and processing (DW, DataLakes, ETL/ELT).</li></ul><ul id="30cfeff4-3ec1-4506-a2fd-9ca396602d7e" class="bulleted-list"><li style="list-style-type:disc">CAP theorem. Explain basic paradigms of SQL and no-SQL databases (ACID/BASE, Brewer’s diagram) and illustrate how the database type corresponds with the data structure and purpose in specific cases.</li></ul><ul id="ffff532a-f6dc-812f-831b-cbe326f06d17" class="bulleted-list"><li style="list-style-type:disc">Data analyses and processing. Explain different data storage and processing approaches (SQL, no-SQL, DW/DataLake, RDF and their influence on data analyses. What type of storage is suitable for what type of tasks? Describe basic data-related tasks (visualization, deep data analyses, reporting, data processing) and discuss the relationship between data storage type and the task.</li></ul><ul id="22eb01d4-20cc-46b1-b211-497d70b420c8" class="bulleted-list"><li style="list-style-type:disc">Methods of data analysis. Describe the basic data analysis methods (histogram, boxplot, correlation, pairwise covariance, …) and interpret their results on a simple example. Describe principles of advanced data analysis methods (clustering, regression, classification) and describe the interpretation of their possible outputs.</li></ul></div></p><ul id="797c589a-bd2c-43f8-ac31-2bd2e716910b" class="toggle"><li><details open=""><summary>Payal/Bilal Notes</summary><figure id="e976e68d-1021-4c83-ae06-a95e11de5cc9"><div class="source"><a href="Advanced_Data_Storage.pdf">Advanced Data Storage.pdf</a></div></figure></details></li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Indexing and query execution and optimization in relational and no-SQL databases. Explain the differences between index types (B+ tree, hash, bitmap, map/reduce) and the process of query optimization</summary><div class="indented"><figure class="block-color-pink_background callout" style="white-space:pre-wrap;display:flex" id="ffff532a-f6dc-813f-9544-fa359751bfde"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="ffff532a-f6dc-816c-834e-c3377ba42359" class=""><strong><span style="border-bottom:0.05em solid">Index:</span></strong><strong> Indexes are data structures used in databases to improve the speed of data retrieval [index in a book]</strong></p><ul id="ddf0fd01-0ac3-49a6-8434-aac91331ee6e" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Indexes help make queries faster, especially for operations involving <code>SELECT</code>, <code>JOIN</code>, <code>WHERE</code>, and <code>ORDER BY</code> clauses.</li></ul><ul id="ffff532a-f6dc-81a5-80e9-fe241d92b119" class="bulleted-list"><li style="list-style-type:disc"><strong>Structure</strong>: Indexes are typically implemented as trees (e.g., B-Trees) or hash maps, which allow quick lookups.</li></ul><ul id="ffff532a-f6dc-81bc-8001-ff60d2f4c902" class="bulleted-list"><li style="list-style-type:disc"><strong>Storage</strong>: Indexes occupy additional disk space because they store a subset of table data in an organized manner.</li></ul><p id="fd1919e1-8bbc-4fbc-a23d-4f1d961698f6" class="">
+</p></div></figure><ul id="ffff532a-f6dc-814a-8903-cfeb8ac1f079" class="bulleted-list"><li style="list-style-type:disc"><strong>Types of Indexes</strong>:<p id="15c10a7a-00eb-4254-83fd-4524192dd2d4" class="">Indexing creates a data structure (usually B+tree or Hash table) that helps database quickly locate the rows that match the query condition without scanning the entire table. </p><p id="2360e67a-56e6-4009-83f4-9e16e77e03c9" class="">Indexes are typically created on columns frequently used in <code>WHERE</code>, <code>ORDER BY</code>, and <code>JOIN</code> clauses.</p><figure id="96200aa3-8729-424d-b201-b95e37d98bb8" class="image" style="text-align:center"><a href="1708421919905.jpg"><img style="width:384px" src="1708421919905.jpg"/></a></figure></li></ul><p id="e3f1c381-e859-497e-b31f-fa01a40a1810" class="">
+</p><ul id="ed1c96a5-b2ca-4799-b9a9-544a3376b2b5" class="toggle"><li><details open=""><summary><strong>B+ Tree Indexes</strong></summary><div id="ffff532a-f6dc-818f-b3bd-c10df57eecba" class="column-list"><div id="ce8630a9-52ed-4148-8e61-8c06d81fa754" style="width:100%" class="column"><p id="93b8ce26-42d4-449f-8fd6-72ad3019401a" class=""><strong><span style="border-bottom:0.05em solid">Structure</span></strong><span style="border-bottom:0.05em solid">:</span></p><ul id="ffff532a-f6dc-8183-9521-fb6d8ec63188" class="bulleted-list"><li style="list-style-type:disc"><strong>Root Node</strong>: The top node of the tree.</li></ul><ul id="ffff532a-f6dc-819c-9560-c2a8f29740c5" class="bulleted-list"><li style="list-style-type:disc"><strong>Internal Nodes</strong>: Nodes that have children and help guide the search process. They store keys to guide the search but do not store actual data.</li></ul><ul id="ffff532a-f6dc-81e2-9dad-dda8d4ea1177" class="bulleted-list"><li style="list-style-type:disc"><strong>Leaf Nodes</strong>: The bottom nodes that store the actual data pointers or values. They are linked to each other to form a linked list to facilitate range queries.</li></ul><p id="ffff532a-f6dc-816c-810d-e9caacd4fe19" class=""><strong><span style="border-bottom:0.05em solid">Uses:</span></strong></p><p id="f7e2affc-31fb-4985-89eb-cfca4f99f97a" class="">Searches, insertions, and deletions are efficient due to the self-balanced nature of the tree.</p><p id="ffff532a-f6dc-811b-9d30-c9f26712dc2b" class="">The leaf nodes are linked, allowing efficient range queries - <em><strong>use the =, &gt;, &gt;=, &lt;, &lt;=, or BETWEEN operators </strong></em>and ordered traversals.</p><p id="848ec2dc-789b-4bc8-930f-5111f2710a65" class="">B+ trees are designed to minimize disk I/O operations</p><p id="9c474dae-b28d-4e54-94fd-5ef9b6f477e2" class="">B-Tree indexing is widely used in relational databases such as MySQL and PostgreSQL.</p><p id="ffff532a-f6dc-8106-98a4-e8c02bde0f4a" class=""><strong><span style="border-bottom:0.05em solid">B tree vs B+ tree : </span></strong> </p><p id="e674177d-251c-4863-8969-95ddb54f24e5" class="">In a B+ tree, all data pointers are stored only at the leaf nodes, while in a B-tree, data pointers can be stored in both internal and leaf nodes.</p><p id="ffff532a-f6dc-8120-8f60-d8a5aa8a8662" class="">This makes B+ trees more efficient for range queries and sequential access</p><p id="3a50a0df-ce75-486b-beda-308af88fa337" class="">
+</p><p id="ffff532a-f6dc-81fb-9bb9-d4cc0f8ab555" class="">
+</p></div><div id="17258a6a-115b-496e-a1c4-ff9f8c6afa37" style="width:100%" class="column"><p id="ffff532a-f6dc-814b-8646-ea0ff4fb490a" class="">
+</p><figure id="ffff532a-f6dc-811d-bf18-d95345453152" class="image"><a href="0_CxpRYqlARO8JhCd8.gif"><img style="width:542.951416015625px" src="0_CxpRYqlARO8JhCd8.gif"/></a></figure></div></div></details></li></ul><ul id="ffff532a-f6dc-8160-ab18-e89214fd725d" class="toggle"><li><details open=""><summary><strong>Hash Indexes</strong></summary><p id="cd35f7a3-424f-4fb4-a023-4065e983536f" class=""><span style="border-bottom:0.05em solid">Hash indexing</span> is <strong><span style="border-bottom:0.05em solid">commonly </span></strong><span style="border-bottom:0.05em solid">used in</span><strong><span style="border-bottom:0.05em solid"> in-memory databases such as Redis</span></strong></p><div id="1bad748d-29ea-4705-b5a7-7aef8d0a5ca7" class="column-list"><div id="ffff532a-f6dc-818a-8f35-f265062cd2af" style="width:100%" class="column"><p id="be20e1fb-e754-4d73-9163-5f9bd345663e" class=""><span style="border-bottom:0.05em solid">Comprised </span>of :<strong> Keys, Hash Function and hash table </strong></p><p id="ffff532a-f6dc-81bc-937d-fce76c2f83a8" class="">Incredibly fast for equality comparisons (<code>=</code>, <code>IN</code>) and lookups , but they are <strong>unsuitable for range queries</strong> (<code>&lt;</code>, <code>&gt;</code>, <code>BETWEEN</code>).</p><p id="a5f08787-4edb-4730-9ea0-85adc0266894" class="">Hash indexes work by <strong>mapping each record in the table to a unique bucket based on its hash value.</strong></p><p id="1cf9d2df-25c6-4f88-b8c1-5bd9207582c9" class=""><strong>To perform a query using a hash index</strong>,</p><ol type="1" id="c45e2e2a-3069-4bc4-927d-f6ff3dd37a04" class="numbered-list" start="1"><li>The <strong>database calculates the hash value for the query condition</strong></li></ol><ol type="1" id="ffff532a-f6dc-811a-ab4f-cd50b6ddaef3" class="numbered-list" start="2"><li>Looks up the corresponding <strong>hash bucket in the hash table</strong>.</li></ol><ol type="1" id="96550a47-903d-44de-9714-e508edbcd583" class="numbered-list" start="3"><li>The database then <strong>retrieves the pointers to the rows in the table</strong> that have the corresponding hash value</li></ol><ol type="1" id="ffff532a-f6dc-8164-aec2-fc0969b05744" class="numbered-list" start="4"><li>Uses those <strong>pointers to retrieve the actual rows</strong> from the table.</li></ol><p id="d6c9a763-7faf-4485-8b5b-a0821a949cb5" class="">To find a record in a hash index, <strong>the database calculates the hash value of the search key and then looks up the corresponding bucket.</strong> If the record is in the bucket, the database returns it. Otherwise, the database performs a full table scan.<br/><br/><strong><span style="border-bottom:0.05em solid">Cons: </span></strong></p><p id="081940d3-b80d-46ac-a92b-6c41e9d4bf83" class="">Hash indexing does <strong>not support range queries or sorting</strong></p><p id="ffff532a-f6dc-81df-844d-c74bd42ae4ef" class="">Hash indexes can <strong>consume a lot of memory</strong></p><p id="863df47e-912a-4069-868b-4e7c0d2e5d10" class="">Hash indexing is <strong>not suitable for databases that are frequently updated</strong></p><p id="ffff532a-f6dc-81aa-87ba-d4d02b2641b1" class="">
+</p></div><div id="ffff532a-f6dc-81b1-ae9a-f25475e439e4" style="width:100%" class="column"><figure id="7ff5910a-95c6-48a8-9005-0f72988f4eab" class="image"><a href="1702607219088.png"><img style="width:384px" src="1702607219088.png"/></a></figure><p id="79a719be-c225-4603-acc3-d770d09a23b3" class="">
+</p><figure id="ffff532a-f6dc-8136-8221-dcceb8ac1ded" class="image"><a href="0_grNy-RKBPYjA1AKv.webp"><img style="width:384px" src="0_grNy-RKBPYjA1AKv.webp"/></a></figure></div></div></details></li></ul><ul id="ffff532a-f6dc-81d6-8a2e-fa31c4873386" class="toggle"><li><details open=""><summary><strong>Bitmap Index</strong></summary><p id="ffff532a-f6dc-817a-9841-fed6b6a9ffcd" class="">Bitmap indexes are most commonly used in <strong>data warehouses</strong> and <strong>OLAP (Online Analytical Processing)</strong> systems, where queries often involve large datasets and require fast read access</p><div id="ffff532a-f6dc-8163-8a25-f25d815ed14e" class="column-list"><div id="463e575f-8800-4b49-b3c8-101b51032848" style="width:56.25%" class="column"><ul id="ffff532a-f6dc-810d-9a66-f7a4e25dc438" class="bulleted-list"><li style="list-style-type:disc">Bitmaps are used for<strong> columns with a small number of distinct values, such as married status, status, Boolean values, columns or gender columns</strong></li></ul><ul id="708587af-eaf7-4e76-ac35-e4bf3f374ee0" class="bulleted-list"><li style="list-style-type:disc">Bitmap indexes are very compact and <strong>efficient for columns with a low cardinality.</strong></li></ul><ul id="d104be70-6287-4e68-afe8-a16c0894eff2" class="bulleted-list"><li style="list-style-type:disc">They allow for <strong>fast read access</strong> and <strong>efficient combination of multiple conditions</strong>.</li></ul><p id="ea5181fa-8bf3-4833-ad3d-c830c18a2986" class=""><em><strong><span style="border-bottom:0.05em solid">How Bitmap Indexes Work</span></strong></em></p><p id="cbbcacb6-a9c9-4de8-afc2-d22703afaa6e" class=""><strong>Bitmap Creation</strong>: A bitmap index is created for each distinct value in a column.</p><p id="ffff532a-f6dc-81c1-8445-dc98de4e7bc8" class=""><strong>Query Execution</strong>: When a query is run (e.g., <code>WHERE department = &#x27;HR&#x27;</code>), the database engine simply looks at the bitmap for <code>HR</code>, where the bits are already set for matching rows, avoiding a full table scan.</p></div><div id="ffff532a-f6dc-8183-9485-edb5e785aaac" style="width:143.75%" class="column"><p id="ffff532a-f6dc-81f4-81de-d15cfcc7f52f" class="">
+</p><figure id="e5e0ef82-bb5e-49f6-a944-be9e94d6b824" class="image"><a href="bitmap_index_example.png"><img style="width:1280.25px" src="bitmap_index_example.png"/></a></figure></div></div><p id="ffff532a-f6dc-8136-9b69-d17e2bcd1485" class="">
+</p></details></li></ul><ul id="ffff532a-f6dc-8150-9e4f-c30bc9233697" class="toggle"><li><details open=""><summary><strong>Map Reduce </strong></summary><p id="073a6647-be65-4e65-bce7-afece893a7e7" class="">Refers to process of using the MapReduce framework to create and manage indexes over large datasets in a <strong>distributed system</strong></p><div id="ffff532a-f6dc-819f-879e-c388345c4104" class="column-list"><div id="05e960cc-adcc-4876-9555-06732b3bdceb" style="width:100%" class="column"><p id="ffff532a-f6dc-8139-8c48-f9352ad06ebf" class="">Developed by Google </p><p id="ffff532a-f6dc-81cf-b18e-fda2fdd34767" class="">Divides large scale computations into two main phases:</p><ul id="ffff532a-f6dc-81db-a6fd-f069d46ca744" class="bulleted-list"><li style="list-style-type:disc"><strong>Map </strong>(filtering and sorting)</li></ul><ul id="03b48c68-2796-48c1-b5c0-75b493419a7c" class="bulleted-list"><li style="list-style-type:disc"><strong>Reducing</strong>(summarizing and aggregating)</li></ul><p id="ffff532a-f6dc-81b1-8381-e54644add8b7" class="">MapReduce indexing is useful in scenarios where:</p><ul id="ffff532a-f6dc-818a-9188-d85551715f79" class="bulleted-list"><li style="list-style-type:disc"><strong>Massive datasets</strong> are involved, especially when the data is distributed across multiple nodes.</li></ul><ul id="ffff532a-f6dc-8136-9c20-c75b6f66b2d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Parallel processing</strong> is needed to handle large-scale indexing tasks efficiently.                                                                                                                                                                                                       </li></ul><ul id="ffff532a-f6dc-81ba-94e3-feea6c8cf7b9" class="bulleted-list"><li style="list-style-type:disc"><strong>Text search engines</strong> and <strong>big data systems</strong> need to index large volumes of unstructured data (e.g., logs, documents).</li></ul><ul id="9bd34fb9-3df9-4b14-bc32-00f3c649cada" class="bulleted-list"><li style="list-style-type:disc"><strong>Batch processing</strong> is preferred over real-time updates.</li></ul></div><div id="ffff532a-f6dc-81ea-968b-f22f3c86f7ea" style="width:100%" class="column"><figure id="d4365db9-907c-4515-a96e-b502f453a956" class="image"><a href="image.png"><img style="width:1280.25px" src="image.png"/></a></figure></div></div></details></li></ul><ul id="6e82dcc0-9740-4a9b-a93b-d3183fe2a1ee" class="bulleted-list"><li style="list-style-type:disc"><strong>Query Execution and Optimization</strong>:<p id="55b5311b-018d-4292-9398-b3ef5e7920bf" class="">
+</p><div id="ffff532a-f6dc-81e8-980c-d850345089d4" class="column-list"><div id="81bb17a1-4a9d-4791-a088-4961513134ac" style="width:100%" class="column"><p id="ffff532a-f6dc-819f-9a61-cd4ca14961ce" class="">QUery Execution in SQL Databases</p><figure id="ffff532a-f6dc-81b6-8f65-d8874b04d1c1" class="image"><a href="PhasesofQueryEvaluation.png"><img style="width:432px" src="PhasesofQueryEvaluation.png"/></a></figure></div><div id="9ebf27a8-c346-4073-8875-b590ab470930" style="width:100%" class="column"><figure id="8482d2fb-4ca1-4666-8c83-a5e953816e94" class="image"><a href="order-of-execution-of-SQL-query.png"><img style="width:528px" src="order-of-execution-of-SQL-query.png"/></a></figure><p id="c9997f5a-f396-4ad7-8efe-c252a10a7eb3" class="">
+</p></div></div></li></ul><ul id="476e6192-828e-4b03-b39c-78f1468f97d3" class="bulleted-list"><li style="list-style-type:disc"><strong>Comparing Index Types</strong>:<ul id="ffff532a-f6dc-8140-95d7-ed3ab34dc5f0" class="bulleted-list"><li style="list-style-type:circle">Differences between B+ Tree, Hash, Bitmap, and Map/Reduce indexes.</li></ul><ul id="42f82fcb-d528-4cc8-b882-0ca69e8740bd" class="bulleted-list"><li style="list-style-type:circle">Use cases for each index type.</li></ul></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Database scaling and big data processing. Describe different approaches to database scaling (Vertical and Horizontal scaling, application level, mirroring, partitioning, sharding) and non-database approaches to big data storing and processing (DW, DataLakes, ETL/ELT).</summary><div class="indented"><h3 id="ffff532a-f6dc-81ee-bd62-fa360ce1557e" class="">What Was Wrong with Relational Databases?</h3><ul id="9fa17397-ee35-4729-b4ac-e027298b5b2b" class="bulleted-list"><li style="list-style-type:disc"><strong>Limited Horizontal Scalability</strong>: RDBMS struggled to scale across multiple servers, relying on costly vertical scaling.</li></ul><ul id="0f6db5dc-9252-49fb-87ce-a238484570a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Rigid Schema</strong>: Required predefined schemas, making it difficult to handle unstructured or changing data.</li></ul><ul id="ffff532a-f6dc-81a8-b854-fd4f7305d603" class="bulleted-list"><li style="list-style-type:disc"><strong>Performance Bottlenecks</strong>: Slower for high-throughput, real-time applications due to complex transactions and joins.</li></ul><ul id="6714a0f5-24c6-4d28-93bf-4013bb4e5729" class="bulleted-list"><li style="list-style-type:disc"><strong>Complex Distributed Management</strong>: ACID properties complicated operations in distributed environments.</li></ul><ul id="ffff532a-f6dc-819b-b801-d64db9bd4109" class="bulleted-list"><li style="list-style-type:disc"><strong>Inflexibility with Modern Data Types</strong>: Limited ability to manage unstructured or hierarchical data (e.g., JSON, documents).</li></ul><ul id="ffff532a-f6dc-8121-9f60-e9ec4602cfe8" class="bulleted-list"><li style="list-style-type:disc"><strong>Costly Schema Modifications</strong>: Changing the schema in RDBMS is resource-intensive and time-consuming.</li></ul><ul id="e87b9620-96f9-4b5d-8afc-f08686e2e80a" class="toggle"><li><details open=""><summary><strong>University Presentation</strong></summary><figure id="817755b3-1391-45ea-b9c8-8f5930007e0b"><div class="source"><a href="DDBSNoSQL_part1_EN.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/32cf4088-a6ae-4647-a56f-ff4c2a37f223/DDBSNoSQL_part1_EN.pdf</a></div></figure></details></li></ul><ul id="ffff532a-f6dc-813b-8f2e-e80a7c2e77c5" class="toggle"><li><details open=""><summary><strong>Database Scaling Approaches</strong>:</summary><div id="e8b35d5a-83c1-44e6-8ed8-6c5a0c89770f" class="column-list"><div id="ffff532a-f6dc-8129-8999-d5a02860ca93" style="width:100%" class="column"><ul id="ffff532a-f6dc-8140-b9f8-c1d8cd38d399" class="bulleted-list"><li style="list-style-type:disc"><strong>Vertical Scaling (Scaling Up):</strong> Increasing the capacity of a single server (e.g., adding more CPU, RAM, or storage). This improves performance but is limited by the maximum capacity of the server hardware.</li></ul><ul id="ffff532a-f6dc-81dd-8394-e19843a0ce5e" class="bulleted-list"><li style="list-style-type:disc"><strong>Horizontal Scaling (Scaling Out):</strong> Adding more servers to distribute the load. This approach can handle more requests by balancing them across multiple machines.</li></ul><ul id="ffff532a-f6dc-81fe-b5d8-ee857aaa4220" class="bulleted-list"><li style="list-style-type:disc"><strong>Application-Level Scaling:</strong> Modifying the application to improve performance or handle more requests, often through techniques like load balancing or optimizing code.</li></ul><ul id="63a8df70-9a25-4ea6-9d69-ff2f9dbfac76" class="bulleted-list"><li style="list-style-type:disc"><strong>Database Mirroring:</strong> Maintaining an exact copy of a database on a separate server. It provides redundancy and failover support to improve availability and reliability.</li></ul><ul id="ffff532a-f6dc-8132-83ff-df7d27edd07e" class="bulleted-list"><li style="list-style-type:disc"><strong>Partitioning:</strong> Dividing a large database into smaller, manageable pieces called partitions. Each partition is stored separately, allowing for more efficient data management and access.</li></ul><ul id="ffff532a-f6dc-8130-aea4-ef17c800a97c" class="bulleted-list"><li style="list-style-type:disc"><strong>Sharding:</strong> Distributing data across multiple database instances (shards) to improve performance and scalability. Each shard holds a subset of the data, reducing the load on any single instance.</li></ul><p id="ffff532a-f6dc-812f-911b-c689b49d3e2b" class="">
+</p></div><div id="ffff532a-f6dc-81b3-9fc7-efa80e0a9e26" style="width:100%" class="column"><p id="ffff532a-f6dc-8164-bdee-d4883bab9ca6" class="">
+</p><figure id="ffff532a-f6dc-812b-b86e-fdd07c19fa14" class="image"><a href="image%201.png"><img style="width:905.9296875px" src="image%201.png"/></a></figure></div></div></details></li></ul><ul id="12ead513-455c-43f9-9f23-d20be87d2cfe" class="toggle"><li><details open=""><summary><strong>Big Data Storing and Processing</strong>:</summary><div id="f6137ba0-8724-4919-a69c-9420c39ff55a" class="column-list"><div id="ffff532a-f6dc-8177-86e3-fa97227a1bf0" style="width:100%" class="column"><p id="273c1b47-80e6-4e3e-9c68-c989b31ff324" class=""><strong>Non-database approaches to big data:</strong><div class="indented"><ul id="ffff532a-f6dc-81c3-b071-f91cc5314242" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">Data Warehousing (DW):</span></strong><p id="aa7b5149-e237-4df5-9a3b-08a35391b412" class="">A data warehouse is a centralized repository that stores large volumes of structured data from multiple sources. It is optimized for query and analysis rather than transaction processing.</p><p id="935d4dcb-6818-462f-9b91-979923b8664b" class=""><strong>Features</strong>:<div class="indented"><ul id="ffff532a-f6dc-81d0-b019-c50ced16db5a" class="bulleted-list"><li style="list-style-type:disc"><strong>Schema</strong>: Typically employs a star or snowflake schema.</li></ul><ul id="ffff532a-f6dc-81a8-b7eb-ec319a283825" class="bulleted-list"><li style="list-style-type:disc"><strong>ETL Process</strong>: Data is Extracted from sources, Transformed, and Loaded into the warehouse.</li></ul><ul id="921ef532-fda7-485c-ab7e-04adfcbc09d5" class="bulleted-list"><li style="list-style-type:disc"><strong>Optimization</strong>: Often uses OLAP (Online Analytical Processing) for complex queries and reporting.</li></ul></div></p><p id="aade66b4-1aa8-4ceb-a518-d44b6592256c" class=""><strong>Examples</strong>: Amazon Redshift, Google BigQuery, Snowflake.</p></li></ul><ul id="623eb139-22a1-4158-89e3-2568606e9be2" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">Data Lakes:</span></strong>A data lake is a large repository that stores raw, unstructured, semi-structured, and structured data. It allows for the storage of data in its native format and supports a variety of data types.<p id="ffff532a-f6dc-81ff-975c-c03b04067452" class=""><strong>Features</strong></p><ul id="7aea5e63-587d-494d-b99d-fe6864647b7c" class="bulleted-list"><li style="list-style-type:circle"><strong>Schema-on-Read</strong>: Data is interpreted at the time of analysis rather than during ingestion.</li></ul><ul id="b5e9f111-a0b6-4689-99a5-fc58beb86a84" class="bulleted-list"><li style="list-style-type:circle"><strong>Scalability</strong>: Can handle large volumes and varieties of data.</li></ul><ul id="09f4da1a-eb77-4f66-a120-d39ab7c2e09d" class="bulleted-list"><li style="list-style-type:circle"><strong>Integration</strong>: Supports integration with various processing frameworks like Hadoop and Spark.</li></ul><p id="ffff532a-f6dc-8157-a0e1-ec7387b7fdf5" class=""><strong>Examples</strong>: AWS S3, Azure Data Lake, Google Cloud Storage.</p></li></ul><ul id="ffff532a-f6dc-8178-991d-c5a10335b9db" class="bulleted-list"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">ETL (Extract, Transform, Load) vs. ELT (Extract, Load, Transform):</span></strong><h3 id="3098a321-4ab7-4d98-b3ac-84a149fc57f4" class="">Key Differences</h3><ul id="ffff532a-f6dc-812e-82b8-f21c8857a603" class="bulleted-list"><li style="list-style-type:circle"><strong>Transformation Timing</strong>: ETL performs transformation before loading, while ELT performs it after loading.</li></ul><ul id="b3d599f6-9d3c-41e3-be05-1d8817bd5def" class="bulleted-list"><li style="list-style-type:circle"><strong>System Requirements</strong>: ETL requires separate processing infrastructure, whereas ELT leverages the target system&#x27;s processing power.</li></ul><ul id="ffff532a-f6dc-810c-9c37-d9f232b63c37" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Handling</strong>: ETL may result in cleaner data before loading, while ELT stores raw data and transforms it as needed, offering more flexibility.</li></ul></li></ul></div></p></div><div id="ffff532a-f6dc-813d-b617-d994b52afc3e" style="width:100%" class="column"><p id="ffff532a-f6dc-8123-83e8-e149a50e77e3" class="">
+</p><figure id="c6e84850-018c-43f6-b5c2-1499fac86f85" class="image"><a href="BDCC-06-00132-g001.png"><img style="width:4374px" src="BDCC-06-00132-g001.png"/></a></figure><figure id="b456b15a-3649-4b07-8ab6-9fec1c2df59e" class="image"><a href="garg_etl_elt_one_right_data_pipeline_2.png"><img style="width:790.0694580078125px" src="garg_etl_elt_one_right_data_pipeline_2.png"/></a></figure><ul id="ffff532a-f6dc-819a-9894-c87d742432b8" class="bulleted-list"><li style="list-style-type:disc"><strong>ETL</strong>: Use when data needs to be cleansed and transformed before loading into a data warehouse or target system; ideal for structured environments with specific transformation requirements.</li></ul><ul id="1ceb16bc-2db8-4ac1-a776-08df5c31702b" class="bulleted-list"><li style="list-style-type:disc"><strong>ELT</strong>: Use when working with data lakes or modern cloud platforms where raw data is loaded first and transformations are performed later; suitable for flexible, scalable data processing and analysis.</li></ul><p id="ffff532a-f6dc-812c-abd7-ce1177049a1b" class="">
+</p></div></div></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">CAP theorem. Explain basic paradigms of SQL and no-SQL databases (ACID/BASE, Brewer’s diagram) and illustrate how the database type corresponds with the data structure and purpose in specific cases.</summary><div class="indented"><ul id="ffff532a-f6dc-81f9-8281-c0911395a388" class="toggle"><li><details open=""><summary><strong>CAP Theorem</strong>:</summary><p id="3b44ff95-9497-4c69-af18-0b1b97aa517b" class="">The CAP theorem states that in a distributed system, you can only achieve at most two of the following three properties simultaneously:</p><ol type="1" id="ffff532a-f6dc-818a-ad98-e964f691a738" class="numbered-list" start="1"><li><strong>Consistency</strong>: All nodes have the same data at the same time.</li></ol><ol type="1" id="ffff532a-f6dc-819b-bb38-eafa91b871a8" class="numbered-list" start="2"><li><strong>Availability</strong>: Every request receives a response, even if some nodes are down.</li></ol><ol type="1" id="ffff532a-f6dc-81b8-80bc-f7a2b1c0ddda" class="numbered-list" start="3"><li><strong>Partition Tolerance</strong>: The system continues to operate despite network partitions or failures.</li></ol><ul id="0ecf5c65-a320-441d-91b5-476f165da8f7" class="toggle"><li><details open=""><summary>CA, CP, AP Example with Databases:</summary><p id="8436adeb-71eb-43e5-bca6-cc51ba569ef2" class=""><strong><span style="border-bottom:0.05em solid">Consistency and Availability (CA)</span></strong></p><p id="7b731a72-7186-4144-8c69-7e6d4058dc62" class=""><strong>Example: SQL Databases (e.g., PostgreSQL, MySQL)</strong></p><ul id="6d4ecbdd-a807-4d73-9e6c-f9f270153808" class="bulleted-list"><li style="list-style-type:disc"><strong>Consistency</strong>: SQL databases ensure that every transaction follows ACID (Atomicity, Consistency, Isolation, Durability) properties. This means that once a transaction is committed, all nodes have the same data.</li></ul><ul id="ffff532a-f6dc-8186-9a78-f35ce90922c6" class="bulleted-list"><li style="list-style-type:disc"><strong>Availability</strong>: SQL databases are designed to provide responses to queries as long as the database is operational.</li></ul><ul id="ffff532a-f6dc-8174-a956-df22eb979867" class="bulleted-list"><li style="list-style-type:disc"><strong>Partition Tolerance</strong>: Traditional SQL databases typically do not handle network partitions very well. When a network partition occurs, they might become unavailable because they cannot guarantee consistency across all nodes. This is due to their reliance on a single, consistent view of the data.</li></ul><p id="3179cb0c-1aa7-4fa8-b2b1-851234b2590d" class=""><strong>In Summary</strong>: SQL databases prioritize Consistency and Availability but struggle with Partition Tolerance.</p><p id="ffff532a-f6dc-81cf-932b-c751f869aaa9" class=""><strong><span style="border-bottom:0.05em solid">Consistency and Partition Tolerance (CP)</span></strong></p><p id="78f208cc-30f8-41b7-99b0-65f565baed94" class=""><strong>Example: MongoDB (with Write Concern and Read Concern configured for strong consistency) - it is a single master table</strong></p><ul id="ffff532a-f6dc-816f-8d79-c30aded883d9" class="bulleted-list"><li style="list-style-type:disc"><strong>Consistency</strong>: MongoDB can be configured to provide strong consistency by using mechanisms like read and write concerns to ensure that reads reflect the most recent writes.</li></ul><ul id="2d140fdd-b7a5-4fe4-87a9-4311e2a3dca3" class="bulleted-list"><li style="list-style-type:disc"><strong>Partition Tolerance</strong>: MongoDB can handle network partitions due to its sharding and replication capabilities.</li></ul><ul id="ffff532a-f6dc-81df-a015-d7f6f6a252c9" class="bulleted-list"><li style="list-style-type:disc"><strong>Availability</strong>: In scenarios where there is a network partition, MongoDB might become unavailable or return errors if it cannot ensure the consistency requirements are met.</li></ul><p id="1783e236-a602-4f63-997a-4e0b4ed4d6b5" class=""><strong>In Summary</strong>: MongoDB can be tuned to provide Consistency and Partition Tolerance, but it may sacrifice Availability in case of network partitions.</p><p id="dd21270e-0ebe-46a3-b337-03151aaf6273" class=""><strong><span style="border-bottom:0.05em solid">Availability and Partition Tolerance (AP)</span></strong></p><p id="f734eb00-f0cf-4e50-ae7d-869170bcafa2" class=""><strong>Example: Cassandra</strong></p><ul id="ffff532a-f6dc-8181-8573-c1f91a195b6f" class="bulleted-list"><li style="list-style-type:disc"><strong>Availability</strong>: Cassandra is designed to be highly available and can continue to respond to requests even when some nodes are down or a network partition occurs.</li></ul><ul id="ffff532a-f6dc-8173-a963-d8a7cbaafab8" class="bulleted-list"><li style="list-style-type:disc"><strong>Partition Tolerance</strong>: Cassandra is built to handle network partitions gracefully, ensuring that the system continues to operate and handle requests despite partitions.</li></ul><ul id="ffff532a-f6dc-8122-8468-c2e9a98e8fad" class="bulleted-list"><li style="list-style-type:disc"><strong>Consistency</strong>: Cassandra provides eventual consistency, meaning that while the system will eventually converge to a consistent state, there might be temporary inconsistencies during network partitions or high load.</li></ul><p id="ffff532a-f6dc-8172-84c7-c1da6604a876" class=""><strong>In Summary</strong>: Cassandra prioritizes Availability and Partition Tolerance but provides eventual consistency, sacrificing immediate consistency in favor of being available and resilient to partitions.</p></details></li></ul><p id="ffff532a-f6dc-81ef-af9d-d686f73d5aee" class="">
+</p><div id="ffff532a-f6dc-8148-9f01-cf05e32af7a3" class="column-list"><div id="014da33a-fffe-40e0-9068-86a02cef66e1" style="width:100%" class="column"><p id="ffff532a-f6dc-817c-8a9f-fe08b2ab204d" class="">
+</p><figure id="dc502a56-4942-4b41-9d07-6ac6f3abc764" class="image"><a href="Triangular-illustration-of-the-CAP-Theorem.png"><img style="width:527.953125px" src="Triangular-illustration-of-the-CAP-Theorem.png"/></a></figure></div><div id="ffff532a-f6dc-8192-80c6-d5d0bbcdb2ba" style="width:100%" class="column"><p id="5a61cd11-bfd3-4f9c-8cf6-4e29653a8098" class="">
+</p><figure id="ffff532a-f6dc-8145-ad75-d955355ac2eb" class="image"><a href="1_rxTP-_STj-QRDt1X9fdVlA.jpg"><img style="width:472.9921875px" src="1_rxTP-_STj-QRDt1X9fdVlA.jpg"/></a></figure></div></div></details></li></ul><ul id="ffff532a-f6dc-8127-b4c4-de3e11f8942e" class="toggle"><li><details open=""><summary><strong>Database Paradigms</strong>:</summary><ul id="be1c5ca4-d7c0-4e8c-964f-a310159df9ee" class="toggle"><li><details open=""><summary><strong>ACID (Atomicity, Consistency, Isolation, Durability) in SQL Databases</strong></summary><div id="0dfab972-99ce-4d36-b88c-3c337256a331" class="column-list"><div id="ffff532a-f6dc-811d-976c-d624d9481ba8" style="width:100%" class="column"><p id="873e0246-43c5-45af-84df-b0fa9054c072" class="">ACID properties are a key concept in databases, ensuring reliable transaction processing. Here&#x27;s a breakdown with examples to help you remember:</p><ol type="1" id="7ee77ef2-c330-4e54-9a00-5d688a821796" class="numbered-list" start="1"><li><strong>Atomicity</strong>:<ul id="ffff532a-f6dc-8123-b166-d2c16d1316e0" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Ensures that a transaction is all-or-nothing. If any part of the transaction fails, the entire transaction is rolled back, and no changes are applied.</li></ul><ul id="ffff532a-f6dc-81f9-8b8d-de179ce5e9db" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>: Imagine transferring money between two bank accounts (A to B). If the debit from account A succeeds but the credit to account B fails, the transaction is rolled back, and no money is moved.</li></ul><ul id="ffff532a-f6dc-8112-b7d1-ddcadc6763b4" class="bulleted-list"><li style="list-style-type:disc"><strong>Tip to remember</strong>: &quot;Atomic = indivisible.&quot;</li></ul></li></ol><ol type="1" id="38840366-5809-45e6-ae1c-259b23dfc5fa" class="numbered-list" start="2"><li><strong>Consistency</strong>:<ul id="e009717d-2567-4c39-9788-bb24fb93a312" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Guarantees that a transaction brings the database from one valid state to another, maintaining data integrity.</li></ul><ul id="a7650405-5d89-4185-8659-7ada256f12ab" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>: In a banking system, if a transaction violates balance rules (e.g., negative balance), it will be rejected to keep the system consistent.</li></ul><ul id="ffff532a-f6dc-819a-a092-c2f8cf22ebb7" class="bulleted-list"><li style="list-style-type:disc"><strong>Tip to remember</strong>: &quot;Consistency = valid data before and after.&quot;</li></ul></li></ol><ol type="1" id="cf3ad485-2fc2-4336-bfcd-38671545b6d3" class="numbered-list" start="3"><li><strong>Isolation</strong>:<ul id="ffff532a-f6dc-81b0-a20f-c5ee798340b5" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Ensures that the execution of one transaction is isolated from others, preventing transactions from interfering with each other.</li></ul><ul id="ffff532a-f6dc-81b1-9a44-e998330b46a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>: If two customers are withdrawing money from the same account simultaneously, isolation ensures that both transactions don’t see each other’s operations mid-process.</li></ul><ul id="ffff532a-f6dc-814f-b30b-fbfd9164cc34" class="bulleted-list"><li style="list-style-type:disc"><strong>Tip to remember</strong>: &quot;Isolation = one transaction at a time.&quot;</li></ul></li></ol><ol type="1" id="ffff532a-f6dc-81c3-848f-e3d890f70e7a" class="numbered-list" start="4"><li><strong>Durability</strong>:<ul id="583f76ea-a0f8-41a2-9f15-b5f5d2a1d049" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Ensures that once a transaction is committed, it remains permanent, even in case of a system crash.</li></ul><ul id="ffff532a-f6dc-81b5-9e3b-e0b2db77a0ea" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>: After successfully transferring money between accounts, even if the server crashes right after, the transaction’s effect (money transfer) will still be present once the system is back up.</li></ul><ul id="a5b67772-ef8d-434d-bb5e-a28e542172d6" class="bulleted-list"><li style="list-style-type:disc"><strong>Tip to remember</strong>: &quot;Durability = committed stays forever.&quot;</li></ul></li></ol></div><div id="ffff532a-f6dc-81da-981f-e1698f6e9b71" style="width:100%" class="column"><p id="a56389b8-d9b9-4b99-8fca-443010a843c9" class=""><a href="https://www.youtube.com/watch?v=GAe5oB742dw">https://www.youtube.com/watch?v=GAe5oB742dw</a></p><figure id="ffff532a-f6dc-8178-b720-c1162c27bfbb" class="image"><a href="826d6425-8401-4806-b801-5ff758d5c69f_1280x1664.gif"><img style="width:576px" src="826d6425-8401-4806-b801-5ff758d5c69f_1280x1664.gif"/></a></figure></div></div></details></li></ul><ul id="ffff532a-f6dc-813a-93ee-ddac70eee923" class="toggle"><li><details open=""><summary><strong>BASE (Basically Available, Soft state, Eventual consistency) in NoSQL Databases</strong></summary><div id="ffff532a-f6dc-816b-bc35-e13582e42bda" class="column-list"><div id="7b84e8dd-b729-4e8d-8673-4d24deb7bc0c" style="width:100%" class="column"><p id="bfce28d1-421a-4be7-8eac-ccf64b642b9f" class="">
+</p><figure id="a7dcbc5b-a611-437f-aac0-8b36297bafa0"><div class="source"><a href="CAP_ACID_BASE.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/3c3cb5cf-507f-4b44-92d4-e9e7688b824a/CAP_ACID_BASE.pdf</a></div></figure></div><div id="10ed6db8-8330-4fc1-a0b2-929c4bee23ae" style="width:100%" class="column"><figure id="ffff532a-f6dc-8124-ab0d-ead69bf5e374" class="image"><a href="base4.png"><img style="width:799.9921875px" src="base4.png"/></a></figure></div></div></details></li></ul><ul id="ffff532a-f6dc-8175-a297-dc583ee13c2c" class="toggle"><li><details open=""><summary><strong>ACID vs BASE </strong></summary><ul id="ffff532a-f6dc-816c-aea0-f2100b30c0a5" class="bulleted-list"><li style="list-style-type:disc"><strong>ACID</strong> focuses on strict consistency and is more suitable for traditional relational databases where transactions must be fully consistent.</li></ul><ul id="6a6dcc58-d7f1-4cb9-8e0b-8f78ab6667cc" class="bulleted-list"><li style="list-style-type:disc"><strong>BASE</strong> accepts that data may be temporarily inconsistent but ensures high availability and eventual consistency, making it suitable for distributed databases and systems where availability is crucial.</li></ul></details></li></ul></details></li></ul><ul id="5ae5d6fd-6d91-40ed-ae4b-25a87762e016" class="toggle"><li><details open=""><summary><strong>Types of NoSQL Databases</strong></summary><div id="2a2328f4-7313-4c4b-ab7c-f1a2f889788f" class="column-list"><div id="aa83ee7f-d940-4702-b8ae-348e3afc7427" style="width:100%" class="column"><ul id="ffff532a-f6dc-8199-9afb-d72c3880c7cb" class="bulleted-list"><li style="list-style-type:disc"><strong>Relational Databases (SQL)</strong>: MySQL, Postgres<ul id="ffff532a-f6dc-812b-a564-e64d9549aed1" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Structure</strong>: Tables with rows and columns.</li></ul><ul id="ffff532a-f6dc-819e-8743-fd988d1cab6a" class="bulleted-list"><li style="list-style-type:circle"><strong>Consistency</strong>: Strong consistency with ACID properties.</li></ul><ul id="30aec588-1b3e-4a2f-9cb1-9390ecfa8ee9" class="bulleted-list"><li style="list-style-type:circle"><strong>Purpose</strong>: Suitable for applications with complex transactions and relational data.</li></ul></li></ul><ul id="6b0ee29b-01b7-4adb-acc9-59c1c1c0a82d" class="bulleted-list"><li style="list-style-type:disc"><strong>Key-Value Stores (NoSQL)</strong>: Redis<ul id="046a813a-d951-426f-a779-bf90c39fcc51" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Structure</strong>: Key-value pairs.</li></ul><ul id="7af49649-f0ae-44af-b292-ef649b634679" class="bulleted-list"><li style="list-style-type:circle"><strong>Consistency</strong>: Often eventually consistent (BASE properties).</li></ul><ul id="ffff532a-f6dc-810d-abd6-c0f22e7471ee" class="bulleted-list"><li style="list-style-type:circle"><strong>Purpose</strong>: Simple, fast access to data with high scalability needs (e.g., caching).</li></ul></li></ul><ul id="5eada466-c12b-4e16-b8c5-13c788c2c13c" class="bulleted-list"><li style="list-style-type:disc"><strong>Document Stores (NoSQL)</strong>: MongoDB<ul id="f421ed6c-b3e3-4ee0-87fd-12e47d84a982" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Structure</strong>: JSON-like documents.</li></ul><ul id="ffff532a-f6dc-811a-9709-d3a01f63775d" class="bulleted-list"><li style="list-style-type:circle"><strong>Consistency</strong>: Often eventual consistency.</li></ul><ul id="ffff532a-f6dc-815e-b7be-d4484d69fd53" class="bulleted-list"><li style="list-style-type:circle"><strong>Purpose</strong>: Flexible schema, suitable for hierarchical data and semi-structured data (e.g., content management).</li></ul></li></ul><ul id="ffff532a-f6dc-81b6-9cca-ea025d6e6495" class="bulleted-list"><li style="list-style-type:disc"><strong>Column-Family Stores (NoSQL)</strong>: Cassandra<ul id="ffff532a-f6dc-8119-a0b4-f39f49fb9dbf" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Structure</strong>: Columns grouped into families.</li></ul><ul id="ffff532a-f6dc-81b4-b0d3-d382c89fe9b5" class="bulleted-list"><li style="list-style-type:circle"><strong>Consistency</strong>: Often eventual consistency.</li></ul><ul id="ffff532a-f6dc-81cb-9568-ea0c409f39e3" class="bulleted-list"><li style="list-style-type:circle"><strong>Purpose</strong>: High write and read throughput, suitable for big data analytics (e.g., data warehousing).</li></ul></li></ul><ul id="6a292188-ce36-4d69-a1af-a7654b4ddd6d" class="bulleted-list"><li style="list-style-type:disc"><strong>Graph Databases (NoSQL)</strong>: Amazon Neptune, Noe4j<ul id="da2e0e90-285d-44b8-90e1-a4f31648d51a" class="bulleted-list"><li style="list-style-type:circle"><strong>Data Structure</strong>: Nodes and edges.</li></ul><ul id="ffff532a-f6dc-8185-9dfa-fd4ada72c4f2" class="bulleted-list"><li style="list-style-type:circle"><strong>Consistency</strong>: Varies, often eventual consistency.</li></ul><ul id="ffff532a-f6dc-812c-a9a9-efde0318dafd" class="bulleted-list"><li style="list-style-type:circle"><strong>Purpose</strong>: Efficient querying of interconnected data (e.g., social networks).</li></ul></li></ul></div><div id="11f063b1-53be-491e-95e3-cc2330add592" style="width:100%" class="column"><p id="ffff532a-f6dc-81f3-b193-feb5d58935aa" class="">
+</p><figure id="ffff532a-f6dc-8185-b87e-c61d4e0023d0" class="image"><a href="image%202.png"><img style="width:790.0694580078125px" src="image%202.png"/></a></figure><figure id="59dfd713-0424-4df5-a3d9-4adb7177e971" class="image"><a href="1520921114882.jpg"><img style="width:625.9896240234375px" src="1520921114882.jpg"/></a></figure><p id="32437276-36fd-4b42-ad79-48d1142c177c" class="">
+</p></div></div></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Data analyses and processing. Explain different data storage and processing approaches (SQL, no-SQL, DW/DataLake, RDF and their influence on data analyses. What type of storage is suitable for what type of tasks? Describe basic data-related tasks (visualization, deep data analyses, reporting, data processing) and discuss the relationship between data storage type and the task.</summary><div class="indented"><ul id="4257d0df-b31a-4881-b997-89581376bfe2" class="toggle"><li><details open=""><summary><strong>Data Storage and Processing Approaches</strong>:</summary><table id="34acb596-6a28-4d1e-9fff-b2590a7dcdc7" class="simple-table"><thead class="simple-table-header"><tr id="e6b38101-cb9b-4f7a-933b-454848ad3a6a"><th id="F=&lt;G" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Approach</strong></th><th id="{xpO" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Purpose</strong></th><th id="IWdK" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Goal</strong></th><th id="\]fK" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Storage Method</strong></th><th id="FaZV" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Processing Approach</strong></th><th id="\^`n" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Suitable for Tasks </strong></th><th id="?ONz" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Influence on Data Analysis</strong></th><th id="Tbh{" class="block-color-blue_background simple-table-header" style="width:177.7916717529297px"><strong>Examples</strong></th></tr></thead><tbody><tr id="ffff532a-f6dc-8168-b716-fdaae8fef73f"><td id="F=&lt;G" class="block-color-brown_background" style="width:177.7916717529297px"><strong>SQL (Relational)</strong></td><td id="{xpO" class="block-color-brown_background" style="width:177.7916717529297px">Manage structured data with strict schemas for transactional systems.</td><td id="IWdK" class="block-color-brown_background" style="width:177.7916717529297px">Ensure data integrity, reliability, and consistency with predefined structure.</td><td id="\]fK" class="block-color-brown_background" style="width:177.7916717529297px">Tables with predefined schema.</td><td id="FaZV" class="block-color-brown_background" style="width:177.7916717529297px">SQL queries, ACID compliance, supports complex joins and aggregations.</td><td id="\^`n" class="block-color-brown_background" style="width:177.7916717529297px">Transactional systems, <strong><span style="border-bottom:0.05em solid">reporting, structured data analysis</span></strong>.</td><td id="?ONz" class="block-color-brown_background" style="width:177.7916717529297px">Ideal for structured data with clear relationships; complex querying capabilities for detailed analysis.</td><td id="Tbh{" class="block-color-brown_background" style="width:177.7916717529297px">MySQL, PostgreSQL, Oracle DB, SQL Server.</td></tr><tr id="3791fd6d-32af-4542-93e0-6cdb6a9b3b03"><td id="F=&lt;G" class="block-color-orange_background" style="width:177.7916717529297px"><strong>NoSQL (Non-Relational)</strong></td><td id="{xpO" class="block-color-orange_background" style="width:177.7916717529297px">Handle unstructured or semi-structured data with flexible schemas.</td><td id="IWdK" class="block-color-orange_background" style="width:177.7916717529297px">Provide scalability and flexibility for diverse data formats with high performance and horizontal scaling.</td><td id="\]fK" class="block-color-orange_background" style="width:177.7916717529297px">Key-value, document, wide-column, or graph databases.</td><td id="FaZV" class="block-color-orange_background" style="width:177.7916717529297px">Schema-less design, BASE model (eventual consistency), distributed processing.</td><td id="\^`n" class="block-color-orange_background" style="width:177.7916717529297px">Real-time data, big data, IoT, social media analytics, flexible schema management.</td><td id="?ONz" class="block-color-orange_background" style="width:177.7916717529297px">Enables analysis of unstructured, dynamic data; scalable for real-time analytics but may lack strict consistency.</td><td id="Tbh{" class="block-color-orange_background" style="width:177.7916717529297px">MongoDB, Cassandra, Neo4j, Redis.</td></tr><tr id="ffff532a-f6dc-817e-8749-cf188d328ac8"><td id="F=&lt;G" class="block-color-teal_background" style="width:177.7916717529297px"><strong>Data Warehouses (DW)</strong></td><td id="{xpO" class="block-color-teal_background" style="width:177.7916717529297px">Centralized repository for structured data from various sources.</td><td id="IWdK" class="block-color-teal_background" style="width:177.7916717529297px">Enable complex historical analysis and reporting on large datasets.</td><td id="\]fK" class="block-color-teal_background" style="width:177.7916717529297px">Structured, schema-based (star/snowflake schema).</td><td id="FaZV" class="block-color-teal_background" style="width:177.7916717529297px">Read-intensive, OLAP queries, aggregations, ETL processing.</td><td id="\^`n" class="block-color-teal_background" style="width:177.7916717529297px">Business intelligence, historical reporting and analysis, trend analysis.</td><td id="?ONz" class="block-color-teal_background" style="width:177.7916717529297px">Structured data ensures consistent analysis, optimized for large-scale reporting and historical trend analysis.</td><td id="Tbh{" class="block-color-teal_background" style="width:177.7916717529297px">Amazon Redshift, Snowflake, Google BigQuery.</td></tr><tr id="cfb807f1-0086-4ae1-bd73-2f3f8b0a4445"><td id="F=&lt;G" class="block-color-purple_background" style="width:177.7916717529297px"><strong>Data Lakes</strong></td><td id="{xpO" class="block-color-purple_background" style="width:177.7916717529297px">Store large volumes of raw data in its native format (structured and unstructured).</td><td id="IWdK" class="block-color-purple_background" style="width:177.7916717529297px">Provide cost-effective storage for big data, enabling exploratory analysis and machine learning.</td><td id="\]fK" class="block-color-purple_background" style="width:177.7916717529297px">Raw data stored in files (HDFS, cloud storage).</td><td id="FaZV" class="block-color-purple_background" style="width:177.7916717529297px">ELT processing, distributed frameworks (Hadoop, Spark), processing on demand.</td><td id="\^`n" class="block-color-purple_background" style="width:177.7916717529297px">Big data processing, data science, machine learning, exploratory analysis.</td><td id="?ONz" class="block-color-purple_background" style="width:177.7916717529297px">Flexible for handling both structured and unstructured data; excellent for data exploration and machine learning.</td><td id="Tbh{" class="block-color-purple_background" style="width:177.7916717529297px">AWS S3 Data Lake, Azure Data Lake, Hadoop.</td></tr><tr id="4ae81e8d-fced-40cc-8e9d-35d878bfde54"><td id="F=&lt;G" class="block-color-yellow_background" style="width:177.7916717529297px"><strong>RDF (Resource Description Framework)</strong></td><td id="{xpO" class="block-color-yellow_background" style="width:177.7916717529297px">Represent relationships and metadata in graph-based formats.</td><td id="IWdK" class="block-color-yellow_background" style="width:177.7916717529297px">Enable linked data and semantic analysis for knowledge representation.</td><td id="\]fK" class="block-color-yellow_background" style="width:177.7916717529297px">Triples (subject-predicate-object).</td><td id="FaZV" class="block-color-yellow_background" style="width:177.7916717529297px">SPARQL queries for graph-based analysis and metadata management.</td><td id="\^`n" class="block-color-yellow_background" style="width:177.7916717529297px">Excellent for graph-based visualizations, semantic analysis, and metadata-driven reporting</td><td id="?ONz" class="block-color-yellow_background" style="width:177.7916717529297px">Suitable for relationship-driven data and semantic analysis; enhances metadata-driven insights and knowledge graphs.</td><td id="Tbh{" class="block-color-yellow_background" style="width:177.7916717529297px">Apache Jena, GraphDB, Stardog.</td></tr></tbody></table><ul id="6319746e-a2ee-47bf-be94-51a6ea91901d" class="toggle"><li><details open=""><summary><strong>What is RDF?</strong><br/>RDF, or Resource Description Framework, is a framework used to represent information about things (called resources) in a structured, machine-readable way. It’s commonly used in applications where relationships between different types of data are important, like in knowledge graphs or the Semantic Web.<br/></summary><p id="ffff532a-f6dc-8141-815d-c7c825f7e0ab" class=""><span style="border-bottom:0.05em solid">Key Concepts</span>:</p><p id="d2ae7591-249c-4968-b0d7-01fe370a797c" class=""><strong>Triples</strong>: RDF stores data as &quot;triples,&quot; which are a set of three parts:For example:This triple says &quot;John has a birth year of 1990.&quot;<div class="indented"><ol type="1" id="778781bb-a3f1-437a-baf8-4a7e6d4af232" class="numbered-list" start="1"><li><strong>Subject</strong>: The resource being described (like a webpage, person, or concept).</li></ol><ol type="1" id="ffff532a-f6dc-81ef-b62c-c256b303e50d" class="numbered-list" start="2"><li><strong>Predicate</strong>: A property or characteristic of the resource (like &quot;has name&quot; or &quot;was born in&quot;).</li></ol><ol type="1" id="ffff532a-f6dc-8176-8fef-ec6bbec7f4ec" class="numbered-list" start="3"><li><strong>Object</strong>: The value of that property (like &quot;John Doe&quot; or &quot;1990&quot;).</li></ol><ul id="a0dbe87d-a6a3-4717-acf2-e85276459fad" class="bulleted-list"><li style="list-style-type:disc"><strong>Subject</strong>: &quot;John&quot;</li></ul><ul id="65692fd2-5912-47a5-babd-f21feffe2264" class="bulleted-list"><li style="list-style-type:disc"><strong>Predicate</strong>: &quot;has a birth year&quot;</li></ul><ul id="e1f542a5-8a2f-4b48-9b51-34b7d51dd7f6" class="bulleted-list"><li style="list-style-type:disc"><strong>Object</strong>: &quot;1990&quot;</li></ul></div></p><p id="ffff532a-f6dc-81e6-ba57-f0cde52ca8ce" class="">How It Works:</p><p id="ffff532a-f6dc-816b-9a62-c156bbd169d4" class="">RDF allows you to describe relationships between different resources in a way that both humans and computers can understand.</p><p id="ffff532a-f6dc-81c8-b290-dd7b3af12b53" class="">It’s stored in a graph format, where subjects are linked to objects by predicates. This creates a web of information, which is why it’s used in the <strong>Semantic Web</strong>.</p><p id="ffff532a-f6dc-814d-a3b8-fac2cb5ff8c3" class=""><span style="border-bottom:0.05em solid">Example:</span></p><p id="ffff532a-f6dc-817d-bf5b-c51ff5261a45" class="">Let’s say you want to describe a book in RDF:</p><p id="ffff532a-f6dc-8152-9388-d658d069a77c" class=""><strong>Subject</strong>: &quot;The Lord of the Rings&quot;</p><p id="ffff532a-f6dc-8145-b49a-cb0e01d609df" class=""><strong>Predicate</strong>: &quot;was written by&quot;</p><p id="f483d225-8207-4d6b-9de0-6d8ab59e9245" class=""><strong>Object</strong>: &quot;J.R.R. Tolkien&quot;</p><p id="ffff532a-f6dc-81d2-9046-f7851775ad32" class="">This tells you that &quot;The Lord of the Rings was written by J.R.R. Tolkien.&quot; You can build on this, for example:</p><p id="ffff532a-f6dc-8143-8d59-d9de9052b399" class=""><strong>Subject</strong>: &quot;J.R.R. Tolkien&quot;</p><p id="ffff532a-f6dc-8157-8757-dc8db878ea59" class=""><strong>Predicate</strong>: &quot;was born in&quot;</p><p id="e004d74c-483d-4c6c-b3f6-ecc1d5564598" class=""><strong>Object</strong>: &quot;South Africa&quot;</p><p id="b8b609f5-94df-40ca-9622-37844f9454ef" class="">Now, you have two pieces of information that connect &quot;The Lord of the Rings&quot; to where the author was born.</p><p id="1cd326d0-c3e1-405e-9035-9b6e1a9069f2" class=""><span style="border-bottom:0.05em solid">Why Use RDF?</span></p><p id="cfad2422-f267-4d92-bd83-2dbaefccb560" class="">RDF is especially useful when:</p><p id="ffff532a-f6dc-818f-b7d2-d3e1de22876a" class="">You want to describe data relationships.</p><p id="ffff532a-f6dc-81a1-9bf9-f66daff51070" class="">You’re working with linked data (e.g., connecting datasets or knowledge graphs).</p><p id="6684df2b-d9f7-454c-9cb3-93b0bda549e7" class="">You need flexible, semantic analysis of data.</p><p id="ffff532a-f6dc-8177-aaf4-f9592ca399d7" class=""><span style="border-bottom:0.05em solid">Tools That Use RDF:</span></p><p id="35ecb7ed-4c0d-44d1-9f31-206b6cfea5db" class=""><strong>SPARQL</strong>: A query language to extract and manipulate RDF data.</p><p id="ffff532a-f6dc-8199-b34d-ce14fe293bd3" class=""><strong>Examples</strong>: Knowledge graphs like <strong>Google Knowledge Graph</strong>, databases like <strong>GraphDB</strong>, and <strong>semantic web</strong> applications.</p></details></li></ul></details></li></ul><ul id="ffff532a-f6dc-8105-b846-ef5cceea77ae" class="toggle"><li><details open=""><summary><strong>Data-Related Tasks</strong>:</summary><table id="09d0a33f-0050-46bf-b58f-b0657fae8377" class="simple-table"><thead class="simple-table-header"><tr id="ffff532a-f6dc-814c-af80-e8a7254116ae"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">Task</th><th id="}GHN" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">SQL &amp; Data Warehouses</th><th id="v~`l" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">NoSQL &amp; Data Lakes</th></tr></thead><tbody><tr id="2d3d7b0d-c6a7-40d7-8a35-81343f2fdbf2"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">Visualization</th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Tools:</strong> Tableau, Power BI, Looker</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Tools</strong>: Kibana, Apache Superset, Grafana</td></tr><tr id="ffff532a-f6dc-815c-b219-d690282c5114"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px"></th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Use:</strong> Structured data (e.g., charts, dashboards)</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Use</strong>: Unstructured data (e.g., logs, social data)</td></tr><tr id="ffff532a-f6dc-81e5-9452-d7a0a4f9a087"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">Deep Analysis</th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Tools</strong>: Amazon Redshift, Snowflake, Google BigQuery</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Tools</strong>: Apache Spark, Hadoop, Apache Flink</td></tr><tr id="ffff532a-f6dc-81a6-9d86-ee8a0230ca79"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px"></th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Use</strong>: Complex queries, historical analysis</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Use</strong>: Distributed processing, real-time analytics</td></tr><tr id="3612c310-309b-446f-8d80-e4219dec4271"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">Reporting</th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Tools</strong>: SSRS, Oracle BI, SAP BusinessObjects</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Tools</strong>: Apache Druid, Presto, BigQuery</td></tr><tr id="870cad8c-ab46-43eb-9914-619f58e4c8e2"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px"></th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Use</strong>: Structured reporting (e.g., monthly reports)</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Use</strong>: Real-time or ad-hoc reporting (with preprocessing)</td></tr><tr id="91bb3c13-b3d9-45dc-880a-520f64accb67"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px">Data Processing</th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Tools</strong>: MySQL, PostgreSQL, Oracle DB</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Tools</strong>: Apache Hadoop, Apache Kafka, Apache Storm</td></tr><tr id="ffff532a-f6dc-81c8-a2e4-c34ccd5db68b"><th id="Ed}Y" class="simple-table-header-color simple-table-header" style="width:371.5757649739583px"></th><td id="}GHN" class="" style="width:371.5757649739583px"><strong>Use</strong>: Transactional tasks, ACID compliance</td><td id="v~`l" class="" style="width:371.5757649739583px"><strong>Use</strong>: Batch processing, real-time stream processing</td></tr></tbody></table></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Methods of data analysis. Describe the basic data analysis methods (histogram, boxplot, correlation, pairwise covariance, …) and interpret their results on a simple example. Describe principles of advanced data analysis methods (clustering, regression, classification) and describe the interpretation of their possible outputs.</summary><div class="indented"><ul id="ffff532a-f6dc-8174-addb-f041c2fcd342" class="toggle"><li><details open=""><summary><strong>Back up story for data Analysis - complete  steps involved</strong></summary><p id="ffff532a-f6dc-81a2-b2dd-e04f0c991758" class="">Data analysis typically involves several key steps and methods to transform raw data into meaningful insights. Here&#x27;s a concise overview:</p><h3 id="b8ccade0-2c30-42f2-a47b-f8ba6beb291d" class="">1. <strong>Data Collection</strong></h3><ul id="ffff532a-f6dc-81d6-8aa3-f98a5c3ffb4b" class="bulleted-list"><li style="list-style-type:disc"><strong>Gathering</strong>: Collect data from various sources such as databases, surveys, sensors, or APIs.</li></ul><ul id="e237e9f1-c012-4ed6-80f9-8ec39c807145" class="bulleted-list"><li style="list-style-type:disc"><strong>Integration</strong>: Combine data from different sources if necessary.</li></ul><h3 id="ffff532a-f6dc-81d2-b742-c3435838d0d0" class="">2. <strong>Data Cleaning</strong></h3><ul id="ffff532a-f6dc-812c-a4c1-e5f79ea1b657" class="bulleted-list"><li style="list-style-type:disc"><strong>Handling Missing Values</strong>: Use imputation methods or remove records with missing values.</li></ul><ul id="ec4ce155-ef43-456f-b543-e982b1566ae4" class="bulleted-list"><li style="list-style-type:disc"><strong>Removing Duplicates</strong>: Identify and remove duplicate records.</li></ul><ul id="ffff532a-f6dc-81df-9bac-d99bfc4ecddd" class="bulleted-list"><li style="list-style-type:disc"><strong>Outlier Detection</strong>: Identify and handle outliers that may skew analysis.</li></ul><ul id="ffff532a-f6dc-8113-9835-fcf291e3e702" class="bulleted-list"><li style="list-style-type:disc"><strong>Standardization</strong>: Ensure consistency in data formats and units.</li></ul><h3 id="01190ccc-3d2a-40ad-9676-46aca1cc2315" class="">3. <strong>Data Exploration</strong></h3><ul id="6ff51931-f302-463e-814c-cdfb69fc7809" class="bulleted-list"><li style="list-style-type:disc"><strong>Descriptive Statistics</strong>: Calculate mean, median, mode, standard deviation, etc.</li></ul><ul id="f408a394-c0a8-4d61-b6da-99c4cb54f06e" class="bulleted-list"><li style="list-style-type:disc"><strong>Data Visualization</strong>: Use charts and plots (e.g., histograms, scatter plots) to understand data distribution and relationships.</li></ul><ul id="ffff532a-f6dc-817e-9fcd-e3d40bea4e72" class="bulleted-list"><li style="list-style-type:disc"><strong>Correlation Analysis</strong>: Measure relationships between variables using correlation coefficients.</li></ul><h3 id="ffff532a-f6dc-81cd-98ff-fbe75935a727" class="">4. <strong>Data Transformation</strong></h3><ul id="209cc082-8cfc-4314-be2a-0fb10755e111" class="bulleted-list"><li style="list-style-type:disc"><strong>Normalization/Scaling</strong>: Adjust data to a common scale (e.g., Min-Max scaling).</li></ul><ul id="4ad1a6fd-302a-469a-a6ed-10c8e75be346" class="bulleted-list"><li style="list-style-type:disc"><strong>Feature Engineering</strong>: Create new features or modify existing ones to enhance model performance.</li></ul><ul id="ffff532a-f6dc-8134-8c11-d093cafd907a" class="bulleted-list"><li style="list-style-type:disc"><strong>Dimensionality Reduction</strong>: Use techniques like PCA (Principal Component Analysis) to reduce the number of features while preserving essential information.</li></ul><h3 id="49712193-28c1-4a41-b90e-26c5a9c8f427" class="">5. <strong>Data Modeling</strong></h3><ul id="d673ad82-20c4-4ad4-b560-8f91340c1da9" class="bulleted-list"><li style="list-style-type:disc"><strong>Choose Model</strong>: Select appropriate models based on the problem (e.g., regression, classification, clustering).</li></ul><ul id="53fd54fd-572b-45fa-bc7b-62829d66143e" class="bulleted-list"><li style="list-style-type:disc"><strong>Training</strong>: Fit the model to the training data.</li></ul><ul id="ffff532a-f6dc-81f4-836f-e62901d62586" class="bulleted-list"><li style="list-style-type:disc"><strong>Validation</strong>: Evaluate model performance on a validation set.</li></ul><ul id="1951bd91-fa54-4ec1-bc0d-621ca07dc674" class="bulleted-list"><li style="list-style-type:disc"><strong>Hyperparameter Tuning</strong>: Optimize model parameters to improve performance.</li></ul><h3 id="08c3e743-b19c-4abc-b43b-77062bb988c2" class="">6. <strong>Model Evaluation</strong></h3><ul id="20c4a22a-0a8e-4b6d-a752-c7fed62363b3" class="bulleted-list"><li style="list-style-type:disc"><strong>Metrics</strong>: Use metrics such as accuracy, precision, recall, F1-score, or ROC-AUC for classification models, and RMSE (Root Mean Squared Error), MAE (Mean Absolute Error) for regression models.</li></ul><ul id="d0b23304-2a62-47ed-a4a0-59b7e3b93b11" class="bulleted-list"><li style="list-style-type:disc"><strong>Cross-Validation</strong>: Assess model robustness by using techniques like k-fold cross-validation.</li></ul><h3 id="cbc9af59-e677-4383-bb7c-b88f0e78ae3e" class="">7. <strong>Interpreting Results</strong></h3><ul id="ffff532a-f6dc-815e-bdc9-c855efd858ef" class="bulleted-list"><li style="list-style-type:disc"><strong>Insight Extraction</strong>: Derive actionable insights and conclusions from the analysis.</li></ul><ul id="f97eb205-4bcb-4b5a-8356-f2db86061195" class="bulleted-list"><li style="list-style-type:disc"><strong>Visualization</strong>: Present findings using visualizations like bar charts, heatmaps, or dashboards.</li></ul><h3 id="05ee5731-c02d-446c-88f0-6597dda97676" class="">8. <strong>Reporting</strong></h3><ul id="205099ad-eb15-4c4e-9d43-8474ee27e608" class="bulleted-list"><li style="list-style-type:disc"><strong>Documentation</strong>: Prepare detailed reports or presentations that summarize the findings, methodology, and implications.</li></ul><ul id="ffff532a-f6dc-8192-9602-d5c087107aed" class="bulleted-list"><li style="list-style-type:disc"><strong>Recommendations</strong>: Provide actionable recommendations based on the analysis.</li></ul><h3 id="1b4b0947-3204-4da3-8105-63d29060ba19" class="">9. <strong>Deployment and Monitoring</strong></h3><ul id="ffff532a-f6dc-8151-9ce6-d3015f3992e9" class="bulleted-list"><li style="list-style-type:disc"><strong>Deployment</strong>: Implement the model into production if applicable.</li></ul><ul id="ffff532a-f6dc-817b-a472-d0f0262146ce" class="bulleted-list"><li style="list-style-type:disc"><strong>Monitoring</strong>: Continuously monitor the model&#x27;s performance and update it as necessary.</li></ul><p id="ffff532a-f6dc-81c9-b922-ca9d43b4d38a" class="">These steps can vary slightly depending on the specific project and the tools used, but they provide a general framework for conducting data analysis effectively.</p></details></li></ul><ul id="ffff532a-f6dc-81bd-97ef-e7f5f25763c4" class="toggle"><li><details open=""><summary><strong>Basic Data Analysis Methods</strong>: histogram, boxplot, correlation, pairwise covariance</summary><div id="992fe3cd-bd61-4915-97a8-c0c7b121d98d" class="column-list"><div id="ffff532a-f6dc-81db-8909-fc6eb6b64c4d" style="width:100%" class="column"><p id="31a25147-d29c-4678-ae46-40b469217ced" class=""><strong>Histogram</strong></p><ul id="ffff532a-f6dc-81a4-b734-ea89226adcdb" class="bulleted-list"><li style="list-style-type:disc"><strong>Description</strong>: A histogram displays the distribution of a dataset by dividing it into bins and showing the frequency of data points in each bin.</li></ul><ul id="ffff532a-f6dc-8172-91db-e5e4cfd9fbb5" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation</strong>: It helps visualize the shape of the data distribution, such as whether it’s skewed or normally distributed. For example, if you have exam scores ranging from 0 to 100, a histogram might show that most scores cluster around 70-80, indicating a central tendency.</li></ul><p id="973155f6-8237-49d0-963a-9ec73858ca21" class=""><strong>Boxplot</strong></p><ul id="f54a35e7-d5f5-4257-af58-ed2c47996d02" class="bulleted-list"><li style="list-style-type:disc"><strong>Description</strong>: A boxplot (or whisker plot) summarizes the distribution of a dataset through its quartiles and highlights outliers. It shows the median, upper and lower quartiles, and possible outliers.</li></ul><ul id="ffff532a-f6dc-81ce-a9f7-f74fe4439508" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation</strong>: It provides insights into the spread and skewness of the data. For instance, if you plot salaries of employees and the boxplot shows a long right whisker, it suggests there are some high outlier salaries compared to the rest of the data.</li></ul><p id="e4890c71-beb6-4fa1-840e-d3b234db1257" class=""><strong>Correlation</strong></p><ul id="ffff532a-f6dc-81d5-9adf-f80e535d536e" class="bulleted-list"><li style="list-style-type:disc"><strong>Description</strong>: Correlation measures the strength and direction of the linear relationship between two variables. It ranges from -1 (perfect negative correlation) to 1 (perfect positive correlation), with 0 indicating no linear relationship.</li></ul><ul id="ffff532a-f6dc-81ad-919d-eff70064f519" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation</strong>: A positive correlation means that as one variable increases, the other tends to increase as well. For example, if there’s a correlation of 0.8 between hours studied and exam scores, it suggests that more study hours are associated with higher scores.</li></ul><p id="ffff532a-f6dc-8112-96d0-c38ba07cd9ea" class=""><strong>Pairwise Covariance</strong></p><ul id="98b45292-de3b-4cbc-ad9e-3c30c3b52d29" class="bulleted-list"><li style="list-style-type:disc"><strong>Description</strong>: Covariance measures how two variables change together. Positive covariance means that when one variable increases, the other tends to increase, while negative covariance indicates an inverse relationship.</li></ul><ul id="ffff532a-f6dc-81e2-9314-f880276fd802" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation</strong>: Unlike correlation, covariance is not standardized, so its magnitude depends on the scale of the variables. For example, if the covariance between height and weight is positive, it suggests that taller people tend to be heavier.<ul id="ffff532a-f6dc-81f6-b150-d4eb423ed09e" class="bulleted-list"><li style="list-style-type:circle"><strong>Covariance:</strong> Positive if the variables increase or decrease together, negative if one increases while the other decreases.</li></ul><ul id="ffff532a-f6dc-81ce-93b9-ff80ca9ac4df" class="bulleted-list"><li style="list-style-type:circle"><strong>Magnitude:</strong> Indicates the strength of the relationship.</li></ul></li></ul><h3 id="ffff532a-f6dc-81f1-b0d1-f0797cdf3cc0" class="">Histogram</h3><ul id="ffff532a-f6dc-8144-a9e8-fd0b03c37057" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Visualizes the distribution of a numerical variable.</li></ul><ul id="ffff532a-f6dc-81d7-aea9-cc9133cfa19d" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation:</strong><ul id="0d4a2be4-7c60-4c72-acc3-aacb5759f736" class="bulleted-list"><li style="list-style-type:circle"><strong>Shape:</strong> Symmetrical, skewed (left or right), bimodal.</li></ul><ul id="ffff532a-f6dc-81e8-b547-cb4f4d4f2217" class="bulleted-list"><li style="list-style-type:circle"><strong>Central tendency:</strong> Mean, median, mode.</li></ul><ul id="90f1e075-7d77-4374-8a54-07130227b004" class="bulleted-list"><li style="list-style-type:circle"><strong>Spread:</strong> Variance, standard deviation.</li></ul></li></ul><h3 id="193fa790-5a49-42d3-bfac-48fdb40c18d4" class="">2. Boxplot</h3><ul id="ffff532a-f6dc-8164-9092-e2cb7e390898" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Shows the distribution of a numerical variable, including quartiles, median, and outliers.</li></ul><ul id="ffff532a-f6dc-81dd-8fce-e5ba2121cf0b" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation:</strong><ul id="e568882e-53bd-4b1b-b051-88350db1ffdd" class="bulleted-list"><li style="list-style-type:circle"><strong>Median:</strong> Represents the 50th percentile.</li></ul><ul id="ffff532a-f6dc-817e-9aa2-d0c78c9e399a" class="bulleted-list"><li style="list-style-type:circle"><strong>Interquartile range (IQR):</strong> Represents the spread of the middle 50% of the data.</li></ul><ul id="1e784158-9a2e-4995-a769-fdb8e4498b17" class="bulleted-list"><li style="list-style-type:circle"><strong>Outliers:</strong> Data points that are significantly different from the rest.</li></ul></li></ul><h3 id="ffff532a-f6dc-81e9-97c4-e2fe95af54d7" class="">3. Correlation</h3><ul id="9aff0d24-61c6-4fd6-82ef-779d32569dca" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Measures the strength and direction of the linear relationship between two numerical variables.</li></ul><ul id="ffff532a-f6dc-8185-ba40-ceb79e0d7913" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation:</strong><ul id="ffff532a-f6dc-813d-9453-cdde97881031" class="bulleted-list"><li style="list-style-type:circle"><strong>Correlation coefficient (r):</strong> Ranges from -1 to 1.<ul id="ffff532a-f6dc-815c-a5c9-d3c4a1f7ce2d" class="bulleted-list"><li style="list-style-type:square">1: Perfect negative correlation.</li></ul><ul id="ffff532a-f6dc-8162-8015-d3c64262de05" class="bulleted-list"><li style="list-style-type:square">0: No correlation.</li></ul><ul id="ffff532a-f6dc-819c-9132-cc30c14afe20" class="bulleted-list"><li style="list-style-type:square">1: Perfect positive correlation.</li></ul></li></ul></li></ul><h3 id="ffff532a-f6dc-817f-9a4e-db403a6f65e6" class="">4. Pairwise Covariance</h3><ul id="ffff532a-f6dc-8196-abb4-f0173a01da98" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Measures the joint variability of two numerical variables.</li></ul><ul id="ffff532a-f6dc-8124-989e-ca98c86f2c08" class="bulleted-list"><li style="list-style-type:disc"><strong>Interpretation:</strong><ul id="8fc38a79-a747-4100-a218-6b955f7fb711" class="bulleted-list"><li style="list-style-type:circle"><strong>Covariance:</strong> Positive if the variables increase or decrease together, negative if one increases while the other decreases.</li></ul><ul id="ffff532a-f6dc-81a8-8fb1-e79284084926" class="bulleted-list"><li style="list-style-type:circle"><strong>Magnitude:</strong> Indicates the strength of the relationship.</li></ul></li></ul></div><div id="ffff532a-f6dc-8133-bbb2-cb99e4f95324" style="width:100%" class="column"><p id="cfaedda3-5a1f-48b2-8add-20ea01f10fb7" class=""><strong><span style="border-bottom:0.05em solid">Analyze student grades:</span></strong></p><p id="137ae478-e6c3-45da-8f31-656d547a24c1" class="">Let’s say we have a dataset of 10 students with their exam scores and study hours:</p><table id="ffff532a-f6dc-81a9-9acf-ed01b961e7de" class="simple-table"><tbody><tr id="ffff532a-f6dc-810d-946d-d163989f86de"><td id="yywQ" class="">Student</td><td id="~~Pz" class="">Study Hours</td><td id="\&lt;zb" class="">Exam Score</td></tr><tr id="ffff532a-f6dc-8148-97f6-ce016e94bf89"><td id="yywQ" class="">A</td><td id="~~Pz" class="">2</td><td id="\&lt;zb" class="">50</td></tr><tr id="4149def3-2b36-4550-b55a-cee3801b1137"><td id="yywQ" class="">B</td><td id="~~Pz" class="">3</td><td id="\&lt;zb" class="">55</td></tr><tr id="ffff532a-f6dc-81e2-bd53-d5d96f5488f4"><td id="yywQ" class="">C</td><td id="~~Pz" class="">4</td><td id="\&lt;zb" class="">60</td></tr><tr id="ffff532a-f6dc-81a6-92ce-c94c150fe4b4"><td id="yywQ" class="">D</td><td id="~~Pz" class="">5</td><td id="\&lt;zb" class="">65</td></tr><tr id="ffff532a-f6dc-8118-8c2d-e29ea547d851"><td id="yywQ" class="">E</td><td id="~~Pz" class="">6</td><td id="\&lt;zb" class="">70</td></tr><tr id="8ea566c1-5b71-4a6d-8a65-cbe0a392094f"><td id="yywQ" class="">F</td><td id="~~Pz" class="">7</td><td id="\&lt;zb" class="">75</td></tr><tr id="ffff532a-f6dc-81cb-8548-f56594f981ce"><td id="yywQ" class="">G</td><td id="~~Pz" class="">8</td><td id="\&lt;zb" class="">80</td></tr><tr id="33b864b3-0120-467f-8663-81e27cc67b0c"><td id="yywQ" class="">H</td><td id="~~Pz" class="">9</td><td id="\&lt;zb" class="">85</td></tr><tr id="4cf5091b-878b-4049-96c6-f92100225b90"><td id="yywQ" class="">I</td><td id="~~Pz" class="">10</td><td id="\&lt;zb" class="">90</td></tr><tr id="e3c75f48-dae9-4104-8110-307e3b4a1ebf"><td id="yywQ" class="">J</td><td id="~~Pz" class="">11</td><td id="\&lt;zb" class="">95</td></tr></tbody></table><ol type="1" id="08941212-e2e1-463c-a548-28a06b3a4a02" class="numbered-list" start="1"><li><strong>Histogram</strong>: If you plot histograms of Study Hours and Exam Scores, you might see that both distributions are roughly symmetric and bell-shaped, indicating normal distributions.</li></ol><ol type="1" id="ffff532a-f6dc-813f-889c-febadc66ede9" class="numbered-list" start="2"><li><strong>Boxplot</strong>: A boxplot of Exam Scores would show a central box around 65-80, with whiskers extending to 50 and 95, and possibly no outliers if all values are within the whiskers.</li></ol><ol type="1" id="ffff532a-f6dc-811f-97e8-e363a8aba574" class="numbered-list" start="3"><li><strong>Correlation</strong>: Calculating the correlation between Study Hours and Exam Scores will likely show a strong positive correlation (close to 1), indicating that more study hours are strongly associated with higher exam scores.</li></ol><ol type="1" id="ffff532a-f6dc-8173-ac57-e238913c1199" class="numbered-list" start="4"><li><strong>Pairwise Covariance</strong>: The covariance between Study Hours and Exam Scores will be positive. If it’s a large value, it indicates a strong linear relationship between study hours and exam performance.</li></ol></div></div></details></li></ul><ul id="ffff532a-f6dc-8107-ba08-d806a209456c" class="toggle"><li><details open=""><summary><strong>Advanced Data Analysis Methods</strong>:</summary><h3 id="ffff532a-f6dc-81c9-a08f-cc8dd090898c" class=""><strong>Classification</strong></h3><p id="ffff532a-f6dc-81e4-81eb-e7a1cbbd5953" class=""><strong>Principle:</strong><br/>Classification is a supervised learning method used to predict categorical outcomes. Common algorithms include Logistic Regression, Decision Trees, Random Forest, and Support Vector Machines (SVM).<br/></p><p id="1bfc9714-d9e8-45cd-8020-5e87e02dd047" class=""><strong>Interpretation of Outputs:</strong></p><ul id="73e1c3c3-83ce-43cc-a89d-a6dcaa93f2ca" class="bulleted-list"><li style="list-style-type:disc"><strong>Class Labels:</strong> The model assigns categories or labels to data points based on their features.</li></ul><ul id="ffff532a-f6dc-81ee-8dd5-ce5d0273b672" class="bulleted-list"><li style="list-style-type:disc"><strong>Confusion Matrix:</strong> It shows the number of correct and incorrect predictions for each class.</li></ul><ul id="b1fdcf2d-0356-412b-95ea-2337250be8dc" class="bulleted-list"><li style="list-style-type:disc"><strong>Accuracy, Precision, Recall, F1 Score:</strong> Metrics to evaluate the model&#x27;s performance.</li></ul><p id="a2ee3527-903e-44cc-952a-a2eda31b6cb5" class=""><strong>Movie Lens Dataset Example:</strong><br/>Classification can be used to categorize movies or users into specific groups. For example:<br/></p><ul id="2cc169e7-1935-46d4-9718-c348b0033a00" class="bulleted-list"><li style="list-style-type:disc"><strong>Movie Genre Classification:</strong> Predicting the genre of a movie based on its description or other features.</li></ul><ul id="ffff532a-f6dc-81a4-afaf-f62809af8f4a" class="bulleted-list"><li style="list-style-type:disc"><strong>User Preference Classification:</strong> Classifying users into categories like &quot;action lovers&quot; or &quot;romantic movie fans&quot; based on their rating history.</li></ul><h3 id="78458af2-bfe3-4d73-b090-7307f6e7fac4" class=""><strong>Movie Recommendation System Use Case</strong></h3><p id="60b8ea8e-1f6f-430c-9082-6aee93a67a98" class=""><strong>Goal:</strong> Recommend movies to users based on their preferences and similarities with other users or movies.</p><p id="ffff532a-f6dc-81c0-af3b-eb8ba5a984c3" class=""><strong>Using Clustering:</strong></p><ul id="ffff532a-f6dc-81ed-8998-c480f69e8b19" class="bulleted-list"><li style="list-style-type:disc"><strong>User-Based Collaborative Filtering:</strong> Group users with similar tastes and recommend movies liked by users in the same cluster.</li></ul><ul id="24b26b87-0751-4fdb-bc7f-56c178f2626c" class="bulleted-list"><li style="list-style-type:disc"><strong>Item-Based Collaborative Filtering:</strong> Group similar movies and recommend movies similar to those the user has liked.</li></ul><p id="ffff532a-f6dc-81d1-ad66-c6cbb8be323a" class=""><strong>Using Regression:</strong></p><ul id="15d7d547-0e78-4984-b152-1bf957c1162a" class="bulleted-list"><li style="list-style-type:disc"><strong>Rating Prediction:</strong> Predict how a user will rate a movie they haven&#x27;t watched yet, based on their past ratings and movie features.</li></ul><p id="ffff532a-f6dc-81bf-a4b2-d89b5c8fd66c" class=""><strong>Using Classification:</strong></p><ul id="3ff05cc5-f564-4c46-854f-52f808e2c2d0" class="bulleted-list"><li style="list-style-type:disc"><strong>Genre Prediction:</strong> Predict the genre of a movie that a user might enjoy based on their past preferences.</li></ul><ul id="410663d8-6e3a-4da3-8b3d-affc037f5a94" class="bulleted-list"><li style="list-style-type:disc">Classify review of the user into positive and negative</li></ul><ul id="ffff532a-f6dc-8146-a317-ef53f2de13d7" class="bulleted-list"><li style="list-style-type:disc"><strong>Preference Categorization:</strong> Classify users into preference categories to recommend movies aligned with their tastes.</li></ul></details></li></ul><p id="ffff532a-f6dc-8128-962b-f92abb11c0dc" class="">
+</p></div></details><p id="fa133ea7-93ce-4d51-a404-f0eca7760c3f" class="">
+</p><figure id="ffff532a-f6dc-8125-adb5-fdfe01508d3e"><div class="source"><a href="DDBSNoSQL_part2_EN.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/be887467-7086-4a61-8b3f-af2f5670ca5a/DDBSNoSQL_part2_EN.pdf</a></div></figure><p id="32003cf5-fd54-4031-bc52-a9b3a45c18af" class="">
+</p><figure id="9df7d867-46f6-461b-815b-4affcace7aba"><div class="source"><a href="Note_8._Sep_2024_(2).pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/5b250092-47a9-42f9-996c-9d24b9ab308c/Note_8._Sep_2024_(2).pdf</a></div></figure><p id="98eff337-067c-4432-ab83-aad473ff200f" class="">
+</p><figure id="cbc7b9e2-07d8-4a31-ad8d-e2bfaf3c6f58"><div class="source"><a href="DataWarehouse.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/15590f49-fe37-455b-a3c1-5896effb8a1a/DataWarehouse.pdf</a></div></figure><p id="89ad92d7-1053-49b9-b1ef-65ed75ca6000" class="">
+</p><figure id="ffff532a-f6dc-8126-a944-d9e93e6c5ca9"><div class="source"><a href="Note_8._Sep_2024_(3).pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/ed5d69b5-982b-42e8-b3cd-0b08bdafeb4b/Note_8._Sep_2024_(3).pdf</a></div></figure><p id="ffff532a-f6dc-81ac-889f-c9f72cac0321" class="">
+</p><figure id="e4bf8668-0b20-429a-8626-1cf63cb04bb5"><div class="source"><a href="Linear_Algebra.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/b580d6fa-868f-4276-9313-6421a00b3c2d/Linear_Algebra.pdf</a></div></figure><p id="ffff532a-f6dc-81e5-b1e6-c7e70e41eba0" class="">
+</p><p id="b453aa78-2ccf-4b7c-ae19-22e1897a736f" class="">
+</p><figure id="ffff532a-f6dc-818a-8978-fc7ccfd1151d"><div class="source"><a href="Note_8._Sep_2024_(3)%201.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/ed22a5ee-d6b1-4339-9c38-b27f40c9a8bb/Note_8._Sep_2024_(3).pdf</a></div></figure><p id="ffff532a-f6dc-8193-bb7f-ec4eeb64edd7" class="">
+</p><figure id="4c708555-d677-4995-87ae-cec23456aed6"><div class="source"><a href="Advanced_Data_Storage%201.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/f73c022a-fac8-4154-ad16-bd31631f818e/Advanced_Data_Storage.pdf</a></div></figure><p id="3c5d9ec0-bc43-4eb0-aa23-4894886652f7" class="">
+</p><figure id="ffff532a-f6dc-81d5-af4e-e989aeac6ae7"><div class="source"><a href="Advanced_Data_Storage%202.pdf">https://prod-files-secure.s3.us-west-2.amazonaws.com/cc9fb959-9635-4863-80b9-5a928f55ffb0/541b436a-0a01-4df3-a1ac-2344ac2afeee/Advanced_Data_Storage.pdf</a></div></figure></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

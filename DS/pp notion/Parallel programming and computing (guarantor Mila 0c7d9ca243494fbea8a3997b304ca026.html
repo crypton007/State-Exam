@@ -1,0 +1,869 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Parallel programming and computing (guarantor Milan Předota)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 237, 214, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(249, 228, 188, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0c7d9ca2-4349-4fbe-a8a3-997b304ca026" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_new_york_city_grid.jpg" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">⛑️</span></div><h1 class="page-title"><mark class="highlight-blue_background"><strong>Parallel programming and computing (guarantor Milan Předota)</strong></mark></h1><p class="page-description"></p></header><div class="page-body"><p id="ffff532a-f6dc-81b1-abe5-feda93ff07e1" class=""><strong>Topics</strong></p><ul id="b493c362-014a-4c1f-85ee-bd0da8f339c9" class="bulleted-list"><li style="list-style-type:disc">MPI parallelization: Commands for collective and non-collective communication.</li></ul><ul id="ffff532a-f6dc-819c-b942-cab8f22d04a6" class="bulleted-list"><li style="list-style-type:disc">OpenMP parallelization: Principle, commands, variables.</li></ul><ul id="ffff532a-f6dc-8181-9981-d88df614e705" class="bulleted-list"><li style="list-style-type:disc">Compilation and execution of MPI, OpenMP and OpenCL (GPU) programs. Setting the number of threads, monitoring the efficiency of parallel jobs. Input and output of data.</li></ul><ul id="ffff532a-f6dc-8115-8f2f-d0103aeb34de" class="bulleted-list"><li style="list-style-type:disc">Shared vs. distributed memory, MPI vs. OpenMP. GPU memory. Advantages/disadvantages.</li></ul><ul id="836cfcd8-985d-46a2-a9f7-5a2571aa2aaf" class="bulleted-list"><li style="list-style-type:disc">Parallelization of cycles – implementations, efficiency</li></ul><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">MPI parallelization: Commands for collective and non-collective communication</summary><div class="indented"><ul id="ffff532a-f6dc-81df-bb40-d4ffa53e4525" class="toggle"><li><details open=""><summary><strong>Definition and Advantages of Parallel Programming</strong></summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8d0b119b-6875-455c-9746-958199e575c0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="55618a9b-504e-48b6-b3b4-f6e40ffa00d9" class="">Type of computing where <em><strong><span style="border-bottom:0.05em solid">multiple process are executed simultaneously to solve a problem faster .</span></strong></em> Problems are broken down into instructions and solved concurrently as each resources that has been applied to work is working at the same time </p></div></figure><p id="86d906cd-0772-4b6a-9819-bc33bafe5ac1" class=""><strong>Parallelism</strong> specifically refers to multiple tasks being executed at the exact same time, which requires multiple processing units<br/><br/><strong>Concurrency</strong> involves multiple tasks making progress simultaneously. It can be achieved even on a single-core processor through techniques like time-slicing</p><p id="bff9b113-25e6-4d9a-a4b9-da049249b31b" class="">
+</p><figure id="ffff532a-f6dc-8142-81c0-f57dc3c62067" class="image"><a href="image.png"><img style="width:384px" src="image.png"/></a></figure><div id="dad80ac2-7917-4744-8231-a90fa1930b61" class="column-list"><div id="732b3c27-fd6a-4e38-93b7-c41f4dba976e" style="width:100%" class="column"><p id="7d6458b3-98d2-4b3d-8a7c-3d65c2c34257" class=""><em><strong><span style="border-bottom:0.05em solid">Advantages of Parallel Computing over Serial Computing</span></strong></em></p><p id="ffff532a-f6dc-8103-a43c-c19aa1682f4b" class=""><strong>Scalable </strong>: By increasing the number of processors and dividing workloads among them</p><p id="ffff532a-f6dc-8111-9963-f6c50be7b515" class=""><strong>Resource Utilization</strong> : Use Multicore processors, GPU </p><p id="78058b89-7b22-444d-8f07-24550b942b67" class=""><strong>Speed up and Efficient : </strong>Reduced time due to task divided across multiple cores </p></div><div id="ffff532a-f6dc-8199-9146-d02a5716cdbc" style="width:100%" class="column"><p id="16a21094-bcc2-4891-a4b4-15990e054344" class=""><em><strong><span style="border-bottom:0.05em solid">Disadvantages of Parallel Computing over Serial Computing</span></strong></em></p><p id="d50702b0-b1a4-474c-9fe4-a7e10dc3e836" class=""><strong>Complexity</strong>: Organize and code </p><p id="cb38b262-0248-458d-b95a-c06b33e41cc2" class=""><strong>Limited Scalability</strong> : Amdhals law : even with many processors . some tasks may not parallelize well .</p><p id="ffff532a-f6dc-811b-ae6c-f7f8f9982a45" class=""><strong>Synchronization and Latency</strong> : Causes communication overhead </p></div></div><p id="943c14db-31b2-4dcd-9925-8afb34ad2442" class="">→ Parallel programming is <strong>essential </strong>in fields like <em><span style="border-bottom:0.05em solid">scientific computing, big data processing, machine learning, and real-time systems, where performance and efficiency are critical.</span></em></p><h3 id="ffff532a-f6dc-814e-a376-fd2611513958" class="">Tools and Libraries:</h3><ul id="72bc00ea-eddd-4eb6-9f92-909b1699db89" class="bulleted-list"><li style="list-style-type:disc"><strong>MPI (Message Passing Interface)</strong>: A standard for writing parallel programs <strong>on</strong> <strong>distributed memory systems.</strong></li></ul><ul id="ffff532a-f6dc-8186-b231-f769a10e4791" class="bulleted-list"><li style="list-style-type:disc"><strong>OpenMP</strong>: A widely used API for writing parallel programs in C, C++, and Fortran <strong>for shared memory architectures.</strong></li></ul><ul id="eaac73f8-7291-4fc3-b312-f1c354024727" class="bulleted-list"><li style="list-style-type:disc"><strong>CUDA</strong>: A <strong>parallel computing platform and programming model </strong>created by NVIDIA for <strong>general computing on GPUs (Graphics Processing Units).</strong><figure id="f0efec45-8bb3-4e76-863a-69eb5062f69a" class="image"><a href="image%201.png"><img style="width:540px" src="image%201.png"/></a></figure></li></ul></details></li></ul><ul id="c4c3734a-d6f2-4dcd-a6b7-7b7c71a23e6d" class="toggle"><li><details open=""><summary><strong>MPI Parallelization</strong></summary><p id="e20186b4-2e02-4ec2-bdf4-0ff20fdfe9b1" class="">MPI stands for<strong><span style="border-bottom:0.05em solid"> </span></strong><mark class="highlight-orange"><strong><span style="border-bottom:0.05em solid">Message Passing Interface</span></strong></mark></p><ul id="a4f9c6c3-79c7-4ee6-80d3-ec4d53f00335" class="bulleted-list"><li style="list-style-type:disc">Message passing system for distributed memory environments.</li></ul><ul id="418af4ef-87a3-4857-86d3-22af2873cad3" class="bulleted-list"><li style="list-style-type:disc">Crucial Tool in parallel programming in Distributed memory environments that is .  each processor has it’s own memory that is private to it and and no other processor can see this memory.</li></ul><ul id="72053135-ee71-44d3-b4f2-0e784168e08d" class="bulleted-list"><li style="list-style-type:disc">In order to communicate what is in a processor’s memory space to another processor, the processes “pass messages” to each other.</li></ul><ul id="5ec97464-0205-45f5-86da-0735fab673cd" class="bulleted-list"><li style="list-style-type:disc"> This means that you can use special functions or calls in your code to communicate data and messages between multiple processes on a distributed memory system.</li></ul><ul id="5e3d1985-1edf-44c5-9126-496b4a9c06fe" class="bulleted-list"><li style="list-style-type:disc">MPI is also supported by most compilers and languages, such as C, C++, and Fortran.</li></ul><ul id="ffff532a-f6dc-8180-8b7d-f02c97db1440" class="bulleted-list"><li style="list-style-type:disc">Control over the data distribution and the load balancing as you can design your own data partitioning and communication schemes</li></ul></details></li></ul><ul id="ffff532a-f6dc-816b-bcd7-cf3c48c843be" class="toggle"><li><details open=""><summary><strong>Collective and Non Collective (P2P) Communication in MPI</strong></summary><ul id="dd8ae9d9-8b18-4416-a73c-1b3d66377aa0" class="toggle"><li><details open=""><summary><strong>Tabular Summary of Commands and Uses</strong></summary><table id="34ad2afa-6118-482c-8ec3-ec98524d7041" class="simple-table"><tbody><tr id="ffff532a-f6dc-8107-a590-e1e5ed70baa8"><td id="`Tnm" class="" style="width:190.5416717529297px"><strong>Type of Communication</strong></td><td id="z?PK" class="">Commands</td><td id="qnQ:" class="" style="width:378.00001525878906px">Functionality</td><td id="JkgF" class="" style="width:658.2882080078125px"><strong>Syntax</strong></td><td id="}onv" class="" style="width:321.857666015625px"><strong>Uses</strong></td></tr><tr id="ffff532a-f6dc-8194-950d-e91a7959374f"><td id="`Tnm" class="" style="width:190.5416717529297px"><strong>Point-to-Point</strong></td><td id="z?PK" class=""><code>MPI_Send</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Sends a message from one process to another.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Send(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Send data</td></tr><tr id="99b2e077-bab7-41f4-8177-c5d824f76b7b"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Recv</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Receives a message from another process.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Recv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Status *status)</code></td><td id="}onv" class="" style="width:321.857666015625px">Receive data</td></tr><tr id="5243c2dc-7ce6-4e3d-bbf0-2ac5189d853b"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Isend</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Initiates a non-blocking send operation.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Isend(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request)</code></td><td id="}onv" class="" style="width:321.857666015625px">Non-blocking send</td></tr><tr id="ee3d9fe8-bf39-472c-ad25-05bce76d65b8"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Irecv</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Initiates a non-blocking receive operation.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Irecv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Request *request)</code></td><td id="}onv" class="" style="width:321.857666015625px">Non-blocking receive</td></tr><tr id="ffff532a-f6dc-81d7-9d55-ff8ea435ef05"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Wait</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Waits for a non-blocking communication to complete.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Wait(MPI_Request *request, MPI_Status *status)</code></td><td id="}onv" class="" style="width:321.857666015625px">Complete wait</td></tr><tr id="351fdb1d-facf-4a35-a9d5-4b75000a19a1"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Test</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Tests whether a non-blocking communication is complete.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Test(MPI_Request *request, int *flag, MPI_Status *status)</code></td><td id="}onv" class="" style="width:321.857666015625px">Check status</td></tr><tr id="b3832b94-9599-4ff9-9229-c5d8d4277e1d"><td id="`Tnm" class="" style="width:190.5416717529297px"><strong>Collective</strong></td><td id="z?PK" class=""><code>MPI_Bcast</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Broadcasts a message from the root process to all other processes.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Broadcast data</td></tr><tr id="ffff532a-f6dc-81bb-b175-fd8af52d0838"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Scatter</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Distributes data from the root process to all other processes.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Scatter(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Distribute data</td></tr><tr id="da6d2418-e33a-4d32-a135-ad334463bf39"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Gather</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Collects data from all processes to the root process.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Gather(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Collect data</td></tr><tr id="298fcc1f-a2c8-4591-a6c8-a7dabdcf9b94"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Allgather</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Collects data from all processes and distributes it to all processes.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Allgather(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Gather &amp; distribute</td></tr><tr id="01fd17d9-6771-44ed-a4fb-db60658c5b31"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Reduce</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Reduces data from all processes to a single result at the root process using a specified operation.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Reduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Aggregate result</td></tr><tr id="ffff532a-f6dc-8107-b02d-f369b889d9e7"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Allreduce</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Reduces data from all processes and distributes the result to all processes.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Allreduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Distribute aggregate</td></tr><tr id="bdef674c-575d-4f49-a257-38dc4a3c4d5c"><td id="`Tnm" class="" style="width:190.5416717529297px"></td><td id="z?PK" class=""><code>MPI_Barrier</code></td><td id="qnQ:" class="" style="width:378.00001525878906px">Synchronizes all processes in the communicator, ensuring they all reach the barrier before proceeding.</td><td id="JkgF" class="" style="width:658.2882080078125px"><code>MPI_Barrier(MPI_Comm comm)</code></td><td id="}onv" class="" style="width:321.857666015625px">Synchronize processes</td></tr></tbody></table><h3 id="d1f8a713-cbfd-4ec4-92bb-b407b3513ed6" class=""><strong>Explanation of Parameters</strong></h3><ul id="d43bb608-5fd5-4405-91a2-95812129de5f" class="bulleted-list"><li style="list-style-type:disc"><code><strong>void *buf</strong></code>: Pointer to the buffer where data is stored or where data will be received.</li></ul><ul id="beecece2-eed7-48e8-b8cf-70ddb32eae00" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int count</strong></code>: Number of elements in the buffer.</li></ul><ul id="ffff532a-f6dc-8195-9982-e865b3f05fc4" class="bulleted-list"><li style="list-style-type:disc"><code><strong>MPI_Datatype datatype</strong></code>: Data type of the elements (e.g., <code>MPI_INT</code>, <code>MPI_FLOAT</code>).</li></ul><ul id="31c7d8d9-40d0-467f-9fbb-6046eef471bd" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int dest</strong></code>: Rank of the destination process (for send operations).</li></ul><ul id="bc9c4cf9-43d8-4cda-a0df-ceaff80e76b0" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int source</strong></code>: Rank of the source process (for receive operations).</li></ul><ul id="a033a7b9-b619-42ec-b68b-86a4974ca700" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int tag</strong></code>: Message tag to differentiate messages.</li></ul><ul id="ffff532a-f6dc-81e2-92b8-ee5da519c586" class="bulleted-list"><li style="list-style-type:disc"><code><strong>MPI_Comm comm</strong></code>: Communicator (e.g., <code>MPI_COMM_WORLD</code>).</li></ul><ul id="a19c73ce-dc69-4d5a-b7dd-d0c6cc1689b7" class="bulleted-list"><li style="list-style-type:disc"><code><strong>MPI_Request *request</strong></code>: Request object for non-blocking operations.</li></ul><ul id="ffff532a-f6dc-81f9-b92a-ebafdb4c0d92" class="bulleted-list"><li style="list-style-type:disc"><code><strong>MPI_Status *status</strong></code>: Status object for receiving operations and testing.</li></ul><ul id="7786b3e6-51c1-450c-af73-3995a378a112" class="bulleted-list"><li style="list-style-type:disc"><code><strong>int root</strong></code>: Rank of the root process for collective operations.</li></ul><ul id="e227177a-c43f-4c5d-a1e9-8bf09fbcac5d" class="bulleted-list"><li style="list-style-type:disc"><code><strong>MPI_Op op</strong></code>: Operation for reduction (e.g., <code>MPI_SUM</code>, <code>MPI_MAX</code>).</li></ul></details></li></ul><ul id="dd96ecb5-c4a7-418c-ba2f-f5185cd30cf6" class="toggle"><li><details open=""><summary><strong>Collective Communication</strong></summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8bb8ea76-e3d4-4d2d-86cf-d2912cebfbf0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="63689623-1a6c-4b43-b7da-cbc0d9353657" class=""><strong>Collective communication</strong> involves all processes in a communicator. Every process in the communicator must participate, and it often involves data distribution, collection, or synchronization</p></div></figure><ul id="ffff532a-f6dc-81d9-ac26-f2e588107bf7" class="bulleted-list"><li style="list-style-type:disc">All ranks have to participate in collective together.</li></ul><ul id="247f98ff-8034-45a9-9fab-126328a19165" class="bulleted-list"><li style="list-style-type:disc">Involves all processes  to work together to perform <em><span style="border-bottom:0.05em solid">data movement, collection, or synchronization</span></em>.</li></ul><ul id="ffff532a-f6dc-816f-97c0-fa734ac32af7" class="bulleted-list"><li style="list-style-type:disc">All processes must participate in the communication, even if they do not contribute data.</li></ul><ul id="e5c3914f-0db6-4f88-8048-c0e24e5e7e69" class="bulleted-list"><li style="list-style-type:disc"> These operations are essential for tasks like distributing input data, combining results from multiple processes, and ensuring that all processes reach the same point in the computation.</li></ul><ul id="ffff532a-f6dc-8143-bf0d-d7bc5ed16649" class="bulleted-list"><li style="list-style-type:disc">Examples include <code>MPI_Bcast</code>, <code>MPI_Reduce</code>, and <code>MPI_Gather</code></li></ul><p id="a2c20066-4c6f-4743-b184-fba30301359c" class=""><strong>Commands </strong></p><ul id="ffff532a-f6dc-8174-b5e5-da5ebe23f0db" class="toggle"><li><details open=""><summary><code><strong>MPI_Bcast</strong></code><strong> : Broadcasts </strong>data from one process (root) to all other processes.</summary><p id="ffff532a-f6dc-813b-9091-dcdb2e6e24cb" class=""><strong>Purpose </strong>: Broadcasts a message from one process to all other processes in a communicator.</p><p id="3e463af4-1880-4316-bf86-ff478a47ca88" class=""><strong>Syntax </strong>: <code>MPI_Bcast(void *buf, int count, MPI_Datatype datatype, int root, MPI_Comm comm)</code></p><p id="3eaa9a93-b227-488a-add3-fc775a19b140" class="">Example: </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7524276d-ed69-478b-be39-4c70651562bc" class="code"><code class="language-C++">int dataToBroadcast = 100;  // Data to be broadcast to all processes
+int rootProcessRank = 0;  // Rank of the root process that sends the data
+MPI_Bcast(&amp;dataToBroadcast, 1, MPI_INT, rootProcessRank, MPI_COMM_WORLD);
+
+
+// Output: Broadcasted data: 100
+// buf points to the buffer where data is temporarily store for communication </code></pre><blockquote id="ffff532a-f6dc-813f-945d-e334b9c45e94" class="">Any MPI function that involves communication or synchronization (e.g., <code>MPI_Send</code>, <code>MPI_Recv</code>, <code>MPI_Bcast</code>) can use <code><strong>MPI_COMM_WORLD</strong></code><strong> to specify that the operation applies to all processes within the communicator.</strong></blockquote><p id="ffff532a-f6dc-8166-85c5-eceb557dd096" class=""><code>MPI_Bcast</code> sends the <em>same</em> piece of data to all processes</p><figure id="ffff532a-f6dc-810d-8bba-dbe11d84a4fb" class="image"><a href="ec5ebed0-a72d-4c47-90b6-28d93209c1eb.png"><img style="width:502.74941084053415px" src="ec5ebed0-a72d-4c47-90b6-28d93209c1eb.png"/></a></figure></details></li></ul><ul id="baf7fb85-aabe-4205-a25d-016642d8db9a" class="toggle"><li><details open=""><summary><code><strong>MPI_Scatter</strong></code>: <strong>Distributes </strong>distinct chunks of data from one process to all other processes in a communicator. [one to many]</summary><p id="282fc672-b344-42e8-b808-15c6e2f2261c" class=""><strong>Purpose</strong>: For Data Distribution. </p><p id="ffff532a-f6dc-818c-b59e-da9a9eb55eeb" class="">It divides a big array into a number of smaller parts equal to the number of processes and sends each process (including the source) a piece of the array in rank order.</p><p id="3579fd44-68d1-4d25-99ca-9acff6608183" class=""><strong>Syntax :</strong><code>int MPI_Scatter(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm);</code></p><p id="b41a601c-47c1-4fe2-8b89-f6b916a7363f" class=""><strong>Example :</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-81ed-942b-c1d9a55e92d5" class="code"><code class="language-C++">// Root process (rank 0)
+int dataToScatter[4] = {1, 2, 3, 4};
+int scatteredData;
+int rootProcessRank = 0;
+MPI_Scatter(dataToScatter, 1, MPI_INT, &amp;scatteredData, 1, MPI_INT, rootProcessRank, MPI_COMM_WORLD);
+
+//Output
+// All processes
+printf(&quot;Scattered data: %d\n&quot;, scatteredData);
+// Outputs will be different depending on the process rank:
+// Process 0: Scattered data: 1
+// Process 1: Scattered data: 2
+// Process 2: Scattered data: 3
+// Process 3: Scattered data: 4
+</code></pre><p id="ffff532a-f6dc-81ec-86c2-e8e21e2d493a" class=""><code>MPI_Scatter</code> sends <em>chunks of an array</em> to different processes<br/><br/></p><figure id="ffff532a-f6dc-8192-b92a-de75b45af239" class="image"><a href="b76e16f6-dc14-44c0-a65b-f3ebfd2afd06.png"><img style="width:547.9452054794519px" src="b76e16f6-dc14-44c0-a65b-f3ebfd2afd06.png"/></a></figure></details></li></ul><ul id="310c7cd3-0eaf-4fa0-9be3-aa331cfd19aa" class="toggle"><li><details open=""><summary><code><strong>MPI_Gather</strong></code>: <strong>Collects </strong>data from all processes and assembles it at a root process. <strong>[many to 1]</strong></summary><p id="9ce5ea6a-b992-46b1-80c6-549f5752311b" class=""><strong>Purpose </strong>: For Data Collection</p><p id="ffff532a-f6dc-814f-9a6d-fbb505ac71cb" class="">Receives data stored in small arrays from all the processes (including the source or root) and concatenates it in the receive array in rank order.</p><p id="b49325d6-0bd5-4c4f-81dc-e5bc5151cd24" class=""><strong>Syntax</strong>: <code>int MPI_Gather(const void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm);</code></p><p id="6ab84365-61af-48c8-8f46-f840bfb373fc" class="">Example:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8127-a130-e435ce264515" class="code"><code class="language-C++">// Each process sends its data
+int dataToSend = 1;  // Assuming each process sends 1
+int gatheredData[4];  // Array at root process to collect data
+int rootProcessRank = 0;
+MPI_Gather(&amp;dataToSend, 1, MPI_INT, gatheredData, 1, MPI_INT, rootProcessRank, MPI_COMM_WORLD);</code></pre><p id="1d386c8a-0822-4a92-84d8-c344db6e9ab9" class=""><code>MPI_Gather</code> takes elements from many processes and gathers them to one single process</p><figure id="86347c6c-a9f3-477d-9f14-fd898edd14b6" class="image"><a href="image%202.png"><img style="width:279.9937744140625px" src="image%202.png"/></a></figure></details></li></ul><ul id="b2071a92-d7db-4b96-8128-4ae44a7b8de9" class="toggle"><li><details open=""><summary><code><strong>MPI_AllGather</strong></code>: <strong>Collects </strong>data from all processes and shares the entire result with every process. [<strong>many to many</strong></summary><p id="52deb567-b5c2-4415-8f7f-9ac97a2c6125" class=""><strong>Purpose </strong>: Collects data from all processes and shares the entire result with every process.<br/>After the <br/><code>MPI_Allgather</code> call, each process will have a complete set of the data from all processes.</p><p id="81f31358-e897-4b8e-968e-e2c2bea0bcc8" class="">
+</p><p id="ffff532a-f6dc-81ec-a502-c1ec348ca24c" class=""><strong>Syntax</strong>: <code>MPI_Allgather(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm)</code> (same as gather but no root parameter)</p><p id="ffff532a-f6dc-8116-9766-d3a7a0c8db19" class="">
+</p><p id="464c7700-1766-40bc-ac32-571a725cb1a5" class=""><strong>Example </strong>:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3b1443df-5c55-4784-8e9f-156ee6b3ad31" class="code"><code class="language-C++">MPI_Allgather(&amp;sendbuf, 1, MPI_INT, recvbuf, 1, MPI_INT, MPI_COMM_WORLD);</code></pre><div id="859692a9-2be0-4187-aa79-1bf1ad468caf" class="column-list"><div id="a73643c1-0dff-4742-a2f0-5e60d8ec47e9" style="width:50%" class="column"><figure id="cf3f4f6d-45ce-4002-a4be-1c5e18742974" class="image"><a href="allgather.png"><img style="width:210.98959350585938px" src="allgather.png"/></a></figure></div><div id="e6150e8c-fd3f-4d46-9b25-f34b87f57eed" style="width:50%" class="column"><p id="5573ea9a-e7a6-4de4-bf13-8bfe5909f4a0" class=""><br/><br/></p></div></div></details></li></ul><ul id="ffff532a-f6dc-8113-b597-f5f4606cd03f" class="toggle"><li><details open=""><summary><code>MPI_Reduce</code>: <strong>Aggregates </strong>data from all processes and sends the result to the root process.</summary><p id="ffff532a-f6dc-81f6-90a2-c613e263fc9c" class=""><strong>Purpose </strong>: Aggregates data from all processes in a communicator into a single result, which is then stored on the root process. </p><p id="ffff532a-f6dc-81f3-9910-cf15692d3669" class="">The operation performed on the data can be a sum, maximum, minimum, product, etc.</p><p id="ffff532a-f6dc-8105-9603-d194f127ae97" class=""><br/><br/><strong>Syntax </strong>: <code>MPI_Reduce(sendbuf, recvbuf, count, datatype, op, root, comm)</code></p><p id="4e65dbbc-b094-47cb-910b-2a96570793d0" class=""><strong>Example : </strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8133-9b53-c9782b1b794f" class="code"><code class="language-C++">// Reduce (sum) all values and store the result on the root process
+MPI_Reduce(&amp;sendbuf, &amp;recvbuf, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+//output with sum of ranks of 4 process 
+Sum of ranks = 6 //Root process output </code></pre><p id="ffff532a-f6dc-810a-ae4e-e83e8e1a0aed" class="">In the above, each process contains one integer. <code>MPI_Reduce</code> is called with a root process of 0 and using <code>MPI_SUM</code> as the reduction operation. The four numbers are summed to the result and stored on the root process.</p><figure id="e87bad2e-1682-4446-bd6c-72453ca862e9" class="image"><a href="image%203.png"><img style="width:504.9375305175781px" src="image%203.png"/></a></figure></details></li></ul><ul id="2df6d023-d320-41c7-9d9e-cac1a300118e" class="toggle"><li><details open=""><summary><code>MPI_Allreduce</code>: Aggregates values and returns the result to all processes.</summary><p id="2150013e-bed5-4df2-9d09-5bc5139a27dd" class=""><strong>Purpose </strong>: Performs a reduction operation (like <code>MPI_Reduce</code>) on data from all processes, but instead of storing the result on a single root process, it distributes the result back to all processes.</p><p id="ffff532a-f6dc-81ee-9ffd-da81391b262d" class=""><strong>Syntax </strong>:<code>MPI_Allreduce(sendbuf, recvbuf, count, datatype, op, comm)</code></p><p id="ffff532a-f6dc-8105-a52b-da6f220e2bda" class=""><strong>Example : </strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8151-b87f-d094d7047611" class="code"><code class="language-C++">MPI_Allreduce(&amp;sendbuf, &amp;recvbuf, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
+
+//Output with 4 process , sum of ranks
+
+Process 0 has the sum of ranks = 6
+Process 1 has the sum of ranks = 6
+Process 2 has the sum of ranks = 6
+Process 3 has the sum of ranks = 6</code></pre><figure id="a8ed342e-f160-4f52-add8-308b4a2c4e54" class="image"><a href="mpi_allreduce_1.png"><img style="width:505.0000305175781px" src="mpi_allreduce_1.png"/></a></figure></details></li></ul><ul id="0e62c478-999d-4ddc-8e71-6025e0ec2d9e" class="toggle"><li><details open=""><summary><code>MPI_Barrier</code> : Barrier <strong>Synchronization</strong></summary><p id="adc5935d-ee26-4518-9b9b-747f2de1cefa" class=""><strong>Purpose </strong>: Synchronizes all processes in the communicator. </p><p id="c873019c-8baa-4641-b8d1-2e7e385eb369" class="">No process will proceed until all have reached the barrier.<br/><br/><br/><strong>Syntax </strong>: <code>MPI_Barrier(comm)</code> where <code>comm</code>: Communicator.<br/><br/></p><figure id="21e7293b-1e4a-43e2-b8a4-2c52eaa30fcf" class="image"><a href="barrier.png"><img style="width:328.9757080078125px" src="barrier.png"/></a></figure></details></li></ul></details></li></ul><ul id="ffff532a-f6dc-81f5-82a8-eafdb1eedee1" class="toggle"><li><details open=""><summary><strong>Non-Collective Communication : Point-to-Point </strong></summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ffff532a-f6dc-8197-966a-fa233af92f74"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><p id="b3f31bc1-2ea0-4173-9390-7f47084183b4" class=""><strong>Non-collective communication</strong> involves point-to-point communication between pairs of processes. Only the sender and receiver need to participate in the communication.</p></div></figure><ul id="4e9cf8ad-3c37-4d4b-b58e-85668eb9e458" class="bulleted-list"><li style="list-style-type:disc">Involves direct communication between two processes.</li></ul><ul id="ffff532a-f6dc-8107-ab21-dbd888537613" class="bulleted-list"><li style="list-style-type:disc">Only the processes involved in the communication need to participate.</li></ul><ul id="0b619396-e644-4e3a-b80c-78137f97142f" class="bulleted-list"><li style="list-style-type:disc">Examples include <code>MPI_Send</code> and <code>MPI_Recv</code></li></ul><ul id="56e1260c-c807-4fc2-84bc-31d387cfe994" class="bulleted-list"><li style="list-style-type:disc">Blocking Communication Functions : <code>MPI_Send</code> and <code>MPI_Recv</code> halt the process until the operation is complete.</li></ul><ul id="ffff532a-f6dc-8176-a740-edb172c83adb" class="bulleted-list"><li style="list-style-type:disc"> Non-Blocking Communication Functions : <code>MPI_Isend</code> and <code>MPI_Irecv</code> allow processes to continue executing other instructions while communication is in progress, providing greater flexibility and efficiency in parallel programs.</li></ul><ul id="ffff532a-f6dc-81c6-9d78-da17ce0d5fb6" class="toggle"><li><details open=""><summary><code>MPI_Send</code>  : Sends a message from one process to another.</summary><ul id="ffff532a-f6dc-8164-afe0-d5d9030ce56b" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Sends data from one process to another.</li></ul><ul id="ffff532a-f6dc-8189-b039-f7ff7b2edb0d" class="bulleted-list"><li style="list-style-type:disc"><strong>Blocking/Non-blocking</strong>: Blocking.</li></ul><ul id="ffff532a-f6dc-8140-9361-c372638d109e" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage</strong>: Use when a process needs to send data to another process.</li></ul><p id="facbb771-f622-4b68-a623-7341c981816d" class="">Syntax : </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="836339ae-a64e-4fdf-a88c-82dc531ce5b6" class="code"><code class="language-C++">MPI_Send(
+const void *buf,        // Pointer to the data to send
+int count,              // Number of elements to send
+MPI_Datatype datatype,  // Data type of each element
+int dest,               // Rank of the destination process
+int tag,                // Message tag
+MPI_Comm comm           // Communicator
+);
+</code></pre><p id="ffff532a-f6dc-8140-9e38-d948ae0b4089" class=""><code><strong>MPI_Send</strong></code><strong> ( Blocking Nature)</strong>: The process will block (wait) until the message data is copied out of the send buffer, meaning the buffer can be reused or modified after the send operation return.<br/><br/></p></details></li></ul><ul id="524aa388-1678-4488-b0e3-43660b502bdb" class="toggle"><li><details open=""><summary><code>MPI/_Recv</code> : Receives a message sent by <code>MPI_Send</code></summary><ul id="ffff532a-f6dc-810a-a65b-d443fd9ccd41" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose</strong>: Receives data sent from another process.</li></ul><ul id="44475455-eb5f-4ecd-948c-7c77ef452a0c" class="bulleted-list"><li style="list-style-type:disc"><strong>Blocking/Non-blocking</strong>: Blocking.</li></ul><ul id="2106f61c-ce32-4b72-be03-8098e615f22e" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage</strong>: Use when a process needs to receive data from another process.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ec35e2fa-8abf-468c-919c-f3107d11da92" class="code"><code class="language-C++">MPI_Recv(
+void *buf,              // Pointer to buffer where received data will be stored
+int count,              // Maximum number of elements to receive
+MPI_Datatype datatype,  // Data type of each element
+int source,             // Rank of the source process
+int tag,                // Message tag
+MPI_Comm comm,          // Communicator
+MPI_Status *status      // Status object
+);</code></pre><p id="ffff532a-f6dc-81e4-96ed-df26adcea7b2" class=""><code><strong>MPI_Recv</strong></code>: The process will block until the message is received into the buffer, meaning the buffer contains valid data after the receive operation returns.<br/><br/><br/></p></details></li></ul></details></li></ul></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">OpenMP parallelization: Principle, commands, variables.</summary><div class="indented"><figure id="ffff532a-f6dc-8126-bb4e-d22ac552fb83"><div class="source"><a href="https://wr.informatik.uni-hamburg.de/_media/teaching/sommersemester_2018/hea-18-openmp.pdf">https://wr.informatik.uni-hamburg.de/_media/teaching/sommersemester_2018/hea-18-openmp.pdf</a></div></figure><ul id="ffff532a-f6dc-811f-9d19-dc9d00e13032" class="toggle"><li><details open=""><summary><strong>OpenMP</strong></summary><ul id="89b36137-2e02-4682-a8c1-ab140d5a0cb9" class="bulleted-list"><li style="list-style-type:disc">It is an open source API</li></ul><ul id="f689edd8-92e6-4700-9e35-cad784a37a99" class="bulleted-list"><li style="list-style-type:disc">Stands for Open Multi-Processing</li></ul><ul id="b08dffd9-0bbf-47d3-934a-3dec6d7e3f45" class="bulleted-list"><li style="list-style-type:disc">API that <em><strong><span style="border-bottom:0.05em solid">supports multi-platform shared-memory parallel programming in C, C++, and Fortran.</span></strong></em></li></ul><ul id="ffff532a-f6dc-8184-9c9f-e9f0ec629a68" class="bulleted-list"><li style="list-style-type:disc">It is designed for parallel programming on multi-core processors. </li></ul><ul id="c91c77da-aa1e-4b80-8c33-889405503309" class="bulleted-list"><li style="list-style-type:disc">OpenMP uses a combination of compiler directives, library routines, and environment variables to enable parallelism in code.</li></ul><ul id="160557a5-6e63-4253-967a-6291a4267665" class="bulleted-list"><li style="list-style-type:disc">Enables developers to write parallel code that can take advantages of multiple processors and cores without significant changes to their existing codebases.</li></ul><p id="68e86e69-5d69-444d-84f5-d6a49d792903" class=""><strong>Primary Goals of OpenMP:</strong></p><ul id="ffff532a-f6dc-81a7-af9b-cd098eac7a54" class="bulleted-list"><li style="list-style-type:disc">Simplify parallel programming.</li></ul><ul id="ffff532a-f6dc-81a4-a83b-f4c57d3bcc3b" class="bulleted-list"><li style="list-style-type:disc">Provide a portable, scalable model that offers both fine-grained control over parallelism and a straightforward way to parallelize existing code.</li></ul><p id="3fc6560a-6313-4f28-bafe-cb7f2e27b9bb" class=""><strong>Processes</strong> are independent programs with separate memory spaces. They are heavier in terms of system resources and are used when tasks need to be isolated from each other.</p><p id="c97f6aa1-e86f-4ea4-a906-6df34d9fbaec" class=""><strong>Process </strong>means any program is in execution. Process control block controls the operation of any process. Process control block contains the information about processes for example: Process priority, process id, process state, CPU, register etc. </p><p id="ffff532a-f6dc-817f-8c67-f9535b40b83e" class=""><strong>Threads</strong> are lighter-weight units of execution within a process, sharing memory and resources. They are used for tasks that need to run concurrently within the same program and communicate quickly.</p><p id="d6b99b9e-2a68-4ab0-bfaf-962f81eb37d8" class="">Whereas, <strong>Thread </strong>is the segment of a process means a process can have multiple threads and these multiple threads are contained within a process. A thread have 3 states: running, ready, and blocked.</p></details></li></ul><ul id="ffff532a-f6dc-81e9-9545-f9be8d1e22d7" class="toggle"><li><details open=""><summary><strong>3 Components of API </strong></summary><p id="0075eeec-c33c-4443-8d2e-6f49d00f89b4" class="">The OpenMP API consists of three main components that work together to enable parallel programming in shared memory environments. These components are:</p><h3 id="ffff532a-f6dc-8194-8bab-d27efba29e7c" class="">1. <strong>Compiler Directives (or Pragmas):</strong></h3><ul id="ffff532a-f6dc-8119-80f4-df8f56ab791f" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Compiler directives are special instructions inserted into the source code that guide the compiler on how to parallelize certain sections of the code. These directives are the primary way of implementing parallelism in OpenMP.</li></ul><ul id="aef07ea1-6133-447d-8fb8-0553456936a6" class="bulleted-list"><li style="list-style-type:disc"><strong>Examples:</strong><ul id="c1e2a8e3-2e56-4c68-bc38-5ac1d740eebe" class="bulleted-list"><li style="list-style-type:circle"><code>#pragma omp parallel</code>: Defines a parallel region where a team of threads is created to execute the code within the block.</li></ul><ul id="48546722-6e35-4bfa-9a7f-0c04a62cee5d" class="bulleted-list"><li style="list-style-type:circle"><code>#pragma omp for</code>: Distributes loop iterations among threads in a parallel region.</li></ul><ul id="ffff532a-f6dc-8175-95fe-cf388b86bec0" class="bulleted-list"><li style="list-style-type:circle"><code>#pragma omp sections</code>: Specifies sections of code to be executed in parallel by different threads.</li></ul><ul id="03f44a14-a2fd-460e-8c04-ac66b8bb1e1c" class="bulleted-list"><li style="list-style-type:circle"><code>#pragma omp critical</code>: Defines a critical section of code that only one thread can execute at a time, ensuring mutual exclusion.</li></ul></li></ul><h3 id="ffff532a-f6dc-8140-9d89-d39ba9f77447" class="">2. <strong>Runtime Library Routines:</strong></h3><ul id="61feb7be-21e9-41f1-acad-91b9223607d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> The OpenMP runtime library provides functions that allow programmers to control and query the parallel execution of their programs at runtime. These routines offer more fine-grained control over threading behavior, such as setting the number of threads or managing thread affinities.</li></ul><ul id="14c83545-e208-4ed6-a6c8-2e7f9727de79" class="bulleted-list"><li style="list-style-type:disc"><strong>Examples:</strong><ul id="ffff532a-f6dc-81bc-b82c-c2a931d434bb" class="bulleted-list"><li style="list-style-type:circle"><code>omp_set_num_threads(int num_threads)</code>: Sets the number of threads to be used in the next parallel region.</li></ul><ul id="3c1b0909-34cb-482f-9964-e360c5990be2" class="bulleted-list"><li style="list-style-type:circle"><code>omp_get_num_threads()</code>: Returns the number of threads in the current parallel region.</li></ul><ul id="ffff532a-f6dc-81c0-90ad-c14b97b01cc3" class="bulleted-list"><li style="list-style-type:circle"><code>omp_get_thread_num()</code>: Returns the thread ID of the calling thread.</li></ul><ul id="94b904b4-7cc4-4849-9bb2-889108a74df1" class="bulleted-list"><li style="list-style-type:circle"><code>omp_get_wtime()</code>: Returns the wall clock time (useful for measuring performance).</li></ul></li></ul><h3 id="ffff532a-f6dc-8195-967a-c975ae1e6277" class="">3. <strong>Environment Variables:</strong></h3><ul id="eedff214-2428-47a0-abd6-05262f5fce9e" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Environment variables allow the user to control the behavior of OpenMP programs without modifying the source code. These variables are typically set in the shell or command line before running the program and can influence how OpenMP handles threading, scheduling, and other aspects of execution.</li></ul><ul id="3fa0956d-4715-449f-9b58-e69fae1304ab" class="bulleted-list"><li style="list-style-type:disc"><strong>Examples:</strong><ul id="ffff532a-f6dc-817c-a38f-f01a8d210f84" class="bulleted-list"><li style="list-style-type:circle"><code>OMP_NUM_THREADS</code>: Specifies the default number of threads to use in parallel regions.</li></ul><ul id="087e8a00-ffdc-40ce-a0e2-0a216cef0506" class="bulleted-list"><li style="list-style-type:circle"><code>OMP_SCHEDULE</code>: Controls the scheduling type and chunk size for loop iterations when using the <code>#pragma omp for</code> directive.</li></ul><ul id="b6ba03f5-52a6-4513-805a-25eea5ee3ff7" class="bulleted-list"><li style="list-style-type:circle"><code>OMP_DYNAMIC</code>: Enables or disables dynamic adjustment of the number of threads.</li></ul><ul id="ffff532a-f6dc-81b8-b8a6-fe3a0786daf1" class="bulleted-list"><li style="list-style-type:circle"><code>OMP_PROC_BIND</code>: Controls whether threads are allowed to move between processors during execution.</li></ul></li></ul><p id="ffff532a-f6dc-814d-bcb3-f7879e57abd8" class="">These three components—compiler directives, runtime library routines, and environment variables—provide a comprehensive framework for parallel programming in OpenMP, allowing for both high-level abstraction and fine-tuned control over parallel execution.</p></details></li></ul><ul id="ffff532a-f6dc-8119-b9ac-f7180121db3a" class="toggle"><li><details open=""><summary><strong>Principle</strong></summary><ul id="ffff532a-f6dc-81dd-bddf-e8d28e70b0d4" class="toggle"><li><details open=""><summary>Fork -Join Model</summary><p id="ffff532a-f6dc-81bf-983b-f9f62fd80993" class="">OpenMP uses the fork-join model of parallel execution:</p><figure id="ffff532a-f6dc-8117-aeaa-ee341e296841" class="image"><a href="image.gif"><img style="width:298px" src="image.gif"/></a></figure><p id="7a69655b-9ea4-4d89-bacb-16647109c722" class="">All OpenMP programs begin as a single process: the <strong>master thread</strong>. The master thread executes sequentially until the first <strong>parallel region</strong> construct is encountered.</p><p id="1a31a2e9-8b35-44dd-a577-cbe01b9bd278" class=""><strong>FORK</strong>: the master thread then creates a team of parallel <em>threads</em>.</p><p id="ffff532a-f6dc-81b7-a405-dbd5e648470a" class="">The statements in the program that are enclosed by the parallel region construct are then executed in parallel among the various team threads.</p><p id="42da1cd1-0928-4387-b118-578c8eedd777" class=""><strong>JOIN</strong>: When the team threads complete the statements in the parallel region construct, they synchronize and terminate, leaving only the master thread.</p><p id="ffff532a-f6dc-810d-ab95-eded45ad69ef" class="">The number of parallel regions and the threads that comprise them are arbitrary.</p></details></li></ul><ul id="8905548a-6712-4669-995f-59f9626cf607" class="toggle"><li><details open=""><summary>Shared Memory Model</summary><p id="fb1916b4-2853-4ea6-9375-6457310e4e0f" class="">OpenMP operates on the shared memory model, where multiple threads access and modify shared data within<br/>the same address space. Threads communicate and synchronize<br/>implicitly through shared variables.<br/></p></details></li></ul><ul id="ffff532a-f6dc-8126-81e0-eb9ac8c53768" class="toggle"><li><details open=""><summary>Incremental parallelism </summary><p id="baced8ab-67e2-49d7-b172-3ee901710810" class="">Principle: OpenMP allows for incremental parallelism, meaning that you can parallelize your program gradually. You don’t need to parallelize the entire application at once. Instead, you can start with small, critical sections and progressively parallelize more of the program.<br/>•Application: This is facilitated by the use of compiler directives (#pragma), which can be added to existing code with minimal disruption to the overall structure.<br/></p><p id="ffff532a-f6dc-811a-a0b6-c4fc47d512f6" class="">
+</p></details></li></ul><ul id="edaf56f6-423f-4778-840d-273149588caa" class="toggle"><li><details open=""><summary>Portability </summary><p id="ffff532a-f6dc-81e8-b4e3-e5f48bcc7090" class="">Principle: OpenMP provides portability across different hardware and operating systems. An OpenMP program written on one platform should compile and run on any other platform that supports OpenMP, without requiring changes to the code.<br/>•Application: OpenMP is supported by most major compilers on various platforms, including Unix/Linux, Windows, and macOS, making it suitable for cross-platform development.<br/></p></details></li></ul></details></li></ul><ul id="ffff532a-f6dc-81c7-98d4-c4ee00fdf405" class="toggle"><li><details open=""><summary><strong>Commands</strong></summary><p id="ffff532a-f6dc-81ba-974f-e24fd483821f" class="">OpenMP provides a range of commands in the form of <strong>directives, runtime library routines,</strong> and <strong>environment variables</strong> that allow developers to control parallelism in their programs. Here’s an overview of these commands:</p><h3 id="e2279167-47bd-40f7-8c99-60c697fa60e4" class="">1. <strong>Directives</strong></h3><p id="ffff532a-f6dc-81d3-a021-cafad525e4d2" class="">OpenMP directives are special pragmas that tell the compiler how to parallelize code. These are the main way to express parallelism in OpenMP.</p><h3 id="e6b5849b-9a15-4750-bab3-168254ff7e39" class="">a. <strong>Parallel Directive</strong></h3><ul id="ffff532a-f6dc-810c-869e-d22d18a156a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Defines a parallel region where multiple threads execute the code block.</li></ul><ul id="ffff532a-f6dc-81a6-b726-fb06393fd448" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-816e-a4e0-cbfd5bd23dc2" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel
+{
+    // Code to be executed in parallel
+}
+</code></pre></li></ul><h3 id="ffff532a-f6dc-81e0-bad9-f253ff8130db" class="">b. <strong>For Directive</strong></h3><ul id="ffff532a-f6dc-811e-bf10-eba74590befe" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Parallelizes loop iterations across threads.</li></ul><ul id="c735e97c-1070-4028-bbc3-538de9db9d87" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a952cbb0-be32-4ba3-b8ac-e6cdba75eb4b" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel for
+for (int i = 0; i &lt; N; i++) {
+    // Loop body
+}
+</code></pre></li></ul><h3 id="0e3aeba2-6de6-4934-b2f9-4e899bec8c83" class="">c. <strong>Sections Directive</strong></h3><ul id="ffff532a-f6dc-817a-b4f7-e299d8a7a0e7" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Divides work among threads, where each thread executes a different section of code.</li></ul><ul id="8a9ff491-21ed-4bc4-9939-42deed8901e9" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b1bf45fb-c30f-48f2-8e3d-a1f99e6d7c38" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel sections
+{
+    #pragma omp section
+    {
+        // Code for section 1
+    }
+    #pragma omp section
+    {
+        // Code for section 2
+    }
+}
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8182-991a-d41338d4833f" class="">d. <strong>Single Directive</strong></h3><ul id="cf60963f-a372-48b9-8e59-592189249731" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Ensures that only one thread executes the block of code, while other threads skip it.</li></ul><ul id="ffff532a-f6dc-81b6-90fb-eb0cea88964b" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-811a-ac2a-d81a41482f1c" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp single
+{
+    // Code to be executed by only one thread
+}
+</code></pre></li></ul><h3 id="1cf992fd-cce0-469e-9543-89c4a4fd7779" class="">e. <strong>Critical Directive</strong></h3><ul id="482252ff-2c1a-401b-aa07-4cddbb05ce5b" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Defines a critical section that can be executed by only one thread at a time to prevent race conditions.</li></ul><ul id="1ada06f5-46ec-4b23-90c9-573884b45f70" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-81a3-9fd3-d032f8694749" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp critical
+{
+    // Code to be executed by one thread at a time
+}
+</code></pre></li></ul><h3 id="83d999bb-f9c6-4c08-8edd-b83ce411bc0f" class="">f. <strong>Barrier Directive</strong></h3><ul id="302ccf14-b8d8-45ad-bdd3-081ca5e4411c" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Synchronizes all threads, making them wait until all threads have reached this point in the code.</li></ul><ul id="28a69543-c310-4103-bb7e-e3a0b4764f90" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c1ca3dad-11a4-4d76-8490-009effcebb4a" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp barrier
+</code></pre></li></ul><h3 id="383bedc3-e8f4-4152-bd05-476fe8460039" class="">g. <strong>Atomic Directive</strong></h3><ul id="ffff532a-f6dc-81bd-8d28-c2b6d2ae7e26" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Ensures that a specific memory update operation is performed atomically, preventing race conditions.</li></ul><ul id="8a0a5114-1370-4860-aa3d-058c242f900a" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8169-875b-c0bf0f93852c" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp atomic
+x += 1;
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8186-b160-c89669e1a18a" class="">h. <strong>Master Directive</strong></h3><ul id="dca66b39-d8d6-4967-8e40-dad35c1b2a87" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Ensures that a block of code is executed by the master thread only, without any implicit barrier at the end.</li></ul><ul id="ffff532a-f6dc-8140-9da8-d58040c6ab12" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-814f-8c73-eba1ea5acb1e" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp master
+{
+    // Code executed only by the master thread
+}
+</code></pre></li></ul><h3 id="cb5a3352-9e1e-4457-94e8-35229b8afca3" class="">i. <strong>Task Directive</strong></h3><ul id="d5735be8-c0ea-441c-a7e3-d77f70abef29" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Defines a task, which is a unit of work that can be executed independently by any thread in the team.</li></ul><ul id="ffff532a-f6dc-8116-ba33-e1922017c6a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bc5b9a1c-1597-4545-ad00-c03836ae0cd3" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp task
+{
+    // Code that defines the task
+}
+</code></pre></li></ul><h3 id="3f823adb-7d8e-47b6-8c18-b5fce7f1e57d" class="">2. <strong>Runtime Library Routines</strong></h3><p id="ffff532a-f6dc-81ac-89a0-cb5dbaf6563f" class="">These functions provide additional control over the execution of OpenMP programs.</p><h3 id="ffff532a-f6dc-8181-9cdf-de42b6b20558" class="">a. <strong>omp_set_num_threads</strong></h3><ul id="ffff532a-f6dc-81d1-89d9-f4e603fc4b89" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Sets the number of threads to use in subsequent parallel regions.</li></ul><ul id="ffff532a-f6dc-81ea-ac1d-d06821b9a697" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8173-bf47-ca0c215722e7" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">void omp_set_num_threads(int num_threads);
+</code></pre></li></ul><h3 id="723f2cb4-f969-463d-812f-cbd765cdf331" class="">b. <strong>omp_get_num_threads</strong></h3><ul id="de315e44-05f2-41d9-ae61-2d966a0fe87d" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Returns the number of threads currently in the team.</li></ul><ul id="816de786-9d25-4fe6-a21f-1083e0289fcb" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c8cad1e3-8b1b-4d93-9c35-2db9d73bd4d8" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int omp_get_num_threads(void);
+</code></pre></li></ul><h3 id="ffff532a-f6dc-81ae-a104-d42a587587e8" class="">c. <strong>omp_get_thread_num</strong></h3><ul id="b21d3930-e02a-442b-8d4d-848a9bd63d1f" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Returns the thread ID of the calling thread within the team.</li></ul><ul id="ffff532a-f6dc-8122-b087-cb0ab415fd32" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8141-bb6c-e667ee3bbad5" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int omp_get_thread_num(void);
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8192-8e56-cf12107cf1be" class="">d. <strong>omp_get_max_threads</strong></h3><ul id="cb7603a7-3272-4e02-a717-532ed6b7348d" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Returns the maximum number of threads available.</li></ul><ul id="ffff532a-f6dc-815b-be99-d2b1add4fcd3" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-81ee-b4cb-dd5aa553131b" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int omp_get_max_threads(void);
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8120-a04b-fcfbedce7c9b" class="">e. <strong>omp_get_wtime</strong></h3><ul id="ffff532a-f6dc-81a9-a52a-f2f9208105ed" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Returns the elapsed wall clock time in seconds.</li></ul><ul id="e5faf772-1a5f-4f28-b35a-1f7b7045f1d8" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="be2e0dce-2dbc-4f92-9648-fe7aecb7e943" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">double omp_get_wtime(void);
+</code></pre></li></ul><h3 id="ffff532a-f6dc-814c-9222-d50d32df2100" class="">f. <strong>omp_set_dynamic</strong></h3><ul id="871b2cdc-52c8-4508-b964-ded5912e00f4" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Enables or disables dynamic adjustment of the number of threads.</li></ul><ul id="ffff532a-f6dc-810b-9fa2-ff2045216f3b" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8107-92af-e1b3d53d2f91" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">void omp_set_dynamic(int dynamic_threads);
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8179-82aa-dfeff4cebf6c" class="">3. <strong>Environment Variables</strong></h3><p id="49f6c7b9-8636-43a5-8737-f41121691f2b" class="">These variables control the execution environment of OpenMP programs, typically set in the shell before running the program.</p><h3 id="5d2a29a4-436c-49e3-a037-70c5e27eea01" class="">a. <strong>OMP_NUM_THREADS</strong></h3><ul id="ffff532a-f6dc-8194-a6b1-c6b094705c91" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Specifies the default number of threads to use in parallel regions.</li></ul><ul id="ffff532a-f6dc-813e-9991-e76ede1d8004" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e6facddb-c240-4613-b9c0-1d9eb7d6c20b" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">export OMP_NUM_THREADS=4
+</code></pre></li></ul><h3 id="1b507551-b94f-49b3-af95-1fc5048d446b" class="">b. <strong>OMP_SCHEDULE</strong></h3><ul id="70549d6a-6202-4180-b24e-b52898a3a4d1" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Specifies the scheduling policy for loops (<code>static</code>, <code>dynamic</code>, <code>guided</code>, or <code>auto</code>).</li></ul><ul id="ffff532a-f6dc-81e4-9a8e-cd5bcacd865f" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-814c-8ce7-d144f1cbd4d6" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">export OMP_SCHEDULE=&quot;dynamic,4&quot;
+</code></pre></li></ul><h3 id="e07f4203-af46-4984-bba3-924450643548" class="">c. <strong>OMP_DYNAMIC</strong></h3><ul id="ffff532a-f6dc-8116-9413-c0bbb4a3b180" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Enables or disables dynamic adjustment of the number of threads.</li></ul><ul id="c620c411-ccd2-4ede-a056-65fe1cb0cb57" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="865e2169-057b-4656-a7de-709d221c507a" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">export OMP_DYNAMIC=true
+</code></pre></li></ul><h3 id="321df10b-2e0d-456a-8f1a-984cd0ccb004" class="">d. <strong>OMP_NESTED</strong></h3><ul id="3ce3f8e1-6304-424c-a1d5-63668959879f" class="bulleted-list"><li style="list-style-type:disc"><strong>Purpose:</strong> Enables or disables nested parallel regions.</li></ul><ul id="ffff532a-f6dc-81f4-b720-e6603b7867ae" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3fb327f3-70f7-4095-a234-6d36a552bb79" class="code"><code class="language-Shell" style="white-space:pre-wrap;word-break:break-all">export OMP_NESTED=true
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8159-81e8-c7a1380586c0" class="">Summary</h3><p id="ffff532a-f6dc-8151-b84d-ca477b7d38e7" class=""><mark class="highlight-pink">OpenMP commands include </mark><mark class="highlight-pink"><strong><span style="border-bottom:0.05em solid">directives</span></strong></mark><mark class="highlight-pink"><span style="border-bottom:0.05em solid"> to control parallel regions, work-sharing constructs, and synchronization; </span></mark><mark class="highlight-pink"><strong><span style="border-bottom:0.05em solid">runtime library routines</span></strong></mark><mark class="highlight-pink"><span style="border-bottom:0.05em solid"> to manage the execution environment at runtime; and </span></mark><mark class="highlight-pink"><strong><span style="border-bottom:0.05em solid">environment variables</span></strong></mark><mark class="highlight-pink"><span style="border-bottom:0.05em solid"> to configure the behavior of OpenMP programs before they start</span></mark><mark class="highlight-pink">. These tools allow developers to efficiently parallelize their programs with minimal changes to the original code.</mark></p><p id="c76829d8-b781-46b4-8ce6-b57049ce691a" class="">
+</p></details></li></ul><ul id="8ef392de-b089-4db8-89e8-ae93535baaf8" class="toggle"><li><details open=""><summary><strong>Variables</strong></summary><p id="2a865a0c-3250-4e5c-be05-71d7a94159e7" class="">In OpenMP, variables are categorized based on their scope and sharing behavior among threads. Understanding these categories is crucial for managing data correctly in parallel regions and avoiding issues such as race conditions. Here’s an overview of the different types of variables in OpenMP:</p><h3 id="ffff532a-f6dc-81b8-87d1-f5161b8e1f4f" class="">1. <strong>Shared Variables</strong></h3><ul id="ffff532a-f6dc-8150-b9a5-e97efd9b9dfa" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Variables declared outside of parallel regions or explicitly marked as shared are accessible by all threads in the parallel region. Changes made to these variables by any thread are visible to all other threads.</li></ul><ul id="ffff532a-f6dc-8138-8fe9-d3071aa7939f" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful for sharing data among threads. However, care must be taken to manage concurrent access to avoid race conditions.</li></ul><ul id="ffff532a-f6dc-8146-8f1c-cc844eaf2c87" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8170-8aa2-c7672caa0270" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int shared_var = 0;  // Shared variable
+
+#pragma omp parallel
+{
+    // All threads can access and modify shared_var
+}
+</code></pre></li></ul><h3 id="ffff532a-f6dc-812a-927a-e3b0e74c0866" class="">2. <strong>Private Variables</strong></h3><ul id="64b004df-410d-445e-bf5d-58590f1b1cd1" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Variables declared within a parallel region or specified as private are unique to each thread. Each thread gets its own instance of the variable, which is not visible to other threads.</li></ul><ul id="ffff532a-f6dc-816a-9c8c-dbf5d57a7e81" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful for avoiding conflicts when threads need to work with separate copies of data.</li></ul><ul id="841d21e5-a7ad-455a-a852-e8d2805c4cac" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-816c-8dc0-c78ab79e6230" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel private(private_var)
+{
+    int private_var = 0;  // Private to each thread
+    // Each thread has its own private_var
+}
+</code></pre></li></ul><h3 id="ffff532a-f6dc-811b-8606-d2295642b6ee" class="">3. <strong>Thread-Private Variables</strong></h3><ul id="ffff532a-f6dc-8167-89d2-c284064c44e0" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Similar to private variables, but thread-private variables retain their values between parallel regions. They are often used with the <code>threadprivate</code> directive.</li></ul><ul id="ffff532a-f6dc-8135-a044-d79d1df7c9e1" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful for preserving the state across different parallel regions or between different invocations of parallel regions.</li></ul><ul id="ffff532a-f6dc-8186-9c91-c242e1a2b79d" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a10c8cb0-f2db-44b2-aa82-a396fb3b302a" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp threadprivate(my_private_var)
+int my_private_var;
+
+#pragma omp parallel
+{
+    my_private_var = 10;  // Each thread has its own instance
+}
+</code></pre></li></ul><h3 id="ffff532a-f6dc-8140-abca-e04c88d512d7" class="">4. <strong>Firstprivate Variables</strong></h3><ul id="ffff532a-f6dc-8122-b69a-d587414902a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Variables initialized with the value of a corresponding variable from the master thread when entering the parallel region. Each thread gets a copy of the variable, initialized with the value from the master thread.</li></ul><ul id="ffff532a-f6dc-8126-9724-d4435f50094d" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful when threads need to start with the same initial value but will modify the variable independently.</li></ul><ul id="856667cc-05df-430e-9a00-d0babe36d858" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="5b062fe8-2313-4c10-b0a9-d201212dff2e" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int init_var = 5;
+
+#pragma omp parallel firstprivate(init_var)
+{
+    // Each thread starts with a copy of init_var initialized to 5
+}
+</code></pre></li></ul><h3 id="965e6b8f-24ac-4fad-b4ed-bbbd3b1ec9c2" class="">5. <strong>Lastprivate Variables</strong></h3><ul id="ffff532a-f6dc-8144-a4fc-e69aea4a0771" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Variables that are updated with the value from the last iteration of a parallel loop or section. This ensures that after the parallel region, the variable has the value from the last executed iteration or section.</li></ul><ul id="ffff532a-f6dc-81f0-b978-f1a016b5a18f" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful for capturing the result from the last iteration or section executed by any thread.</li></ul><ul id="c834cf59-943b-42fb-bcb4-a66021c6bd15" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0229d6c9-c7f5-4fb1-b2df-ad20905f9de1" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int last_var;
+
+#pragma omp parallel for lastprivate(last_var)
+for (int i = 0; i &lt; N; i++) {
+    last_var = i;  // last_var will have the value from the last iteration
+}
+</code></pre></li></ul><h3 id="1150ac5f-a1b4-471d-9385-4a3617f79930" class="">6. <strong>Reduction Variables</strong></h3><ul id="f589e091-5023-49a4-a2b3-59b62742bf76" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition:</strong> Variables used to accumulate results from multiple threads into a single value. The <code>reduction</code> clause performs a reduction operation (such as summation or multiplication) across all threads.</li></ul><ul id="ffff532a-f6dc-81e6-955a-dbb081c753f5" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage:</strong> Useful for combining results from different threads into a single result, such as summing elements of an array.</li></ul><ul id="ffff532a-f6dc-8176-83f9-c1a2ef5ecac7" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax Example:</strong><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8183-bf06-e8e022d814c7" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">int sum = 0;
+
+#pragma omp parallel for reduction(+:sum)
+for (int i = 0; i &lt; N; i++) {
+    sum += array[i];  // sum will be accumulated from all threads
+}
+</code></pre></li></ul><h3 id="948680a2-4622-4cbf-a7df-dd20fd29074c" class="">Summary</h3><ul id="ffff532a-f6dc-8111-bd1d-e83f1ab9fcc7" class="bulleted-list"><li style="list-style-type:disc"><strong>Shared Variables:</strong> Accessible by all threads; changes are visible across threads.</li></ul><ul id="814ce351-8a46-494e-ae41-2b78fcf2543b" class="bulleted-list"><li style="list-style-type:disc"><strong>Private Variables:</strong> Unique to each thread; not visible to other threads.</li></ul><ul id="ffff532a-f6dc-812f-9e0e-e6cffa31fa1f" class="bulleted-list"><li style="list-style-type:disc"><strong>Thread-Private Variables:</strong> Similar to private but retain values across parallel regions.</li></ul><ul id="19847199-2878-42df-8a4c-667084d46f3a" class="bulleted-list"><li style="list-style-type:disc"><code><strong>firstprivate</strong></code>: Gives each thread its own copy of a variable, starting with the same value.</li></ul><ul id="ffff532a-f6dc-81e4-9beb-e3a1c1384adf" class="bulleted-list"><li style="list-style-type:disc"><code><strong>lastprivate</strong></code>: Keeps the variable&#x27;s value from the last iteration after the parallel region ends.</li></ul><ul id="624c1597-9339-4fe1-9b2e-99bb6769233e" class="bulleted-list"><li style="list-style-type:disc"><strong>Reduction Variables:</strong> Used to combine results from all threads using a specified reduction operation.</li></ul><p id="77ef5e6f-577a-4cdd-a723-d08b5bf4f33d" class="">Understanding and correctly using these types of variables helps in managing data consistency, avoiding race conditions, and ensuring correct parallel execution in OpenMP programs.</p></details></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-81f8-8cc5-c6a31dd81a0f" class="code"><code class="language-JavaScript">#include &lt;stdio.h&gt;
+#include &lt;omp.h&gt;
+
+int main() {
+    int product = 1; // Variable to store the product
+    int arr[] = {1, 2, 3, 4}; // Array to multiply
+    int n = 4; // Number of elements in the array
+
+    // Parallel region with reduction on product
+    #pragma omp parallel for reduction(*:product)
+    for (int i = 0; i &lt; n; i++) {
+        product *= arr[i]; // Each thread multiplies its private copy of product
+    }
+
+    printf(&quot;Product of array elements = %d\n&quot;, product); // Output: 24 (1*2*3*4)
+    return 0;
+}
+</code></pre><ul id="6a83cca0-f858-4eab-ad4b-e4e408266964" class="toggle"><li><details open=""><summary><strong>Scheduling</strong> </summary><ul id="ffff532a-f6dc-81cd-b0fa-fa2196f323c0" class="bulleted-list"><li style="list-style-type:disc"><strong>Scheduling</strong>: Assigns loop iterations to threads for parallel execution.</li></ul><ul id="ffff532a-f6dc-81b6-ab92-d8716efb9260" class="bulleted-list"><li style="list-style-type:disc"><strong>Goal</strong>: Balance workload, optimize performance</li></ul><ul id="ffff532a-f6dc-81e0-a10b-e7a41f48e3c5" class="bulleted-list"><li style="list-style-type:disc">Scheduling is a method in OpenMP to distribute iterations to different threads in <code>for</code> loop.</li></ul><ul id="e23b533e-5f7a-4114-8574-6afae8e00c41" class="bulleted-list"><li style="list-style-type:disc">The scheduling strategy is defined using the <code>schedule</code> clause in the <code>#pragma omp for</code> directive.</li></ul><ul id="ffff532a-f6dc-8130-8292-d4028fd340d6" class="bulleted-list"><li style="list-style-type:disc"><code>#pragma omp parallel for</code> can be also used directly without scheduling and it is equal to <code>#pragma omp parallel for schedule(static,1)</code> </li></ul><ul id="0b6266d1-4132-4d3c-96d2-a699cbe7053d" class="toggle"><li><details open=""><summary><strong>Static Scheduling</strong> : Divides iterations evenly among threads [For Uniform Workloads]</summary><ul id="ffff532a-f6dc-818c-8cdc-fa429b8fa7c3" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: The loop iterations are divided into chunks of approximately equal size and distributed to threads before the loop starts. Each thread is assigned chunks in a &quot;round robin&quot; fashion.</li></ul><ul id="43a789d6-282d-42ba-bd4b-328193872585" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>: <code>schedule(static, 4)</code> — Each thread gets 4 iterations.<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7ddda2d9-0e9d-45ea-b981-2fbf1488cc1b" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp for schedule(static, [chunk_size])</code></pre></li></ul><ul id="9d03b4f5-2a65-4859-a86b-f98cee712ecb" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>:<ul id="ffff532a-f6dc-81ad-8c92-d6deea93c84b" class="bulleted-list"><li style="list-style-type:circle"><strong>Default Schedule</strong>: If no schedule is specified, OpenMP uses static scheduling by default.</li></ul><ul id="17e76b3c-ea23-4b35-97a7-62bc53e237a1" class="bulleted-list"><li style="list-style-type:circle"><strong>Efficiency</strong>: Works well when all iterations have similar execution times.</li></ul><ul id="ffff532a-f6dc-81e9-9190-ea5d93c98b96" class="bulleted-list"><li style="list-style-type:circle"><strong>Chunk Size</strong>: If <code>chunk_size</code> is specified, each thread is assigned a chunk of iterations. If not specified, the iterations are divided equally among all threads.</li></ul></li></ul><ul id="ffff532a-f6dc-81d4-93a0-d1ec0290168e" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-81a8-9d46-e42f91ea94a4" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel for schedule(static, 4)
+for (int i = 0; i &lt; 16; i++) {
+    // Code to execute
+}</code></pre><ul id="ffff532a-f6dc-814a-a63a-fdec58bfdd87" class="bulleted-list"><li style="list-style-type:circle"><strong>Explanation</strong>: Here, iterations are divided into chunks of 4. If there are 4 threads, each thread will get 4 iterations.</li></ul><figure id="a310d0a9-ac8a-4ba9-848d-c0d221d23075" class="image"><a href="image%204.png"><img style="width:1007px" src="image%204.png"/></a></figure></li></ul></details></li></ul><ul id="ffff532a-f6dc-813d-984d-db5a0ed1b1be" class="toggle"><li><details open=""><summary><strong>Dynamic Scheduling: </strong>Iterations assigned to threads as they finish their current chunks [Non Uniform Workloads]</summary><ul id="ffff532a-f6dc-81d0-8fc6-f524d503e348" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Iterations are divided into chunks and assigned to threads dynamically at runtime as threads finish their current chunks.</li></ul><ul id="ffff532a-f6dc-81bd-a092-c2608109b364" class="bulleted-list"><li style="list-style-type:disc">OpenMP will still split task into <code>iter_size</code>/<code>chunk_size</code> chunks, but distribute trunks to threads dynamically without any specific order.</li></ul><ul id="ffff532a-f6dc-81d7-b6fa-ea74cf7309a4" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-812e-b976-f15df9bc32ff" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp for schedule(dynamic, [chunk_size])</code></pre></li></ul><p id="3478666f-6a2e-4864-ac4c-9b12c246d449" class=""><strong>Characteristics</strong>:<div class="indented"><ul id="ffff532a-f6dc-8172-90d5-c26e789bd0a0" class="bulleted-list"><li style="list-style-type:disc"><strong>Load Balancing</strong>: Effective for loops with irregular or unpredictable execution times across iterations.</li></ul><ul id="ffff532a-f6dc-8162-8039-c59c26694832" class="bulleted-list"><li style="list-style-type:disc"><strong>Overhead</strong>: Higher overhead compared to static scheduling due to the dynamic assignment of chunks.</li></ul></div></p><ul id="ffff532a-f6dc-81cd-88de-cb482243c4d8" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6e0692b0-9a5d-469a-bdd0-e1f1d5d1848a" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel for schedule(dynamic, 2)
+for (int i = 0; i &lt; 16; i++) {
+    // Code to execute
+}</code></pre><ul id="ffff532a-f6dc-81ad-8255-e0fe73e18c45" class="bulleted-list"><li style="list-style-type:circle"><strong>Explanation</strong>: Here, chunks of 2 iterations are dynamically assigned to threads as they become available.</li></ul><p id="2b3407b6-9cb0-4545-baf3-fc29a092ee0c" class="">
+</p></li></ul></details></li></ul><ul id="4953f38d-2f56-4c8d-a6ff-34e0a9e1be34" class="toggle"><li><details open=""><summary><strong>Guided Scheduling :Starts with larger chunks, decreases over time </strong></summary><ul id="ffff532a-f6dc-81e9-85e8-ed29d2cfd105" class="bulleted-list"><li style="list-style-type:disc"><strong>Definition</strong>: Similar to dynamic scheduling, but the chunk size decreases over time. Larger chunks are assigned initially, and as threads complete their tasks, they are given smaller chunks.</li></ul><ul id="4ba8e964-4d50-4e68-94b0-4cde5729d275" class="bulleted-list"><li style="list-style-type:disc"><strong>Syntax</strong>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ffff532a-f6dc-8107-8848-fe25022cd00d" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp for schedule(guided, [chunk_size])</code></pre></li></ul><ul id="ffff532a-f6dc-8157-bab1-fa642aef960e" class="bulleted-list"><li style="list-style-type:disc"><strong>Characteristics</strong>:<ul id="9dca8968-2fa9-4710-bf11-8552c6bb0fae" class="bulleted-list"><li style="list-style-type:circle"><strong>Optimization</strong>: Reduces overhead by initially assigning larger chunks, decreasing as the workload decreases.</li></ul><ul id="ffff532a-f6dc-81ed-a16a-e99c90ce2279" class="bulleted-list"><li style="list-style-type:circle"><strong>Best Use</strong>: Useful when later iterations are likely to have less work or when the overall workload decreases as iterations progress.</li></ul></li></ul><ul id="d570e49b-452c-4f47-b1d1-fcb3a39216a8" class="bulleted-list"><li style="list-style-type:disc"><strong>Example</strong>:<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c40be039-3b7f-4e32-b1e2-c608ac43d8f0" class="code"><code class="language-C" style="white-space:pre-wrap;word-break:break-all">#pragma omp parallel for schedule(guided, 4)
+for (int i = 0; i &lt; 16; i++) {
+    // Code to execute
+}</code></pre><ul id="ffff532a-f6dc-81f9-a628-fcb1aff68982" class="bulleted-list"><li style="list-style-type:circle"><strong>Explanation</strong>: The first chunks are large (4 in this case), and as threads finish their tasks, they are assigned smaller chunks.</li></ul></li></ul></details></li></ul><ul id="ffff532a-f6dc-8165-98df-e968aea7b86f" class="toggle"><li><details open=""><summary><strong>Auto Scheduling : Decision left with OpenMP run time environment </strong></summary><p id="ffff532a-f6dc-81a4-a8cf-f9bd79c451b1" class="">The decision on scheduling is left to the OpenMP runtime environment, which chooses the most appropriate scheduling strategy based on iterations and threads availability </p><p id="a48ebafd-5f66-4dd5-86ff-d8f0e9527a92" class="">Syntax : <code>#pragma omp for schedule(auto)</code></p><p id="3cfc1901-319e-464f-96a6-8c204b41e79f" class=""><strong>Characteristics</strong>:</p><ul id="ffff532a-f6dc-818f-9018-ed7e00099a53" class="bulleted-list"><li style="list-style-type:disc"><strong>Flexibility</strong>: Provides flexibility for the runtime to optimize based on the environment and system characteristics.</li></ul><ul id="a0f0f35f-02e1-45dc-b473-bca5e63b66b0" class="bulleted-list"><li style="list-style-type:disc"><strong>Usage</strong>: Useful when you trust the runtime to make the best decision for scheduling</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bb21826d-3b05-4d5b-b29f-05a4fc64c767" class="code"><code class="language-C++">#pragma omp parallel for schedule(auto)
+for (int i = 0; i &lt; 16; i++) {
+// Code to execute
+}
+//Explanation: The runtime decides how to schedule iterations.</code></pre></details></li></ul><ul id="ffff532a-f6dc-8126-9f29-f61c44cf0a88" class="toggle"><li><details open=""><summary><strong>Runtime  : Variable set OMP_SCHEDULE</strong></summary><p id="cb4482d9-a69a-4f74-b5cf-8fed61de7c48" class="">Depend on environment variable <code>OMP_SCHEDULE</code> we set in command line.<br/><br/></p><p id="8e8a2093-0ccb-4a45-8d25-1fd0eb33cac5" class="">This allows for tuning and experimenting with different schedules without recompiling the code.<br/><br/></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d83500e0-b6e2-43b8-bf87-f987a479ddad" class="code"><code class="language-Bash">export OMP_SCHEDULE=&quot;dynamic,4&quot;
+./a.out</code></pre></details></li></ul><ul id="ffff532a-f6dc-81d8-a6bd-cb194a58977a" class="toggle"><li><details open=""><summary><strong>Comparison and Use Cases </strong></summary><ul id="f83d4406-218a-4364-b94a-e37acdddea69" class="bulleted-list"><li style="list-style-type:disc"><strong>Static Scheduling</strong>: Best for loops where all iterations take roughly the same time to execute. It minimizes overhead since the assignment is done before loop execution.</li></ul><ul id="ffff532a-f6dc-8181-87a1-fd076e6a5076" class="bulleted-list"><li style="list-style-type:disc"><strong>Dynamic Scheduling</strong>: Ideal when the workload is unpredictable or highly variable, such as in irregular computations.</li></ul><ul id="ffff532a-f6dc-811d-a759-e59c929aee27" class="bulleted-list"><li style="list-style-type:disc"><strong>Guided Scheduling</strong>: Useful when early iterations are expected to be heavier and require more time than later ones. (Processing by complexity : Example)</li></ul><ul id="ffff532a-f6dc-817d-b3e3-f2f9c32f0e0e" class="bulleted-list"><li style="list-style-type:disc"><strong>Auto Scheduling</strong>: Relies on compiler heuristics, which can be beneficial for performance tuning.</li></ul><ul id="da7b63bc-5bac-42a5-9c44-ab6d0988353c" class="bulleted-list"><li style="list-style-type:disc"><strong>Runtime Scheduling</strong>: Provides flexibility in choosing the scheduling policy during execution, enabling easy experimentation. [ Experimentations]</li></ul></details></li></ul></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Compilation and execution of MPI, OpenMP and OpenCL (GPU) programs. Setting the number of threads, monitoring the efficiency of parallel jobs. Input and output of data.</summary><div class="indented"><blockquote id="ffff532a-f6dc-81d8-9d0e-eaf6243210b9" class=""><em><strong><span style="border-bottom:0.05em solid">MPI </span></strong></em><p id="de0d3789-6849-4d81-8ae1-53b1820e3d98" class=""><strong>Compilation</strong> : <code>mpiicc -o mpi_program mpi_program.cpp</code><div class="indented"><p id="ffff532a-f6dc-811d-a7e9-ceb9b52c42e7" class="">This command compiles <code>mpi_program.cpp</code> into the executable <code>mpi_program</code>.</p></div></p><p id="db1c3175-1da2-4294-96d3-fbe7651b53d7" class=""><strong>Execution and Setting No of Threads</strong> :<code> mpirun -n 4 ./mpi_program</code><div class="indented"><p id="63994238-bc4d-4f7c-b3a8-b1e7362ff352" class="">This command runs the <code>mpi_program</code> with 4 MPI processes.</p></div></p><p id="ffff532a-f6dc-81f9-a8b2-e6744b6e9c21" class=""><strong>Input and Output of Data :</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="57d2fe38-7358-404f-b6f5-13834ddafd9b" class="code"><code class="language-Bash">MPI_File fh;
+MPI_File_open(MPI_COMM_WORLD, &quot;output.dat&quot;, MPI_MODE_CREATE | MPI_MODE_WRONLY, MPI_INFO_NULL, &amp;fh);
+MPI_File_write(fh, data.c_str(), data.size(), MPI_CHAR, MPI_STATUS_IGNORE);
+MPI_File_close(&amp;fh);</code></pre></blockquote><p id="ffff532a-f6dc-8183-802a-d3fd8612a7a2" class="">
+</p><blockquote id="ffff532a-f6dc-8132-b2c5-ecbede8c5d3c" class=""><em><strong><span style="border-bottom:0.05em solid">OpenMP</span></strong></em><p id="ffff532a-f6dc-81c5-af5d-d6364fcb0fd6" class="">Include : # include&lt;omp.h&gt;</p><p id="ffff532a-f6dc-81f1-8272-e0dbf4fd58a5" class=""><strong>Compilation</strong> : <code>icc parallel_hello_world.cpp -o parallel_hello_world.exe -qopenmp</code></p><p id="ffff532a-f6dc-81dc-b7ea-c823adcb5e9a" class=""><strong>Execution</strong>:<code> ./parallel_hello_world</code></p><p id="ffff532a-f6dc-816b-a6ee-e8c2b0efb3b3" class=""><strong>Threads:</strong> Set with <code>OMP_NUM_THREADS</code> or <code>omp_set_num_threads()</code>.</p></blockquote><p id="ffff532a-f6dc-81c0-9a39-c37ceef7b25d" class="">
+</p><blockquote id="ffff532a-f6dc-8137-b5a3-f4313ce6e5bb" class=""><strong><span style="border-bottom:0.05em solid">OpenCL</span></strong><p id="4f9a72ef-5354-4cc7-ae53-fb7ffec52967" class=""><strong>Steps</strong>: </p><ul id="767c8476-c4f0-4601-8ce6-c24537746033" class="bulleted-list"><li style="list-style-type:disc"><strong>Write the OpenCL Kernel</strong> (<code>kernel.cl</code> or as a string in the code).[defines the computation to be performed on the device.]</li></ul><ul id="b5709a57-d3f5-46bf-abeb-a18409ec604a" class="bulleted-list"><li style="list-style-type:disc"><strong>Write the Host Program</strong> in C++ using the OpenCL API.</li></ul><ul id="3c18c021-6bb9-4da8-8c41-900ef014fdf0" class="bulleted-list"><li style="list-style-type:disc"><strong>Compile the Host Program:</strong><p id="5dbe5355-e5f4-4c5d-9f77-634771c782e6" class="">opencl_program - output executable file </p><p id="ffff532a-f6dc-8149-9e42-e662e79f7da1" class="">main.cpp - host code form opencl program</p><ul id="ffff532a-f6dc-8123-8cca-f9de94a670b1" class="bulleted-list"><li style="list-style-type:circle"><strong>With </strong><code><strong>g++</strong></code><strong>:</strong> <code>g++ -o opencl_program main.cpp -lOpenCL</code></li></ul><ul id="e5c02f22-ada6-49a0-a5fe-2c5868b1892a" class="bulleted-list"><li style="list-style-type:circle"><strong>With </strong><code><strong>icpc</strong></code><strong>:</strong> <code>icpc -o opencl_program main.cpp -lOpenCL</code></li></ul><ul id="ffff532a-f6dc-81ac-9b85-ec7062bbfcc4" class="bulleted-list"><li style="list-style-type:circle"><strong>With </strong><code><strong>nvcc</strong></code><strong>:</strong> <code>nvcc -o opencl_program main.cpp -lOpenCL</code></li></ul></li></ul><ul id="ffff532a-f6dc-8138-bf8d-fa2e189b25a3" class="bulleted-list"><li style="list-style-type:disc"><strong>Execute the Program:</strong> <code>./opencl_program</code></li></ul><p id="ffff532a-f6dc-819b-b200-c2c1640a28ac" class=""><strong>Compilation</strong> : <code>nvcc -o my_opencl_program my_opencl_program.cu -lOpenCL</code></p></blockquote><p id="ffff532a-f6dc-81b6-9eae-c258a2159a31" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Shared vs. distributed memory, MPI vs. OpenMP. GPU memory. Advantages/disadvantages.</summary><div class="indented"><ul id="ffff532a-f6dc-8144-b2ce-e8a8a3214b48" class="toggle"><li><details open=""><summary>Memory Models : Shared Vs Distributed</summary><table id="ffff532a-f6dc-81b5-914d-f54c123133cd" class="simple-table"><thead class="simple-table-header"><tr id="ffff532a-f6dc-81f9-84f5-cb01a32ac7a0"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Feature</th><th id="LTBB" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Shared Memory</th><th id="=Fnj" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Distributed Memory</th></tr></thead><tbody><tr id="4694b0ab-80bf-44ee-af9e-a7c30d1487a8"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Definition</th><td id="LTBB" class="" style="width:303.2708333333333px">Common memory space accessible by all processors</td><td id="=Fnj" class="" style="width:303.2708333333333px">Separate memory for each processor</td></tr><tr id="c6eb5d44-7822-4404-8816-73b820badded"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Address Space</th><td id="LTBB" class="" style="width:303.2708333333333px">Single address space</td><td id="=Fnj" class="" style="width:303.2708333333333px">Multiple address spaces</td></tr><tr id="ffff532a-f6dc-8110-9a4b-d03d21177e38"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Communication</th><td id="LTBB" class="" style="width:303.2708333333333px">Implicit through shared variables</td><td id="=Fnj" class="" style="width:303.2708333333333px">Explicit through message passing</td></tr><tr id="ffff532a-f6dc-8199-aab4-de98190e5029"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Synchronization</th><td id="LTBB" class="" style="width:303.2708333333333px">Requires mechanisms like locks and semaphores</td><td id="=Fnj" class="" style="width:303.2708333333333px">Managed through messaging protocols</td></tr><tr id="ffff532a-f6dc-8140-a56e-fda2d525f940"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Ease of Use</th><td id="LTBB" class="" style="width:303.2708333333333px">Easier to program</td><td id="=Fnj" class="" style="width:303.2708333333333px">More complex due to explicit communication</td></tr><tr id="ffff532a-f6dc-81d1-bbf1-fa380984f4e7"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Scalability</th><td id="LTBB" class="" style="width:303.2708333333333px">Limited by memory bandwidth and coherence issues</td><td id="=Fnj" class="" style="width:303.2708333333333px">Highly scalable, suitable for large systems</td></tr><tr id="d187b3b0-f883-4a31-9eaf-44af787aa560"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Latency</th><td id="LTBB" class="" style="width:303.2708333333333px">Low latency</td><td id="=Fnj" class="" style="width:303.2708333333333px">Higher latency due to network communication</td></tr><tr id="ffff532a-f6dc-81bb-9a7e-d873fa1974f1"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Complexity</th><td id="LTBB" class="" style="width:303.2708333333333px">Complex synchronization and cache coherence</td><td id="=Fnj" class="" style="width:303.2708333333333px">Data distribution and message-passing complexity</td></tr><tr id="3170f1a4-88f9-4976-93c9-b74ddcc7bb05"><th id="&lt;vuT" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Cache Coherence</th><td id="LTBB" class="" style="width:303.2708333333333px">Requires careful management</td><td id="=Fnj" class="" style="width:303.2708333333333px">Not a concern as each processor has its own memory</td></tr></tbody></table></details></li></ul><ul id="ffff532a-f6dc-8150-9d47-f51cafc7e0f5" class="toggle"><li><details open=""><summary><strong>MPI vs OpenMP</strong></summary><table id="ffff532a-f6dc-81cd-a29f-c2e9824c2171" class="simple-table"><thead class="simple-table-header"><tr id="468c578a-da02-4e1e-aa28-dcc9f3992b26"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Feature</th><th id="L_N\" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">MPI (Message Passing Interface)</th><th id="Wxk;" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">OpenMP (Open Multi-Processing)</th></tr></thead><tbody><tr id="ffff532a-f6dc-81f2-8d91-df60885ad659"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Definition</th><td id="L_N\" class="" style="width:303.2708333333333px">Standard for message-passing in distributed memory</td><td id="Wxk;" class="" style="width:303.2708333333333px">API for parallel programming in shared memory</td></tr><tr id="ffff532a-f6dc-81c1-9f38-f88eb0c6a739"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Language Support</th><td id="L_N\" class="" style="width:303.2708333333333px">C, C++, Fortran, others</td><td id="Wxk;" class="" style="width:303.2708333333333px">Primarily C, C++, Fortran</td></tr><tr id="c63618f8-92ec-439b-9cca-eac3fe408b91"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Communication</th><td id="L_N\" class="" style="width:303.2708333333333px">Explicit message passing</td><td id="Wxk;" class="" style="width:303.2708333333333px">Implicit through shared memory</td></tr><tr id="ffff532a-f6dc-81c9-9f79-d4f77d672ea5"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Parallelism</th><td id="L_N\" class="" style="width:303.2708333333333px">Distributed memory, suitable for large clusters</td><td id="Wxk;" class="" style="width:303.2708333333333px">Shared memory, suitable for multi-core systems</td></tr><tr id="ffff532a-f6dc-814d-80be-fe5f673bd162"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Scalability</th><td id="L_N\" class="" style="width:303.2708333333333px">Highly scalable to large numbers of processors</td><td id="Wxk;" class="" style="width:303.2708333333333px">Limited to shared memory systems</td></tr><tr id="ffff532a-f6dc-8168-adba-d2bfdd8f37c8"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Ease of Use</th><td id="L_N\" class="" style="width:303.2708333333333px">Complex, requires manual management of messages</td><td id="Wxk;" class="" style="width:303.2708333333333px">Easier to use, integrates with existing code</td></tr><tr id="a16fb1c7-152e-4460-80e9-7e79f36694a3"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Overhead</th><td id="L_N\" class="" style="width:303.2708333333333px">Higher due to network communication</td><td id="Wxk;" class="" style="width:303.2708333333333px">Lower due to shared memory</td></tr><tr id="ffff532a-f6dc-81c4-a0c0-c438e1f1a298"><th id="AaR}" class="simple-table-header-color simple-table-header" style="width:303.2708333333333px">Performance</th><td id="L_N\" class="" style="width:303.2708333333333px">Depends on network latency and bandwidth</td><td id="Wxk;" class="" style="width:303.2708333333333px">Typically higher due to lower communication overhead</td></tr></tbody></table></details></li></ul><ul id="b3687de1-e225-47f9-ae8d-fe560bc54f8f" class="toggle"><li><details open=""><summary><strong>GPU: Graphical Processing Unit</strong></summary><h3 id="ffff532a-f6dc-81b7-981d-d97398facee4" class="">GPU Overview</h3><ul id="4a51b474-d3e8-4ead-b22c-41ea0c8f933a" class="bulleted-list"><li style="list-style-type:disc"><strong>GPU (Graphics Processing Unit):</strong> A specialized processor designed for parallel processing. Originally used for graphics rendering, now also used for scientific computing, machine learning, and data analytics.</li></ul><ul id="09e59e3b-ddb8-4a88-8648-437b6c0d04cb" class="bulleted-list"><li style="list-style-type:disc"><strong>Key Features:</strong> High parallelism, capable of processing large datasets quickly, excels in tasks that can be done simultaneously.</li></ul><h3 id="ffff532a-f6dc-81a9-83a0-ec59ebc6ed94" class="">Why We Need GPUs</h3><ul id="be0f7e45-8199-4efa-9e43-476502a6d45f" class="bulleted-list"><li style="list-style-type:disc"><strong>Performance:</strong> GPUs handle tasks requiring massive parallelism, such as deep learning, simulations, and real-time data processing, more efficiently than CPUs.</li></ul><ul id="c7f2339c-b09a-441b-9a3c-826e921ba8e8" class="bulleted-list"><li style="list-style-type:disc"><strong>Applications:</strong> Graphics rendering, AI model training, scientific simulations, and large-scale data analysis.</li></ul><h3 id="09d20c07-1af6-4ad8-93b0-d134c0744669" class="">CUDA</h3><ul id="ffff532a-f6dc-818f-8334-fe18d0c1c56c" class="bulleted-list"><li style="list-style-type:disc"><strong>CUDA (Compute Unified Device Architecture):</strong> A parallel computing platform by NVIDIA, allowing developers to use NVIDIA GPUs for general-purpose processing.</li></ul><ul id="4f6bbf50-72d9-4727-9203-4a0aee396d37" class="bulleted-list"><li style="list-style-type:disc"><strong>Features:</strong> NVIDIA-specific, high performance, easy integration with C/C++ and deep learning frameworks.</li></ul><h3 id="02d9bb0f-4774-4124-8b4b-95aa915e7b77" class="">OpenCL</h3><ul id="237a320e-586f-44ab-afbf-dd6d532639ae" class="bulleted-list"><li style="list-style-type:disc"><strong>OpenCL (Open Computing Language):</strong> An open standard for parallel computing across various hardware (CPUs, GPUs, FPGAs) from different vendors.</li></ul><ul id="7b5e7d16-6cc7-4c7e-b685-df7abf40707f" class="bulleted-list"><li style="list-style-type:disc"><strong>Features:</strong> Cross-platform, portable, general-purpose, suitable for heterogeneous computing environments</li></ul></details></li></ul><ul id="ffff532a-f6dc-8182-a0d8-c2c140557205" class="toggle"><li><details open=""><summary><strong>GPU Memory</strong></summary><p id="ffff532a-f6dc-8168-8d56-efaf86b37431" class="">Blocks are group of threads that execute the same instruction on different pieces of data in parallel</p><ul id="ffff532a-f6dc-811e-9520-e2cd233e6455" class="bulleted-list"><li style="list-style-type:disc"><strong>Registers : </strong>The fastest memory available, used to store variables for individual threads(local counter, intermediate results)</li></ul><ul id="ffff532a-f6dc-811f-b04d-d342af7b720f" class="bulleted-list"><li style="list-style-type:disc"><strong>Local Memory</strong>:<strong> Each Thread can use its own local memory</strong>, where it can store temporary variables. This has the <strong>smallest scope</strong> and is dedicated to <strong>each individual Thread.</strong></li></ul><ul id="bfad24cb-0c76-427b-974b-db1ee97584ff" class="bulleted-list"><li style="list-style-type:disc"><strong>Shared Memory:</strong> <strong>Threads within the same Block</strong> can share data through shared memory. This allows Threads within the same Block to communicate and access data faster compared to accessing global memory.</li></ul><ul id="ffff532a-f6dc-81a1-bf8b-c797205ce456" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-orange"><strong>Global Memory</strong></mark><mark class="highlight-orange">: This is the </mark><mark class="highlight-orange"><strong>largest memory in the GPU</strong></mark> and can be accessed by<mark class="highlight-orange"><strong> all Threads across all Blocks</strong></mark><mark class="highlight-orange">.</mark> However, accessing global memory is typically <em><strong><span style="border-bottom:0.05em solid">slower </span></strong></em>than other memory types, so optimization is necessary to avoid performance degradation.</li></ul><ul id="95ea930f-2594-4dd4-8c83-2e1fbb82d0cf" class="bulleted-list"><li style="list-style-type:disc"><strong>Texture Memory and Constant Memory</strong>: These are<strong> special memory types in the GPU</strong> optimized for accessing specific data types such as<strong> textures or constant values.  Used for 2D and 3D data (textures) in graphics applications. All Threads across all Blocks</strong> can access these memory types</li></ul><figure id="ffff532a-f6dc-81cb-a0a6-c59f618527b1" class="image"><a href="image%205.png"><img style="width:1024px" src="image%205.png"/></a></figure><p id="ffff532a-f6dc-8174-910d-e218c581ae58" class="">Global memory in the GPU is analogous to RAM in the CPU. When we initialize a value in the GPU without specifying its storage location, it is automatically stored in the global memory.</p><table id="93e83e12-3d21-4981-892f-1d7a2dfb427e" class="simple-table"><tbody><tr id="26b86bcb-c59e-4ebf-9995-8813ccb2e463"><td id="e@qf" class="" style="width:487px"><strong>CPU Memory</strong></td><td id="BEqu" class="" style="width:598px"><strong>GPU Memory</strong></td></tr><tr id="532eb1de-bc52-497d-8b2e-33bb8b1832d0"><td id="e@qf" class="" style="width:487px">System RAM, as the name suggests, specifically handles all the data associated with the system’s core operations.</td><td id="BEqu" class="" style="width:598px">Dedicated VRAM, as the name suggests, is meant for specialized purposes, such as video rendering, image-data processing and manipulation, and massive-scale dataset transmission for parallel processing.</td></tr><tr id="ffff532a-f6dc-81a7-8d6a-e45bcb3f6416"><td id="e@qf" class="" style="width:487px">The consumption of CPU memory is more compared to GPU memory. It is because the CPU handles OS tasks and related operations, including GPU management.</td><td id="BEqu" class="" style="width:598px">GPU handles task-specific operations only and therefore requires substantially less memory resources.</td></tr><tr id="1a653e65-424a-4fad-9e9e-dcae134d0b9d"><td id="e@qf" class="" style="width:487px">CPU memory consists of RAM, cache, and registers working in tandem. They have a short-width interface for data movement.</td><td id="BEqu" class="" style="width:598px">GPU memory refers specifically to on-chip storage resources. They have a broad interface &amp; shorter paths with a point-to-point connection.</td></tr><tr id="406e552a-49fc-4f78-a735-b4e983beda79"><td id="e@qf" class="" style="width:487px">When a CPU works with its system memory, it focuses on delivering low latency.</td><td id="BEqu" class="" style="width:598px">When a GPU works with its dedicated memory, it focuses on delivering high throughput.</td></tr><tr id="ffff532a-f6dc-8127-b26a-d33b52fdc1f5"><td id="e@qf" class="" style="width:487px">CPU memory bandwidth is slower compared to GPU memory bandwidth.</td><td id="BEqu" class="" style="width:598px">GPU memory bandwidth is faster compared to CPU memory bandwidth</td></tr></tbody></table><p id="606618ec-2327-494b-956a-0c025c32f492" class="">
+</p></details></li></ul><ul id="ffff532a-f6dc-81ae-99c1-c2c92f2afbef" class="toggle"><li><details open=""><summary><strong>Advantages Disadvantages of Global Memory </strong></summary><h3 id="498778c2-1c18-4efd-b117-74dbdeddb01a" class=""><strong>Advantages:</strong></h3><ul id="ffff532a-f6dc-8172-8876-d3f0915c9239" class="bulleted-list"><li style="list-style-type:disc"><strong>Large Capacity:</strong> Provides enough space to store large datasets, which is crucial for handling complex tasks.</li></ul><ul id="ffff532a-f6dc-8116-b402-fe8240816faf" class="bulleted-list"><li style="list-style-type:disc"><strong>Universal Accessibility:</strong> Can be accessed by all threads across all blocks, making it versatile for shared data.</li></ul><ul id="ed44e24b-c879-41b4-8968-001c2deb4867" class="bulleted-list"><li style="list-style-type:disc"><strong>Facilitates CPU-GPU Communication:</strong> Acts as the main interface for data exchange between the CPU and GPU.</li></ul><h3 id="ffff532a-f6dc-81f3-8159-f31acc8e47e8" class=""><strong>Disadvantages:</strong></h3><ul id="d626e34d-1c3d-4d50-a83c-bdb85dea36c4" class="bulleted-list"><li style="list-style-type:disc"><strong>High Latency:</strong> Accessing global memory is slower compared to other memory types, which can reduce performance.</li></ul><ul id="ffff532a-f6dc-81cb-8836-f99b1702bc4e" class="bulleted-list"><li style="list-style-type:disc"><strong>Resource Contention:</strong> Since it&#x27;s shared among all threads, simultaneous access by many threads can lead to bottlenecks.</li></ul><ul id="ffff532a-f6dc-8167-9805-e6c8b43a4d2c" class="bulleted-list"><li style="list-style-type:disc"><strong>Power Consumption:</strong> Accessing global memory consumes more power due to large data movements.</li></ul><ul id="5c52a176-337b-4e4b-bc49-37d0e11392b6" class="bulleted-list"><li style="list-style-type:disc"><strong>Inefficiency:</strong> Non-coalesced memory access can lead to inefficient bandwidth usage, further slowing down operations.</li></ul><p id="a299ce43-1685-4cd8-86ab-791de0250b54" class="">
+</p><p id="ffff532a-f6dc-81e4-8ac4-e9d7b833384d" class=""><em><strong><span style="border-bottom:0.05em solid">Summarization for Viva: </span></strong></em></p><p id="ffff532a-f6dc-8146-9303-f3a09476d6b6" class="">
+</p><ul id="679affb9-bd54-4778-a263-56bdb6deb3aa" class="bulleted-list"><li style="list-style-type:disc"><strong>Introduction:</strong> &quot;Global memory in GPUs is essential for handling large-scale data and enabling communication between the CPU and GPU.&quot;</li></ul><ul id="ffff532a-f6dc-81ce-95fd-e902cfb1c444" class="bulleted-list"><li style="list-style-type:disc"><strong>Advantages:</strong> &quot;It offers large capacity and universal accessibility, which are crucial for large datasets and tasks requiring wide data sharing.&quot;</li></ul><ul id="41200ffa-8a98-426e-9139-9c42c38918f8" class="bulleted-list"><li style="list-style-type:disc"><strong>Disadvantages:</strong> &quot;However, it has high latency, potential for resource contention[Shared by all threads, leading to potential bottlenecks.], and can be inefficient if not accessed properly. Strategies like memory coalescing are important to mitigate these downsides.&quot;</li></ul><p id="45dc6aca-a156-434a-ae39-929d2e194fe2" class="">
+</p></details></li></ul><ul id="ffff532a-f6dc-81b1-92c7-f69db6415fe8" class="toggle"><li><details open=""><summary><strong>CPU vs GPU</strong></summary><table id="ffff532a-f6dc-8182-a8cb-cd96893d8b97" class="simple-table"><thead class="simple-table-header"><tr id="ffff532a-f6dc-8157-a42f-cdee45dffbc5"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Feature</th><th id="o&lt;Sf" class="simple-table-header-color simple-table-header" style="width:704.2734375px">CPU (Central Processing Unit)</th><th id="l\Wj" class="simple-table-header-color simple-table-header" style="width:704.2734375px">GPU (Graphics Processing Unit)</th></tr></thead><tbody><tr id="031b7c5b-6257-42c5-88c7-c016dd6439d8"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Primary Purpose</th><td id="o&lt;Sf" class="" style="width:704.2734375px">General-purpose computing and control tasks</td><td id="l\Wj" class="" style="width:704.2734375px">Parallel processing, graphics rendering, and specific computations</td></tr><tr id="ffff532a-f6dc-8187-948e-eb937c776d65"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Core Count</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Typically 2 to 64 high-performance cores</td><td id="l\Wj" class="" style="width:704.2734375px">Thousands of smaller, simpler cores</td></tr><tr id="fea95816-c5b7-416e-85d3-e47b0b90c27b"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Clock Speed</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Generally higher (e.g., 2-5 GHz)</td><td id="l\Wj" class="" style="width:704.2734375px">Generally lower (e.g., 1-2 GHz)</td></tr><tr id="fe48bc6d-8674-4ff1-a2e0-2190e33d10d3"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Parallelism</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Limited parallelism, optimized for sequential tasks</td><td id="l\Wj" class="" style="width:704.2734375px">High parallelism, optimized for concurrent tasks</td></tr><tr id="ffff532a-f6dc-811a-b624-cf96fe4e09f0"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Cache</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Large L1, L2, and L3 caches</td><td id="l\Wj" class="" style="width:704.2734375px">Limited cache, relies more on high memory bandwidth</td></tr><tr id="ffff532a-f6dc-813f-8fd0-d0bbc5b4e7f4"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Instruction Set</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Broad, complex instruction set</td><td id="l\Wj" class="" style="width:704.2734375px">Specialized for tasks like vector and matrix operations</td></tr><tr id="ffff532a-f6dc-815a-b2fd-f71f761223e4"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Memory</th><td id="o&lt;Sf" class="" style="width:704.2734375px">Uses system RAM, smaller bandwidth</td><td id="l\Wj" class="" style="width:704.2734375px">High-bandwidth VRAM (e.g., GDDR6)</td></tr><tr id="17e42c09-4281-43aa-bff3-c6f317acca12"><th id=":ttG" class="simple-table-header-color simple-table-header" style="width:704.2734375px">Performance</th><td id="o&lt;Sf" class="" style="width:704.2734375px">High single-thread performance, complex operations</td><td id="l\Wj" class="" style="width:704.2734375px">High throughput for parallel tasks, less for single-threaded tasks</td></tr></tbody></table><div id="ffff532a-f6dc-8194-b881-ecda572f72af" class="column-list"><div id="d49e9cab-625d-46f1-8212-159f8399879d" style="width:50%" class="column"><figure id="ffff532a-f6dc-81f8-8577-e1e73bef36be" class="image"><a href="cpu_or_gpu_for_streaming-8w4bXM.webp"><img style="width:1248px" src="cpu_or_gpu_for_streaming-8w4bXM.webp"/></a></figure></div><div id="ffff532a-f6dc-8147-be1b-c24fd1b6616c" style="width:50%" class="column"><figure id="b9f33146-e727-43b2-b26a-c44b2ba56d9b" class="image"><a href="1_L9SPSTIq_ptT6a5ejgzmAQ-1024x732.png"><img style="width:672px" src="1_L9SPSTIq_ptT6a5ejgzmAQ-1024x732.png"/></a></figure></div></div><p id="467e36dc-1ede-4db8-83dd-a3dbc2e20f42" class="">
+</p></details></li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-red">Parallelization of cycles – implementations, efficiency</mark></summary><div class="indented"><p id="20fa9adb-c293-4591-a9d9-58854bdd8461" class="">
+</p></div></details><p id="0bec2b33-d3dd-4d29-aa1b-3b9be1f7653d" class="">
+</p><hr id="ffff532a-f6dc-81ea-954a-e5ebf2c8b344"/><p id="532ad9b4-1642-49c5-9413-9e13b0f30d36" class="">Extras : </p><ul id="e3ffe6c4-d9e4-4ea0-86cd-85574ca78817" class="toggle"><li><details open=""><summary>Time in Parallel Process and Formulas </summary><p id="a2184b1c-b452-4c58-b67a-1fede7517e5d" class="">Wall time : It is the time that a user experiences as they wait for a task to complete.</p></details></li></ul><ul id="ffff532a-f6dc-817f-bc80-cd7e2b2d49df" class="toggle"><li><details open=""><summary><strong>Amdahl’s Law </strong>:</summary><p id="00185ee2-cb08-413d-8b54-214449affabd" class=""><strong>Amdahl’s Law</strong>: The speedup of a program using multiple processors is limited by the sequential portion of the program.</p><figure id="ffff532a-f6dc-8151-aa30-d7da659a045d" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>S</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>P</mi><mo stretchy="false">)</mo><mo>+</mo><mfrac><mi>P</mi><mi>N</mi></mfrac></mrow></mfrac></mrow><annotation encoding="application/x-tex">S = \frac{1}{(1 - P) + \frac{P}{N}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.4288em;vertical-align:-1.1073em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.2377em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8723em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.10903em;">N</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.345em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.1073em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></div></figure><p id="ffff532a-f6dc-81fd-8726-d9613d509749" class="">where S is the speedup, P is the parallelizable portion, and Nis the number of processors.</p></details></li></ul><p id="ffff532a-f6dc-81cc-8c07-c694907baac3" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
